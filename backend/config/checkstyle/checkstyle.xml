@@ -1,0 +1,236 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+        "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+    <property name="charset" value="UTF-8"/>
+
+    <property name="fileExtensions" value="java, properties, xml"/>
+
+    <module name="SuppressWarningsFilter"/>
+    <module name="FileTabCharacter"/>
+    <module name="FileLength"/>
+    <module name="NewlineAtEndOfFile"/>
+    <module name="UniqueProperties">
+        <property name="fileExtensions" value="properties"/>
+    </module>
+
+    <module name="TreeWalker">
+        <module name="AbbreviationAsWordInName">
+            <property name="tokens" value="VARIABLE_DEF,CLASS_DEF"/>
+            <property name="ignoreStatic" value="false"/>
+            <property name="allowedAbbreviationLength" value="3"/>
+            <property name="allowedAbbreviations" value="LIMS"/>
+        </module>
+        <module name="AnnotationLocation"/>
+        <module name="AnonInnerLength">
+            <property name="max" value="30"/>
+        </module>
+        <module name="AnnotationUseStyle"/>
+        <module name="ArrayTrailingComma"/>
+        <module name="ArrayTypeStyle"/>
+        <module name="AvoidDoubleBraceInitialization"/>
+        <module name="AvoidEscapedUnicodeCharacters"/>
+        <module name="AvoidNestedBlocks"/>
+        <module name="AvoidNoArgumentSuperConstructorCall"/>
+        <module name="AvoidStarImport">
+            <property name="excludes" value="java.io,java.net,java.lang.Math"/>
+            <property name="allowClassImports" value="false"/>
+            <property name="allowStaticMemberImports" value="false"/>
+        </module>
+        <module name="AvoidEscapedUnicodeCharacters"/>
+        <module name="AvoidNestedBlocks"/>
+
+        <module name="BooleanExpressionComplexity"/>
+
+        <module name="BooleanExpressionComplexity">
+            <property name="max" value="5"/>
+        </module>
+
+        <module name="CatchParameterName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]+$"/>
+        </module>
+        <module name="ClassFanOutComplexity">
+            <property name="max" value="35"/>
+        </module>
+        <module name="ClassDataAbstractionCoupling">
+            <property name="max" value="9"/>
+        </module>
+        <module name="ClassTypeParameterName">
+            <property name="format" value="^[a-zA-Z]$"/>
+        </module>
+        <module name="ConstantName">
+            <property name="format"
+                      value="^log(ger)?$|^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$"/>
+        </module>
+        <module name="CovariantEquals"/>
+        <module name="CyclomaticComplexity">
+            <property name="switchBlockAsSingleDecisionPoint" value="true"/>
+        </module>
+
+        <module name="DeclarationOrder"/>
+        <module name="DefaultComesLast"/>
+
+        <module name="EmptyBlock">
+            <property name="tokens" value="LITERAL_DEFAULT"/>
+        </module>
+        <module name="EmptyStatement"/>
+        <module name="EmptyCatchBlock"/>
+        <module name="EmptyForInitializerPad"/>
+        <module name="EmptyForIteratorPad"/>
+        <module name="EmptyLineSeparator">
+            <property name="allowNoEmptyLineBetweenFields" value="true"/>
+        </module>
+        <module name="EqualsAvoidNull"/>
+        <module name="EqualsHashCode"/>
+        <module name="ExecutableStatementCount">
+            <property name="tokens" value="CTOR_DEF,METHOD_DEF"/>
+        </module>
+        <module name="ExplicitInitialization"/>
+
+        <module name="FallThrough"/>
+        <module name="FinalClass"/>
+        <module name="FinalLocalVariable"/>
+        <module name="FinalParameters"/>
+
+        <module name="GenericWhitespace"/>
+
+        <module name="HideUtilityClassConstructor"/>
+
+        <module name="IllegalCatch"/>
+        <module name="IllegalThrows"/>
+        <module name="IllegalInstantiation">
+            <property name="classes" value="java.lang.Boolean"/>
+        </module>
+        <module name="IllegalImport">
+            <property name="illegalPkgs" value="java.util.logging"/>
+        </module>
+        <module name="InnerAssignment"/>
+        <module name="InterfaceTypeParameterName">
+            <property name="format" value="^[a-zA-Z]$"/>
+        </module>
+        <module name="InterfaceIsType"/>
+
+        <module name="LambdaBodyLength"/>
+        <module name="LambdaParameterName"/>
+        <module name="LeftCurly"/>
+        <module name="LocalVariableName">
+            <property name="format" value="^[a-z](_?[a-zA-Z0-9]+)*$"/>
+        </module>
+
+        <module name="MethodName"/>
+        <module name="MemberName"/>
+        <module name="MethodCount"/>
+        <module name="MethodTypeParameterName"/>
+        <module name="MethodLength">
+            <property name="tokens" value="METHOD_DEF"/>
+        </module>
+        <module name="MissingOverride"/>
+        <module name="MutableException"/>
+        <module name="MissingSwitchDefault"/>
+        <module name="ModifiedControlVariable"/>
+        <module name="ModifierOrder"/>
+        <module name="MultipleStringLiterals">
+            <property name="allowedDuplicates" value="2"/>
+        </module>
+        <module name="MultipleVariableDeclarations"/>
+
+        <module name="NeedBraces">
+            <property name="tokens" value="LITERAL_DO, LITERAL_FOR, LITERAL_WHILE"/>
+        </module>
+        <module name="NestedForDepth"/>
+        <module name="NestedIfDepth">
+            <property name="max" value="2"/>
+        </module>
+        <module name="NoArrayTrailingComma"/>
+        <module name="NoClone"/>
+        <module name="NoCodeInFile"/>
+        <module name="NoEnumTrailingComma"/>
+        <module name="NoFinalizer"/>
+        <module name="NoLineWrap"/>
+        <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>
+        <module name="NPathComplexity"/>
+
+        <module name="OneTopLevelClass"/>
+        <module name="OneStatementPerLine"/>
+        <module name="OuterTypeFilename"/>
+        <module name="OuterTypeNumber"/>
+        <module name="OverloadMethodsDeclarationOrder"/>
+
+        <module name="ParameterName">
+            <property name="format" value="^[a-z][_a-zA-Z0-9]+$"/>
+        </module>
+        <module name="PackageName"/>
+
+        <module name="RedundantImport"/>
+        <module name="RedundantModifier"/>
+        <module name="RegexpSinglelineJava">
+            <property name="format" value="System.out.println"/>
+            <property name="message" value="Statt System.out.println LOG.debug verwenden!"/>
+        </module>
+
+        <module name="RightCurly"/>
+
+        <module name="SimplifyBooleanExpression"/>
+        <module name="SimplifyBooleanReturn"/>
+        <module name="StaticVariableName"/>
+        <module name="StringLiteralEquality"/>
+        <module name="SuppressWarningsHolder"/>
+
+        <module name="SuppressionXpathSingleFilter">
+            <property name="checks" value="HideUtilityClassConstructor"/>
+            <property name="query" value="//CLASS_DEF[.//ANNOTATION/IDENT[@text='NoArgsConstructor']]"/>
+        </module>
+        <module name="SuppressionXpathSingleFilter">
+            <property name="files" value=".*Test\.java"/>
+            <property name="checks" value="ExecutableStatementCount"/>
+            <property name="query" value="//METHOD_DEF[.//ANNOTATION/IDENT[@text='BeforeEach']]"/>
+        </module>
+        <module name="SuppressionXpathSingleFilter">
+            <property name="files" value=".*Test\.java"/>
+            <property name="checks" value="ExecutableStatementCount"/>
+            <property name="query" value="//METHOD_DEF[.//ANNOTATION/IDENT[@text='Test']]"/>
+        </module>
+        <module name="SuppressionXpathSingleFilter">
+            <property name="files" value=".*Test\.java"/>
+            <property name="checks" value="MethodLength"/>
+            <property name="query" value="//METHOD_DEF[.//ANNOTATION/IDENT[@text='BeforeEach']]"/>
+        </module>
+        <module name="SuppressionXpathSingleFilter">
+            <property name="files" value=".*Test\.java"/>
+            <property name="checks" value="ClassDataAbstractionCoupling"/>
+        </module>
+        <module name="SuppressionXpathSingleFilter">
+            <property name="files" value=".*Test\.java"/>
+            <property name="checks" value="ConstantName"/>
+        </module>
+        <module name="SuppressionXpathSingleFilter">
+            <property name="files" value=".*Test\.java"/>
+            <property name="checks" value="ClassFanOutComplexity"/>
+        </module>
+        <module name="ThrowsCount">
+            <property name="max" value="2"/>
+        </module>
+        <module name="TypeName"/>
+
+        <module name="UnnecessarySemicolonInEnumeration"/>
+        <module name="UnnecessaryParentheses"/>
+        <module name="UnnecessarySemicolonInTryWithResources"/>
+        <module name="UnnecessarySemicolonAfterOuterTypeDeclaration"/>
+        <module name="UnnecessarySemicolonAfterTypeMemberDeclaration"/>
+        <module name="UnusedImports"/>
+        <module name="UpperEll"/>
+
+        <module name="VariableDeclarationUsageDistance">
+            <property name="allowedDistance" value="4"/>
+        </module>
+
+        <module name="WhitespaceAfter"/>
+        <module name="WhitespaceAround"/>
+
+    </module>
+
+</module>
+
