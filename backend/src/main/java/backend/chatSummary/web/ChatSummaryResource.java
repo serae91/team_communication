@@ -1,6 +1,7 @@
 package backend.chatSummary.web;
 
 import backend.envConfig.EnvConfig;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -12,6 +13,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
+import java.util.Map;
 
 @Path("/chatsummary")
 @ApplicationScoped
@@ -40,7 +43,7 @@ public class ChatSummaryResource {
                 User: Vielen Dank, das klingt sehr hilfreich.
                 Bot: Gerne! Wenn Sie möchten, kann ich Ihnen eine kurze Zusammenfassung der Funktionen schicken.
                 """;
-        final String requestJson = """
+        /*final String requestJson = """
                 {
                   "model": "gpt-5-mini",
                   "messages": [
@@ -48,7 +51,18 @@ public class ChatSummaryResource {
                     {"role": "user", "content": "%s"}
                   ]
                 }
-                """.formatted(chat);
+                """.formatted(chat);*/
+        final ObjectMapper mapper = new ObjectMapper();
+
+        final Map<String, Object> requestBody = Map.of(
+                "model", "gpt-4o-mini", // "gpt-5-mini" gibt es aktuell nicht
+                "messages", List.of(
+                        Map.of("role", "system", "content", "Fasse den folgenden Chatverlauf zusammen."),
+                        Map.of("role", "user", "content", chat)
+                )
+        );
+
+        final String requestJson = mapper.writeValueAsString(requestBody);
         final HttpClient client = HttpClient.newHttpClient();
         final HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.openai.com/v1/chat/completions"))
