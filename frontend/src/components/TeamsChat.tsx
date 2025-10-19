@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from 'react';
 import { listForSenderIdAndReceiverId } from '../services/MessageService';
 import { MessageDto } from '../dtos/MessageDto';
+import { summarize } from '../services/ChatSummaryService';
 
 const dummymessages = [
   {
@@ -38,6 +39,7 @@ export default function TeamsChat() {
   const [messages, setMessages] = useState<MessageDto[]>([]);
   useEffect(() => {
     listForSenderIdAndReceiverId(1,2).then(setMessages);
+    summarize().then(console.log);
   }, []);
 
   return (
@@ -45,7 +47,7 @@ export default function TeamsChat() {
       {messages.map(message=><div key={message.id}><p>{message.text}</p><p>{message.createdAt}</p></div>)}
       {dummymessages.map((msg, index) => {
         const isOwn = msg.sender === "Du";
-        const previous = messages[index - 1];
+        const previous = dummymessages[index - 1];
         const showAvatar = !previous || previous.sender !== msg.sender;
 
         return (

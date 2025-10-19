@@ -1,6 +1,4 @@
 import api from './api';
-import { MessageDto } from '../dtos/MessageDto';
-import { AxiosResponse } from 'axios';
 
 const path = '/message';
 
