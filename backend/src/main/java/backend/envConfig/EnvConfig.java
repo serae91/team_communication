@@ -15,6 +15,6 @@ public class EnvConfig {
     }
 
     public String getOpenAIKey() {
-        return dotenv.get("OPENAI_API_KEY");
+        return dotenv.get("GEMINI_API_KEY");
     }
 }

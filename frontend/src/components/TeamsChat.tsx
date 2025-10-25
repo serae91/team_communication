@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from 'react';
-import { listForSenderIdAndReceiverId } from '../services/MessageService';
 import { MessageDto } from '../dtos/MessageDto';
-import { summarize } from '../services/ChatSummaryService';
+import { askPost } from '../services/GeminiService';
 
 const dummymessages = [
   {
@@ -38,8 +37,7 @@ const dummymessages = [
 export default function TeamsChat() {
   const [messages, setMessages] = useState<MessageDto[]>([]);
   useEffect(() => {
-    listForSenderIdAndReceiverId(1,2).then(setMessages);
-    summarize().then(console.log);
+    askPost('What is the difference between Java and Kotlin?').then(console.log);
   }, []);
 
   return (
