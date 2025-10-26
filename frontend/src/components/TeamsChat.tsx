@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from 'react';
 import { MessageDto } from '../dtos/MessageDto';
-import { askPost } from '../services/GeminiService';
+import { askPost, sayHello } from '../services/GeminiService';
 
 const dummymessages = [
   {
@@ -37,7 +37,7 @@ const dummymessages = [
 export default function TeamsChat() {
   const [messages, setMessages] = useState<MessageDto[]>([]);
   useEffect(() => {
-    askPost('What is the difference between Java and Kotlin?').then(console.log);
+    askPost('What time is it in Munich?').then(console.log);
   }, []);
 
   return (

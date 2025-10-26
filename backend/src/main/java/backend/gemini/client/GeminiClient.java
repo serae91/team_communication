@@ -10,6 +10,15 @@ import jakarta.ws.rs.QueryParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import jakarta.ws.rs.core.MediaType;
 
+@RegisterRestClient(configKey = "gemini-api")
+@Path("/v1beta/models/gemini-2.5-flash:generateContent")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+public interface GeminiClient {
+
+    @POST
+    GeminiResponse generateContent(GeminiRequest request, @QueryParam("key") String key);
+}/*
 @RegisterRestClient(baseUri = "https://generativelanguage.googleapis.com/v1beta")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -17,5 +26,5 @@ public interface GeminiClient {
 
     @POST
     @Path("/models/gemini-2.5-flash:generateContent")
-    GeminiResponse generateContent(@QueryParam("key") String key, GeminiRequest request);
-}
+    GeminiResponse generateContent(GeminiRequest request, @QueryParam("key") String key);
+}*/

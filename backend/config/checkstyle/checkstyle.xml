@@ -90,10 +90,7 @@
         <module name="ExplicitInitialization"/>
 
         <module name="FallThrough"/>
-        <module name="FinalClass">
-            <property name="excludeClassesPattern"
-                      value="backend\.gemini\.model\.(GeminiRequest|GeminiRequest\$Content|GeminiRequest\$Part)"/>
-        </module>
+        <module name="FinalClass"/>
         <module name="FinalLocalVariable"/>
         <module name="FinalParameters"/>
 

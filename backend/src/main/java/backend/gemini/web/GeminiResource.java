@@ -19,7 +19,13 @@ public class GeminiResource {
     GeminiService geminiService;
 
     @GET
-    @Path("/ask/{question}")
+    @Path("/sayHello")
+    public String sayHello() {
+        return geminiService.sayHello();
+    }
+
+    @GET
+    @Path("/ask")
     public String ask(@QueryParam("question") final String question) {
         return geminiService.askGemini(question);
     }
