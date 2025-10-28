@@ -1,0 +1,6 @@
+@use '../../styles/colors' as c;
+
+.main-page {
+  padding: 24px;
+  background-color: c.$color-background-primary;
+}

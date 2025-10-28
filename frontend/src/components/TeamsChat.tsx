@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { MessageDto } from '../dtos/MessageDto';
 import { askPost, sayHello } from '../services/GeminiService';
 import BLButton from './ui/BLButton/BLButton';
+import MainPage from './main-page/MainPage';
 
 const dummymessages = [
   {
@@ -41,13 +42,14 @@ export default function TeamsChat() {
     askPost('What time is it in Munich?').then(console.log);
   }, []);
 
-  return (
+  return (<><MainPage/>
     <div className="flex flex-col h-[600px] w-full max-w-xl mx-auto bg-gray-50 dark:bg-gray-900 rounded-2xl shadow p-4 overflow-y-auto">
       <BLButton>Button CTA</BLButton>
       <BLButton size={'s'}>Button CTA</BLButton>
       <BLButton size={'m'}>Button CTA</BLButton>
       <BLButton size={'l'}>Button CTA</BLButton>
       <BLButton size={'xl'}>Button CTA</BLButton>
+
       {messages.map(message=><div key={message.id}><p>{message.text}</p><p>{message.createdAt}</p></div>)}
       {dummymessages.map((msg, index) => {
         const isOwn = msg.sender === "Du";
@@ -102,6 +104,6 @@ export default function TeamsChat() {
           </motion.div>
         );
       })}
-    </div>
+    </div></>
   );
 }

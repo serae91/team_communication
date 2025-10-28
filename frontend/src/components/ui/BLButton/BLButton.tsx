@@ -1,13 +1,14 @@
 import './BLButton.scss';
-type Size = 's' | 'm' | 'l' | 'xl';
+import { BLButtonSize } from './types';
+
 
 interface BLButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  size?: Size;
+  size?: BLButtonSize;
 }
 
-const BLButton: React.FC<BLButtonProps> = ({ size = 'm', children }) => {
+const BLButton: React.FC<BLButtonProps> = ({ size = 'm', disabled, children }) => {
   return (
-    <button
+    <button disabled={disabled}
       className={
         `button button--${size}` }
     >

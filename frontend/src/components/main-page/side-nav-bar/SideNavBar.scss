@@ -1,0 +1,15 @@
+@use '../../../styles/colors' as c;
+
+.side-nav-bar {
+  position: relative;
+  display: flex;
+  width: 329px;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}

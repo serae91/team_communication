@@ -1,85 +1,23 @@
 @use '../../../styles/colors' as c;
 
-/*.fancy-button {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: c.$color-brand;
-  //color: white;
-  cursor: pointer;
-
-  border-radius: 8px;
-  border-width: 2px;
-
-  &--s {
-    background: c.$color-brand;
-    padding: 8px 12px;
-    width: 154px;
-    height: 36px;
-  }
-
-  &--m {
-    padding: 8px 12px;
-    width: 158px;
-    height: 40px;
-  }
-
-  &--l {
-    padding: 8px 12px;
-    width: 177px;
-    height: 44px;
-  }
-
-  &--xl {
-    padding: 8px 12px;
-    width: 181px;
-    height: 48px;
-  }
-}
-
-.fancy-button::before,
-.fancy-button::after {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  border-width: 2px;
-  border-style: solid;
-  border-color: #D6BBFB;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.fancy-button::before {
-  left: 12px;
-}
-
-.fancy-button::after {
-  right: 12px;
-}*/
-
 .button {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   border: solid;
+  border-color: #D6BBFB;
   border-radius: 8px;
   border-width: 2px;
   background-color: c.$color-brand;
   color: white;
-  font-weight: 500;
   cursor: pointer;
   transition: background 0.2s ease;
 
   &:hover {
-    background-color: #1d4ed8;
+    background-color: c.$color-brand-minus;
   }
 
-  /* Kreise links & rechts */
   &::before,
   &::after {
     content: '';
@@ -90,6 +28,8 @@
     border-style: solid;
     border-color: #D6BBFB;
     transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
   }
 
   &::before {
@@ -108,8 +48,8 @@
 /* 🔸 Größenvarianten */
 .button--s {
   padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  --circle-size: 6px;
+  font-size: small;
+  //--circle-size: 6px;
   --circle-offset: 10px;
 
   &::before,
@@ -153,8 +93,8 @@
 
   &::before,
   &::after {
-    width: var(--circle-size);
-    height: var(--circle-size);
+    width: 16px;
+    height: 16px;
   }
 }
 

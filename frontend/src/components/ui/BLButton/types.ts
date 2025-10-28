@@ -1,0 +1,1 @@
+export type BLButtonSize = 's' | 'm' | 'l' | 'xl';
