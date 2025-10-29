@@ -6,10 +6,25 @@
   width: 329px;
   height: 100vh;
   flex-direction: column;
-}
+  gap: 24px;
 
-.button-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  .side-symbol {
+    color: c.$color-text-3;
+    margin-right: 8px;
+  }
+
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .title {
+      padding-left: 1.2em;
+      display: flex;
+      justify-content: left;
+      color: c.$color-text-2;
+      font-weight: 600;
+      float: left;
+    }
+  }
 }

@@ -13,28 +13,28 @@ function SideNavBar(props: SideNavBarProps): JSX.Element {
     <div className="side-nav-bar">
       <div className={ 'button-group' }>
         <SideNavBarButton badgeCount={ 3 }>
-          <FaEnvelope size={ 20 } style={ {marginRight: 8} }/>
+          <FaEnvelope size={ 20 } className={'side-symbol'}/>
           Inbox
         </SideNavBarButton>
         <SideNavBarButton badgeCount={ undefined }>
-          <FaHistory size={ 20 } style={ {marginRight: 8} }/>
+          <FaHistory size={ 20 } className={'side-symbol'}/>
           History
         </SideNavBarButton>
         <SideNavBarButton badgeCount={ 0 }>
-          <FaUserPlus size={ 20 } style={ {marginRight: 8} }/>
+          <FaUserPlus size={ 20 } className={'side-symbol'}/>
           Invite Team Member
         </SideNavBarButton>
       </div>
-      Groups
       <div className={ 'button-group' }>
+        <div className={'title'}>Groups</div>
         <SideNavBarButton badgeCount={ 3 }>
-          # Development
+          <div className={'side-symbol'}>#</div> Development
         </SideNavBarButton>
         <SideNavBarButton badgeCount={ undefined }>
-          # Marketing
+          <div className={'side-symbol'}>#</div> Marketing
         </SideNavBarButton>
         <SideNavBarButton badgeCount={ 0 }>
-          # Sales
+          <div className={'side-symbol'}>#</div> Sales
         </SideNavBarButton>
       </div>
     </div>
