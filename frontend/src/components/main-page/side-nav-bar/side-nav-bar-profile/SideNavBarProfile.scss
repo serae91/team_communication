@@ -1,0 +1,75 @@
+@use '../../../../styles/colors' as c;
+
+.profile {
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: c.$color-text-3;
+
+  .card {
+    display: flex;
+    align-items: center;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 8px;
+    border-color: c.$color-boarder;
+    padding: 12px;
+    height: 64px;
+    width: 280px;
+    margin-right: 12px;
+    background-color: c.$color-background-primary;
+
+    .picture {
+      border-style: solid;
+      border-width: 2px;
+      border-radius: 50%;
+      border-color: c.$color-boarder;
+      width: 40px;
+      height: 40px;
+      margin-right: 12px;
+    }
+
+    .envelope {
+      display: flex;
+      justify-content: space-between;
+      width: calc(100% - 52px);
+
+      .description {
+        flex-direction: column;
+        justify-items: left;
+
+        .name {
+          font-weight: 600;
+          color: c.$color-text-main;
+        }
+
+        .e-mail {
+          font-weight: 400;
+          color: c.$color-text-2;
+        }
+      }
+
+      .icon {
+        display: flex;
+        justify-self: right;
+        color: c.$color-text-3;
+      }
+    }
+  }
+
+
+  .card:hover {
+    border-style: solid;
+    border-color: c.$color-boarder;
+    background-color: c.$color-hover-gray;
+  }
+
+  .card:focus {
+    outline: none;
+    border-style: solid;
+    border-width: 2px;
+    border-color: c.$color-boarder;
+    background-color: c.$color-select-gray;
+  }
+}

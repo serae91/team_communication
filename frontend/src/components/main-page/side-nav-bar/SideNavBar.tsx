@@ -2,6 +2,7 @@ import { JSX } from 'react';
 import './SideNavBar.scss';
 import SideNavBarButton from './side-nav-bar-button/SideNavBarButton';
 import { FaEnvelope, FaHistory, FaUserPlus } from 'react-icons/fa';
+import SideNavBarProfile from './side-nav-bar-profile/SideNavBarProfile';
 
 
 interface SideNavBarProps {
@@ -11,6 +12,7 @@ interface SideNavBarProps {
 function SideNavBar(props: SideNavBarProps): JSX.Element {
   return(
     <div className="side-nav-bar">
+      <SideNavBarProfile/>
       <div className={ 'button-group' }>
         <SideNavBarButton badgeCount={ 3 }>
           <FaEnvelope size={ 20 } className={'side-symbol'}/>
