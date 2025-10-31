@@ -1,11 +1,11 @@
 import './App.css'
-import TeamsChat from "./components/TeamsChat.js";
+import MainPage from "./components/main-page/MainPage.tsx";
 
 function App() {
 
   return (
-      <TeamsChat>
-    </TeamsChat>
+      <MainPage>
+    </MainPage>
   )
 }
 

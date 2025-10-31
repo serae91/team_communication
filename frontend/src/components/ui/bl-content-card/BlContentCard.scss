@@ -1,0 +1,14 @@
+@use '../../../styles/colors' as colors;
+@use '../../../styles/constants' as constants;
+
+.content-card {
+  flex: 1;
+  display: flex;
+  justify-content: left;
+  padding: constants.$padding;
+  border-radius: constants.$border-radius;
+  border-style: solid;
+  border-width: constants.$border-width;
+  border-color: $color-border;
+  background-color: colors.$color-white;
+}

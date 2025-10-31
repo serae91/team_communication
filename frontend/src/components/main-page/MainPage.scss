@@ -1,6 +1,15 @@
-@use '../../styles/colors' as c;
+@use '../../styles/colors' as color;
+@use '../../styles/constants' as constants;
 
 .main-page {
-  padding: 24px;
-  background-color: c.$color-background-primary;
+  display: flex;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: constants.$padding;
+  background-color: color.$color-background-primary;
 }

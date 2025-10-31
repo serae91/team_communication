@@ -1,4 +1,5 @@
-@use '../../../styles/colors' as c;
+@use '../../../styles/colors' as color;
+@use '../../../styles/constants' as constant;
 
 .button {
   position: relative;
@@ -6,16 +7,16 @@
   align-items: center;
   justify-content: center;
   border: solid;
-  border-color: #D6BBFB;
-  border-radius: 8px;
-  border-width: 2px;
-  background-color: c.$color-brand;
-  color: white;
+  border-color: $color-border;
+  border-radius: constant.$border-radius;
+  border-width: constant.$border-width;
+  background-color: color.$color-brand;
+  color: color.$color-white;
   cursor: pointer;
   transition: background 0.2s ease;
 
   &:hover {
-    background-color: c.$color-brand-minus;
+    background-color: color.$color-brand-minus;
   }
 
   &::before,

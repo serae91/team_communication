@@ -1,8 +1,7 @@
 import { JSX } from 'react';
 import './SideNavBarProfile.scss';
 import {
-  FaArrowsAltV,
-  FaExpandArrowsAlt, FaHandHoldingUsd,
+  FaHandHoldingUsd,
 } from 'react-icons/fa';
 
 

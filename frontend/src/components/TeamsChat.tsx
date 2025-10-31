@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from 'react';
 import { MessageDto } from '../dtos/MessageDto';
 import { askPost, sayHello } from '../services/GeminiService';
-import BLButton from './ui/BLButton/BLButton';
+import BLButton from './ui/bl-button/BLButton';
 import MainPage from './main-page/MainPage';
 
 const dummymessages = [

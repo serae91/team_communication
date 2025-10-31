@@ -1,0 +1,8 @@
+@use '../../../styles/colors' as colors;
+@use '../../../styles/constants' as constants;
+
+.title {
+  height: constants.$height-title;
+  font-weight: constants.$font-weight-title;
+  color: colors.$color-text-main;
+}

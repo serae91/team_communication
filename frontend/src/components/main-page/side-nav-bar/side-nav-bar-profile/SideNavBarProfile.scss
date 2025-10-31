@@ -13,7 +13,7 @@
     border-style: solid;
     border-width: 2px;
     border-radius: 8px;
-    border-color: c.$color-boarder;
+    border-color: $color-border;
     padding: 12px;
     height: 64px;
     width: 280px;
@@ -24,7 +24,7 @@
       border-style: solid;
       border-width: 2px;
       border-radius: 50%;
-      border-color: c.$color-boarder;
+      border-color: $color-border;
       width: 40px;
       height: 40px;
       margin-right: 12px;
@@ -61,7 +61,7 @@
 
   .card:hover {
     border-style: solid;
-    border-color: c.$color-boarder;
+    border-color: $color-border;
     background-color: c.$color-hover-gray;
   }
 
@@ -69,7 +69,7 @@
     outline: none;
     border-style: solid;
     border-width: 2px;
-    border-color: c.$color-boarder;
+    border-color: $color-border;
     background-color: c.$color-select-gray;
   }
 }

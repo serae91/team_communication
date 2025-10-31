@@ -1,11 +1,12 @@
-@use '../../../../styles/colors' as c;
+@use '../../../../styles/colors' as colors;
+@use '../../../../styles/constants' as constants;
 
 .side-nav-bar-button {
-  height: 44px;
-  border-radius: 8px;
+  height: constants.$height-title;
+  border-radius: constants.$border-radius;
   border-style: hidden;
-  background-color: c.$color-background-primary;
-  color: c.$color-text-2;
+  background-color: colors.$color-background-primary;
+  color: colors.$color-text-2;
   font-weight: 500;
 
   .content {
@@ -27,9 +28,9 @@
       height: 22px;
       border-radius: 50%;
       border-style: solid;
-      border-width: 2px;
-      border-color: c.$color-boarder;
-      background-color: c.$color-background-2;
+      border-width: constants.$border-width;
+      border-color: $color-border;
+      background-color: colors.$color-background-2;
     }
   }
 
@@ -37,14 +38,14 @@
 
 .side-nav-bar-button:hover {
   border-style: solid;
-  border-color: c.$color-boarder;
-  background-color: c.$color-hover-gray;
+  border-color: $color-border;
+  background-color: colors.$color-hover-gray;
 }
 
 .side-nav-bar-button:focus {
   outline: none;
   border-style: solid;
   border-width: 2px;
-  border-color: c.$color-boarder;
-  background-color: c.$color-select-gray;
+  border-color: $color-border;
+  background-color: colors.$color-select-gray;
 }
