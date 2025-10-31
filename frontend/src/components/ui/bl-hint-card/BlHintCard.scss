@@ -1,0 +1,31 @@
+@use '../../../styles/colors' as colors;
+@use '../../../styles/constants' as constants;
+
+.hint-card {
+  display: flex;
+  align-items: center;
+  border-radius: constants.$border-radius;
+  border-style: solid;
+  border-width: constants.$border-width;
+  padding: 4px 4px 4px 12px;
+}
+
+.hint-card--info {
+
+}
+
+.hint-card--warning {
+
+}
+
+.hint-card--error {
+  color: colors.$color-plus-red;
+  border-color: colors.$color-error-red-border;
+  background-color: colors.$color-error-red-background;
+}
+
+.hint-card--success {
+  color: colors.$color-plus-red;
+  border-color: colors.$color-error-red-border;
+  background-color: colors.$color-error-red-background;
+}

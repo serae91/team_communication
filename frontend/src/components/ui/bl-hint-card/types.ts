@@ -1,0 +1,1 @@
+export type BLHintCardType = 'info' | 'warning' | 'error' | 'success';

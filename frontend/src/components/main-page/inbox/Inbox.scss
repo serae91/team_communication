@@ -1,26 +1,29 @@
 @use '../../../styles/colors' as colors;
 @use '../../../styles/constants' as constants;
 
-.title-box {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
-  .title {
-    height: constants.$height-title;
-    font-size: constants.$font-size-title;
-    font-weight: constants.$font-weight-title;
-    color: colors.$color-text-main;
+.inbox {
+  gap: 10px;
+  .title-box {
     display: flex;
-    align-items: center;
-  }
+    flex-direction: column;
+    align-items: flex-start;
 
-  .sub-title {
-    height: constants.$height-sub-title;
-    font-size: constants.$font-size-subtitle;
-    font-weight: constants.$font-weight-sub-title;
-    color: colors.$color-text-main;
-    display: flex;
-    align-items: center;
+    .title {
+      height: constants.$height-title;
+      font-size: constants.$font-size-title;
+      font-weight: constants.$font-weight-title;
+      color: colors.$color-text-main;
+      display: flex;
+      align-items: center;
+    }
+
+    .sub-title {
+      height: constants.$height-sub-title;
+      font-size: constants.$font-size-subtitle;
+      font-weight: constants.$font-weight-sub-title;
+      color: colors.$color-text-main;
+      display: flex;
+      align-items: center;
+    }
   }
 }

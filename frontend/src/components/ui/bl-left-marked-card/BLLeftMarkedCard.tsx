@@ -1,12 +1,12 @@
 import './BLLeftMarkedCard.scss';
 import { JSX } from 'react';
-import { Color } from './types';
+import { BLLeftMarkedCardColor } from './types';
 import { color } from 'framer-motion';
 
 interface BLLeftMarkedCardProps {
   children;
   className: string;
-  color: Color;
+  color: BLLeftMarkedCardColor;
 }
 
 const BLLeftMarkedCard = (props={children: undefined, className: '', color: 'black'} as BLLeftMarkedCardProps): JSX.Element => {

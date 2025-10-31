@@ -1,1 +1,1 @@
-export type Color = 'black' | 'red';
+export type BLLeftMarkedCardColor = 'black' | 'red';
