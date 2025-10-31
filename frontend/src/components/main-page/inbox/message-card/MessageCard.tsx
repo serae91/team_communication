@@ -14,7 +14,7 @@ function MessageCard(props: MessageCardProps): JSX.Element {
     <div className={ 'message-card' }>
       <div className={'title'}><BLSideSymbol>#</BLSideSymbol>{props.title}</div>
       <div className={'message-box'}>
-        <div className={'sender'}>{props.sender}</div>
+        <div className={'sender'}><div className={'profile-picture'}></div>{props.sender}</div>
         {props.message}
       </div>
     </div>

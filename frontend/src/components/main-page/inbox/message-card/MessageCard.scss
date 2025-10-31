@@ -13,6 +13,7 @@
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+  justify-content: center;
 
   .title {
     display: flex;
@@ -25,10 +26,18 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    //justify-content: center;
     color: colors.$color-text-main;
 
     .sender {
+
+      .profile-picture {
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        margin-right: constants.$margin-right;
+        background-color: pink;
+      }
+
       border-radius: constants.$border-radius;
       background-color: colors.$color-select-gray;
       height: 28px;
