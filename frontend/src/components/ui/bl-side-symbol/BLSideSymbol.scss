@@ -1,0 +1,7 @@
+@use '../../../styles/colors' as colors;
+@use '../../../styles/constants' as constants;
+
+.side-symbol {
+  color: colors.$color-text-3;
+  margin-right: constants.$margin-right;
+}

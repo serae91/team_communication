@@ -1,8 +1,26 @@
 @use '../../../styles/colors' as colors;
 @use '../../../styles/constants' as constants;
 
-.title {
-  height: constants.$height-title;
-  font-weight: constants.$font-weight-title;
-  color: colors.$color-text-main;
+.title-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .title {
+    height: constants.$height-title;
+    font-size: constants.$font-size-title;
+    font-weight: constants.$font-weight-title;
+    color: colors.$color-text-main;
+    display: flex;
+    align-items: center;
+  }
+
+  .sub-title {
+    height: constants.$height-sub-title;
+    font-size: constants.$font-size-subtitle;
+    font-weight: constants.$font-weight-sub-title;
+    color: colors.$color-text-main;
+    display: flex;
+    align-items: center;
+  }
 }

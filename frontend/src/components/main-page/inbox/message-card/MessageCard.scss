@@ -1,0 +1,41 @@
+@use '../../../../styles/colors' as colors;
+@use '../../../../styles/constants' as constants;
+
+.message-card {
+  background-color: colors.$color-hover-gray;
+  height: constants.$height-message-card;
+  width: 100%;
+  border-radius: constants.$border-radius;
+  border-left-style: solid;
+  border-left-width: constants.$border-spacer-width;
+  border-left-color: colors.$color-error-red;
+  padding-left: 13px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+
+  .title {
+    display: flex;
+    flex-direction: row;
+    color: colors.$color-text-2;
+    align-items: center;
+  }
+
+  .message-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    //justify-content: center;
+    color: colors.$color-text-main;
+
+    .sender {
+      border-radius: constants.$border-radius;
+      background-color: colors.$color-select-gray;
+      height: 28px;
+      padding: 0 12px;
+      display: flex;
+      align-items: center;
+      margin-right: constants.$margin-right;
+    }
+  }
+}

@@ -4,6 +4,7 @@
 .content-card {
   flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: left;
   padding: constants.$padding;
   border-radius: constants.$border-radius;

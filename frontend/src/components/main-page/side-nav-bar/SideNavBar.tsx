@@ -3,6 +3,7 @@ import './SideNavBar.scss';
 import SideNavBarButton from './side-nav-bar-button/SideNavBarButton';
 import { FaEnvelope, FaHistory, FaUserPlus } from 'react-icons/fa';
 import SideNavBarProfile from './side-nav-bar-profile/SideNavBarProfile';
+import BLSideSymbol from '../../ui/bl-side-symbol/BLSideSymbol';
 
 
 interface SideNavBarProps {
@@ -15,28 +16,28 @@ function SideNavBar(props: SideNavBarProps): JSX.Element {
       <SideNavBarProfile/>
       <div className={ 'button-group' }>
         <SideNavBarButton badgeCount={ 3 }>
-          <FaEnvelope size={ 20 } className={'side-symbol'}/>
+          <BLSideSymbol><FaEnvelope size={ 20 } className={'side-symbol'}/></BLSideSymbol>
           Inbox
         </SideNavBarButton>
         <SideNavBarButton badgeCount={ undefined }>
-          <FaHistory size={ 20 } className={'side-symbol'}/>
+          <BLSideSymbol><FaHistory size={ 20 } className={'side-symbol'}/></BLSideSymbol>
           History
         </SideNavBarButton>
         <SideNavBarButton badgeCount={ 0 }>
-          <FaUserPlus size={ 20 } className={'side-symbol'}/>
+          <BLSideSymbol><FaUserPlus size={ 20 } className={'side-symbol'}/></BLSideSymbol>
           Invite Team Member
         </SideNavBarButton>
       </div>
       <div className={ 'button-group' }>
         <div className={'title'}>Groups</div>
         <SideNavBarButton badgeCount={ 3 }>
-          <div className={'side-symbol'}>#</div> Development
+          <BLSideSymbol>#</BLSideSymbol> Development
         </SideNavBarButton>
         <SideNavBarButton badgeCount={ undefined }>
-          <div className={'side-symbol'}>#</div> Marketing
+          <BLSideSymbol>#</BLSideSymbol> Marketing
         </SideNavBarButton>
         <SideNavBarButton badgeCount={ 0 }>
-          <div className={'side-symbol'}>#</div> Sales
+          <BLSideSymbol>#</BLSideSymbol> Sales
         </SideNavBarButton>
       </div>
     </div>
