@@ -20,7 +20,8 @@ function Inbox(props: InboxProps): JSX.Element {
         </div>
       </div>
 
-      <MessageCard title={'Development'} sender={ 'Phoenix Baker' } message={ 'ask for the api key for the backend' }></MessageCard>
+      <MessageCard title={'Development'} sender={ 'Phoenix Baker' } message={ 'ask for the api key for the backend.' } color={'red'}></MessageCard>
+      <MessageCard title={'Development'} sender={ 'Marcus Lee' } message={ 'both requires the contact information of Microsoft and Google.' } color={'black'}></MessageCard>
   </BLContentCard>
 
   );

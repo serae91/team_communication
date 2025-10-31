@@ -2,24 +2,15 @@
 @use '../../../../styles/constants' as constants;
 
 .message-card {
-  background-color: colors.$color-hover-gray;
   height: constants.$height-message-card;
-  width: 100%;
-  border-radius: constants.$border-radius;
-  border-left-style: solid;
-  border-left-width: constants.$border-spacer-width;
-  border-left-color: colors.$color-error-red;
-  padding-left: 13px;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  justify-content: center;
+  gap: 10px;
 
   .title {
     display: flex;
     flex-direction: row;
     color: colors.$color-text-2;
     align-items: center;
+    font-weight: constants.$font-weight-title;
   }
 
   .message-box {
@@ -27,6 +18,7 @@
     flex-direction: row;
     align-items: center;
     color: colors.$color-text-main;
+    font-weight: constants.$font-weight-sub-title;
 
     .sender {
 
@@ -38,6 +30,7 @@
         background-color: pink;
       }
 
+      color: colors.$color-text-2;
       border-radius: constants.$border-radius;
       background-color: colors.$color-select-gray;
       height: 28px;
