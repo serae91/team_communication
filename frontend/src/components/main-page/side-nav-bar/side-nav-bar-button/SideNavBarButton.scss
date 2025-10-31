@@ -29,7 +29,7 @@
       border-radius: 50%;
       border-style: solid;
       border-width: constants.$border-width;
-      border-color: $color-border;
+      border-color: colors.$color-border;
       background-color: colors.$color-background-2;
     }
   }
@@ -38,7 +38,7 @@
 
 .side-nav-bar-button:hover {
   border-style: solid;
-  border-color: $color-border;
+  border-color: colors.$color-border;
   background-color: colors.$color-hover-gray;
 }
 
@@ -46,6 +46,6 @@
   outline: none;
   border-style: solid;
   border-width: 2px;
-  border-color: $color-border;
+  border-color: colors.$color-border;
   background-color: colors.$color-select-gray;
 }

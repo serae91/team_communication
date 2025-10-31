@@ -1,4 +1,4 @@
-@use '../../../styles/colors' as color;
+@use '../../../styles/colors' as colors;
 @use '../../../styles/constants' as constant;
 
 .button {
@@ -10,13 +10,13 @@
   border-color: $color-border;
   border-radius: constant.$border-radius;
   border-width: constant.$border-width;
-  background-color: color.$color-brand;
-  color: color.$color-white;
+  background-color: colors.$color-brand;
+  color: colors.$color-white;
   cursor: pointer;
   transition: background 0.2s ease;
 
   &:hover {
-    background-color: color.$color-brand-minus;
+    background-color: colors.$color-brand-minus;
   }
 
   &::before,

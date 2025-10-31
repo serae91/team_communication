@@ -1,11 +1,11 @@
-@use '../../../../styles/colors' as c;
+@use '../../../../styles/colors' as colors;
 
 .profile {
   height: 64px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: c.$color-text-3;
+  color: colors.$color-text-3;
 
   .card {
     display: flex;
@@ -13,18 +13,18 @@
     border-style: solid;
     border-width: 2px;
     border-radius: 8px;
-    border-color: $color-border;
+    border-color: colors.$color-border;
     padding: 12px;
     height: 64px;
     width: 280px;
     margin-right: 12px;
-    background-color: c.$color-background-primary;
+    background-color: colors.$color-background-primary;
 
     .picture {
       border-style: solid;
       border-width: 2px;
       border-radius: 50%;
-      border-color: $color-border;
+      border-color: colors.$color-border;
       width: 40px;
       height: 40px;
       margin-right: 12px;
@@ -41,19 +41,19 @@
 
         .name {
           font-weight: 600;
-          color: c.$color-text-main;
+          color: colors.$color-text-main;
         }
 
         .e-mail {
           font-weight: 400;
-          color: c.$color-text-2;
+          color: colors.$color-text-2;
         }
       }
 
       .icon {
         display: flex;
         justify-self: right;
-        color: c.$color-text-3;
+        color: colors.$color-text-3;
       }
     }
   }
@@ -61,15 +61,15 @@
 
   .card:hover {
     border-style: solid;
-    border-color: $color-border;
-    background-color: c.$color-hover-gray;
+    border-color: colors.$color-border;
+    background-color: colors.$color-hover-gray;
   }
 
   .card:focus {
     outline: none;
     border-style: solid;
     border-width: 2px;
-    border-color: $color-border;
-    background-color: c.$color-select-gray;
+    border-color: colors.$color-border;
+    background-color: colors.$color-select-gray;
   }
 }
