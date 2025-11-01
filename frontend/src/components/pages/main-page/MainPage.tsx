@@ -10,7 +10,7 @@ interface BLMainPageProps {
 
 function MainPage(props: BLMainPageProps): JSX.Element {
   return(
-    <div className={'main-page'}>
+    <div className={'main-page full-width full-height'}>
       <SideNavBar/>
       <Inbox/>
     </div>

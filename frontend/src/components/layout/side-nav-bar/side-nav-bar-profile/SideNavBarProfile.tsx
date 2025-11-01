@@ -11,7 +11,7 @@ interface SideNavBarProfileProps {
 
 function SideNavProfile(props: SideNavBarProfileProps): JSX.Element {
   return(
-    <div className={ 'profile' }>
+    <div className={ 'profile flex-row' }>
       <button className={ 'card' }>
         <div className={ 'picture' }></div>
         <div className={ 'envelope' }>

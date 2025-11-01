@@ -15,8 +15,8 @@ interface MessageCardProps {
 function MessageCard(props: MessageCardProps): JSX.Element {
   return(
     <BLLeftMarkedCard className={'message-card'} color={props.color}>
-      <div className={'title'}><BLSideSymbol>#</BLSideSymbol>{props.title}</div>
-      <div className={'message-box'}>
+      <div className={'title flex-row'}><BLSideSymbol>#</BLSideSymbol>{props.title}</div>
+      <div className={'message-box flex-row'}>
         <div className={'sender'}><div className={'profile-picture'}></div>{props.sender}</div>
         {props.message}
       </div>
