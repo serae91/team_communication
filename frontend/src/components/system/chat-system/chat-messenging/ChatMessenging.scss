@@ -5,4 +5,28 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
+
+  .send-button{
+    outline: none;
+    color: colors.$color-text-main;
+    background-color: colors.$color-white;
+    min-height: constants.$height-title;
+    padding: 0 18px;
+    border-radius: constants.$border-radius;
+    border-style: solid;
+    border-width: constants.$border-width;
+    border-color: colors.$color-border;
+    width: constants.$height-title;
+  }
+  .send-button:hover {
+    background-color: colors.$color-hover-gray;
+  }
+  .send-button:active {
+    background-color: colors.$color-select-gray;
+  }
+
+  .flex-row {
+    display: flex;
+    flex-direction: row;
+  }
 }

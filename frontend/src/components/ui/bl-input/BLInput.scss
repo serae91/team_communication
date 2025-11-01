@@ -1,0 +1,15 @@
+@use '../../../styles/colors' as colors;
+@use '../../../styles/constants' as constants;
+
+
+.bl-input {
+  outline: none;
+  color: colors.$color-text-main;
+  background-color: colors.$color-white;
+  min-height: constants.$height-title;
+  padding: 0 18px;
+  border-radius: constants.$border-radius;
+  border-style: solid;
+  border-width: constants.$border-width;
+  border-color: colors.$color-border;
+}

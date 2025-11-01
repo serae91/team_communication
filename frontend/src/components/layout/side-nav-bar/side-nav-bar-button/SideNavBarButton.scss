@@ -45,7 +45,7 @@
 .side-nav-bar-button:focus {
   outline: none;
   border-style: solid;
-  border-width: 2px;
+  border-width: constants.$border-width;
   border-color: colors.$color-border;
   background-color: colors.$color-select-gray;
 }

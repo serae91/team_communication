@@ -1,7 +1,6 @@
 import './BLLeftMarkedCard.scss';
 import { JSX } from 'react';
 import { BLLeftMarkedCardColor } from './types';
-import { color } from 'framer-motion';
 
 interface BLLeftMarkedCardProps {
   children;
