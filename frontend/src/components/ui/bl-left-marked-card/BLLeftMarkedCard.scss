@@ -3,10 +3,8 @@
 
 
 .left-marked-card {
-  display: flex;
   position: relative;
   align-items: flex-start;
-  flex-direction: column;
   justify-content: center;
   background-color: colors.$color-hover-gray;
   border-radius: constants.$border-radius;

@@ -12,9 +12,9 @@ interface SideNavBarProps {
 
 function SideNavBar(props: SideNavBarProps): JSX.Element {
   return(
-    <div className="side-nav-bar">
+    <div className="side-nav-bar flex-col">
       <SideNavBarProfile/>
-      <div className={ 'button-group' }>
+      <div className={ 'button-group flex-col' }>
         <SideNavBarButton badgeCount={ 3 }>
           <BLSideSymbol><FaEnvelope size={ 20 } className={'side-symbol'}/></BLSideSymbol>
           Inbox
@@ -28,7 +28,7 @@ function SideNavBar(props: SideNavBarProps): JSX.Element {
           Invite Team Member
         </SideNavBarButton>
       </div>
-      <div className={ 'button-group' }>
+      <div className={ 'button-group flex-col' }>
         <div className={'title'}>Groups</div>
         <SideNavBarButton badgeCount={ 3 }>
           <BLSideSymbol>#</BLSideSymbol> Development

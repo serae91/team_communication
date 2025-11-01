@@ -14,7 +14,7 @@ interface InboxProps {
 function Inbox(props: InboxProps): JSX.Element {
   return(
     <BLContentCard className={'inbox'}>
-      <div className={ 'title-box' }>
+      <div className={ 'title-box flex-col' }>
         <div className={ 'title' }>
           Inbox
         </div>

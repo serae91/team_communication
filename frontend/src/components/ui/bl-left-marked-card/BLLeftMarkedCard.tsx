@@ -10,7 +10,7 @@ interface BLLeftMarkedCardProps {
 
 const BLLeftMarkedCard = (props={children: undefined, className: '', color: 'black'} as BLLeftMarkedCardProps): JSX.Element => {
   return (
-    <div className={ `left-marked-card left-marked-card--${props.color} ${props.className}` }>
+    <div className={ `left-marked-card flex-col left-marked-card--${props.color} ${props.className}` }>
       {props.children}
     </div>
   );

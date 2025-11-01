@@ -2,8 +2,6 @@
 @use '../../../../styles/constants' as constants;
 
 .chat-messenging {
-  display: flex;
-  flex-direction: column;
   gap: 18px;
 
   .send-button{
@@ -25,8 +23,12 @@
     background-color: colors.$color-select-gray;
   }
 
-  .flex-row {
+  /*.flex-row {
     display: flex;
     flex-direction: row;
   }
+
+  .full-width {
+    width: 100%;
+  }*/
 }
