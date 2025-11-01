@@ -1,0 +1,6 @@
+@use '../../../styles/colors' as colors;
+@use '../../../styles/constants' as constants;
+
+.chat-system {
+  background-color: colors.$color-background-primary;
+}

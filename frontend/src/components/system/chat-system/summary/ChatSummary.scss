@@ -1,0 +1,16 @@
+@use '../../../../styles/colors' as colors;
+@use '../../../../styles/constants' as constants;
+
+.summary {
+  color: colors.$color-text-2;
+  text-align: left;
+}
+
+ul {
+  margin: 0;
+  padding: 4px 24px;
+}
+
+li {
+  text-align: left;
+}

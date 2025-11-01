@@ -1,5 +1,5 @@
-@use '../../../../styles/colors' as colors;
-@use '../../../../styles/constants' as constants;
+@use '../../../../../styles/colors' as colors;
+@use '../../../../../styles/constants' as constants;
 
 .message-card {
   height: constants.$height-message-card;

@@ -1,6 +1,6 @@
 import { JSX } from 'react';
 import './MainPage.scss';
-import SideNavBar from './side-nav-bar/SideNavBar';
+import SideNavBar from '../../layout/side-nav-bar/SideNavBar';
 import Inbox from './inbox/Inbox';
 
 
