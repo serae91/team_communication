@@ -1,5 +1,6 @@
-package backend.chatGroup.model;
+package backend.entities.user_group;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,26 +11,30 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "chat_group")
 @RegisterForReflection
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChatGroup {
+public class UserGroup {
 
     @Id
-    @GeneratedValue(generator = "chat_group_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "chat_group_sequence", sequenceName = "chat_group_sequence", allocationSize = 1)
+    @GeneratedValue(generator = "user_group_sequence", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "user_group_sequence", sequenceName = "user_group_sequence", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "group_name", nullable = false)
-    private String groupName;
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
+    @Column(name = "created_at", nullable = false)
+    private Date createdAt;
 }

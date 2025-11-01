@@ -1,6 +1,6 @@
 package backend.auth.core;
 
-import backend.auth.model.User;
+import backend.entities.bl_user.BLUser;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -15,15 +15,15 @@ public class UserService {
     @Transactional
     public void register(final String username, final String password) {
         final String hash = BcryptUtil.bcryptHash(password);
-        final User user = new User();
-        user.setUsername(username);
-        user.setPasswordHash(hash);
-        userRepository.persist(user);
+        final BLUser BLUser = new BLUser();
+        BLUser.setUsername(username);
+        BLUser.setPasswordHash(hash);
+        userRepository.persist(BLUser);
     }
 
     public boolean authenticate(final String username, final String password) {
-        final User user = userRepository.find("username", username).firstResult();
-        return user != null && BcryptUtil.matches(password, user.getPasswordHash());
+        final BLUser BLUser = userRepository.find("username", username).firstResult();
+        return BLUser != null && BcryptUtil.matches(password, BLUser.getPasswordHash());
     }
 }
 

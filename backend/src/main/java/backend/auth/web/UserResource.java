@@ -2,7 +2,7 @@ package backend.auth.web;
 
 import backend.auth.core.UserService;
 import backend.auth.model.TokenDTO;
-import backend.auth.model.UserDTO;
+import backend.entities.bl_user.BLUserDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -37,14 +37,14 @@ public class UserResource {
 
     @POST
     @Path("/register")
-    public Response register(final UserDTO dto) {
+    public Response register(final BLUserDTO dto) {
         userService.register(dto.username(), dto.password());
         return Response.ok().build();
     }
 
     @POST
     @Path("/login")
-    public Response login(final UserDTO dto) {
+    public Response login(final BLUserDTO dto) {
         if (userService.authenticate(dto.username(), dto.password())) {
             final long now = System.currentTimeMillis();
             final String token = Jwts.builder()

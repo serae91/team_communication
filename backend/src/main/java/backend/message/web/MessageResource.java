@@ -1,7 +1,7 @@
 package backend.message.web;
 
 import backend.message.core.MessageService;
-import backend.message.model.Message;
+import backend.entities.message.Message;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;

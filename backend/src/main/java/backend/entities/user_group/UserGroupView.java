@@ -1,21 +1,17 @@
-package backend.message.model;
+package backend.entities.user_group;
 
 import com.blazebit.persistence.view.EntityView;
 import com.blazebit.persistence.view.IdMapping;
 
 import java.util.Date;
 
-@EntityView(Message.class)
-public interface MessageView {
+@EntityView(UserGroup.class)
+public interface UserGroupView {
 
     @IdMapping
     Long getId();
 
-    String getText();
+    String getName();
 
     Date getCreatedAt();
-
-    Long getSenderId();
-
-    Long getReceiverId();
 }

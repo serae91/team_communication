@@ -1,4 +1,4 @@
-package backend.envConfig;
+package backend.env_config;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import io.github.cdimascio.dotenv.Dotenv;

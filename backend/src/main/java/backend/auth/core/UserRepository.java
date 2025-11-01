@@ -1,9 +1,9 @@
 package backend.auth.core;
 
-import backend.auth.model.User;
+import backend.entities.bl_user.BLUser;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class UserRepository implements PanacheRepository<User> {
+public class UserRepository implements PanacheRepository<BLUser> {
 }

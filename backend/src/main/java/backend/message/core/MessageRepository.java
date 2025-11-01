@@ -1,6 +1,6 @@
 package backend.message.core;
 
-import backend.message.model.Message;
+import backend.entities.message.Message;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

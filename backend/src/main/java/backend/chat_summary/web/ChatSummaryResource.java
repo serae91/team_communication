@@ -1,6 +1,6 @@
-package backend.chatSummary.web;
+package backend.chat_summary.web;
 
-import backend.envConfig.EnvConfig;
+import backend.env_config.EnvConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -48,7 +48,7 @@ public class ChatSummaryResource {
                   "model": "gpt-5-mini",
                   "messages": [
                     {"role": "system", "content": "Fasse den folgenden Chatverlauf zusammen."},
-                    {"role": "user", "content": "%s"}
+                    {"role": "BLUser", "content": "%s"}
                   ]
                 }
                 """.formatted(chat);*/
@@ -58,7 +58,7 @@ public class ChatSummaryResource {
                 "model", "gpt-4o-mini", // "gpt-5-mini" gibt es aktuell nicht
                 "messages", List.of(
                         Map.of("role", "system", "content", "Fasse den folgenden Chatverlauf zusammen."),
-                        Map.of("role", "user", "content", chat)
+                        Map.of("role", "BLUser", "content", chat)
                 )
         );
 
