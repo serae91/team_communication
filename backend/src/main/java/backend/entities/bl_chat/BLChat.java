@@ -1,11 +1,10 @@
-package backend.entities.chat;
+package backend.entities.bl_chat;
 
-import backend.entities.message.Message;
+import backend.entities.bl_message.BLMessage;
+import backend.entities.bl_user.BLUser;
 import io.quarkus.runtime.annotations.RegisterForReflection;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,19 +15,20 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "chat")
+@Table(name = "bl_chat")
 @RegisterForReflection
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Chat {
+public class BLChat {
+
     @Id
     @GeneratedValue(generator = "chat_sequence", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "chat_sequence", sequenceName = "chat_sequence", allocationSize = 1)
@@ -41,14 +41,21 @@ public class Chat {
     @Column(name = "created_at", nullable = false)
     private String createdAt;
 
-    @OneToMany(
-            mappedBy = "chat",
-            targetEntity = Message.class,
+    @OneToMany(mappedBy = "chat")
+    @OrderBy("createdAt ASC")
+    private Set<BLMessage> messages;
+
+    @OneToMany(mappedBy = "chat")
+    @OrderBy("username ASC")
+    private Set<BLUser> users;
+
+    /*@OneToMany(
+            mappedBy = "bl_chat",
+            targetEntity = BLMessage.class,
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
     @OrderBy("createdAt ASC")
-    private Set<Message> messages;
-
+    private Set<BLMessage> messages;*/
 }

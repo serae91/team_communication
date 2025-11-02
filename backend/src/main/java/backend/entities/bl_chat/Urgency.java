@@ -1,4 +1,4 @@
-package backend.entities.chat;
+package backend.entities.bl_chat;
 
 public enum Urgency {
     LOW,

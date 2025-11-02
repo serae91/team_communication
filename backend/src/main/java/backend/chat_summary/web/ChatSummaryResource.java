@@ -26,7 +26,7 @@ public class ChatSummaryResource {
     @GET
     @Path("/summary")
     public String summarize() throws IOException, InterruptedException {
-        //String chat = (String) payload.get("chat_history");
+        //String bl_chat = (String) payload.get("chat_history");
         final String apiKey = config.getOpenAIKey();
         Log.debug(apiKey);
         final String chat = """
@@ -51,7 +51,7 @@ public class ChatSummaryResource {
                     {"role": "BLUser", "content": "%s"}
                   ]
                 }
-                """.formatted(chat);*/
+                """.formatted(bl_chat);*/
         final ObjectMapper mapper = new ObjectMapper();
 
         final Map<String, Object> requestBody = Map.of(

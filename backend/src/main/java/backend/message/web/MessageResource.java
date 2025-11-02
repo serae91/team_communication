@@ -1,7 +1,7 @@
 package backend.message.web;
 
+import backend.entities.bl_message.BLMessage;
 import backend.message.core.MessageService;
-import backend.entities.message.Message;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -22,8 +22,8 @@ public class MessageResource {
     @GET
     @Path("/{senderId}/{receiverId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Message> listForSenderIdAndReceiverId(@PathParam("senderId") final Long senderId, @PathParam("receiverId") final Long receiverId) {
-        final List<Message> messages = messageService.listForSenderIdAndReceiverId(senderId, receiverId);
+    public List<BLMessage> listForSenderIdAndReceiverId(@PathParam("senderId") final Long senderId, @PathParam("receiverId") final Long receiverId) {
+        final List<BLMessage> messages = messageService.listForSenderIdAndReceiverId(senderId, receiverId);
         return messages;
     }
 }

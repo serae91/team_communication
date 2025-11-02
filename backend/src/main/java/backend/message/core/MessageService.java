@@ -1,6 +1,6 @@
 package backend.message.core;
 
-import backend.entities.message.Message;
+import backend.entities.bl_message.BLMessage;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -11,15 +11,15 @@ public class MessageService {
     @Inject
     MessageRepository messageRepository;
 
-    public List<Message> listAll() {
+    public List<BLMessage> listAll() {
         return messageRepository.listAll();
     }
 
-    public List<Message> listForSenderIdAndReceiverId(final Long senderId, final Long receiverId) {
+    public List<BLMessage> listForSenderIdAndReceiverId(final Long senderId, final Long receiverId) {
         return messageRepository.listForSenderIdAndReceiverId(senderId, receiverId);
     }
 
-    public List<Message> listForSenderIdAndGroupChatId(final Long senderId, final Long groupChatId) {
+    public List<BLMessage> listForSenderIdAndGroupChatId(final Long senderId, final Long groupChatId) {
         return messageRepository.listForSenderIdAndGroupChatId(senderId, groupChatId);
     }
 }

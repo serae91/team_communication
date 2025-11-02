@@ -1,13 +1,14 @@
-CREATE SEQUENCE user_group_sequence
+CREATE SEQUENCE bl_chat_sequence
     INCREMENT 1
     START 1
     MINVALUE 1
     MAXVALUE 9223372036854775807
     CACHE 1;
 
-CREATE TABLE user_group
+CREATE TABLE bl_chat
 (
     id         BIGINT                  PRIMARY KEY,
-    name       CHARACTER VARYING(255)  NOT NULL UNIQUE,
+    title      CHARACTER VARYING(50)   NOT NULL,
+    urgency    CHARACTER VARYING(20)   NOT NULL,
     created_at TIMESTAMP               DEFAULT NOW()
 );

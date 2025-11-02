@@ -1,4 +1,4 @@
-package backend.entities.user_group;
+package backend.entities.bl_user_group;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -23,7 +23,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserGroup {
+public class BLUserGroup {
 
     @Id
     @GeneratedValue(generator = "user_group_sequence", strategy = GenerationType.SEQUENCE)
