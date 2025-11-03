@@ -8,8 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -44,10 +44,10 @@ public class BLRelChatUser {
     private boolean reminded;
 
     @ManyToOne
-    @MapsId("chat_id")
+    @JoinColumn(name = "chat_id")
     private BLChat chat;
 
     @ManyToOne
-    @MapsId("user_id")
+    @JoinColumn(name = "user_id")
     private BLUser user;
 }

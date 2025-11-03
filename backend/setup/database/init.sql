@@ -1,2 +1,2 @@
 CREATE USER communicator;
-GRANT ALL ON DATABASE team-communication-db TO communicator;
+GRANT ALL ON DATABASE bl-db TO communicator;

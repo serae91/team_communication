@@ -15,7 +15,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>3.13.2</quarkus.platform.version>
+    <quarkus.platform.version>3.28.2</quarkus.platform.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
   </properties>
@@ -39,16 +39,16 @@
   </dependencyManagement>
   <dependencies>
     <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-resteasy-reactive</artifactId>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-rest-qute</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-rest-client-reactive</artifactId>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-rest-jackson</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-resteasy-reactive-jackson</artifactId>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-rest-client-jackson</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -75,10 +75,11 @@
       <artifactId>quarkus-hibernate-validator</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.quarkiverse.langchain4j</groupId>
-      <artifactId>quarkus-langchain4j-vertex-ai-gemini</artifactId>
-      <version>0.18.0</version>
+        <groupId>io.quarkiverse.langchain4j</groupId>
+        <artifactId>quarkus-langchain4j-vertex-ai-gemini</artifactId>
+        <version>0.23.0</version>
     </dependency>
+
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
@@ -102,17 +103,17 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.blazebit</groupId>
-      <artifactId>blaze-persistence-integration-quarkus-3</artifactId>
-      <version>${blaze-persistence.version}</version>
-      <scope>compile</scope>
+        <groupId>com.blazebit</groupId>
+        <artifactId>blaze-persistence-core-api-jakarta</artifactId>
+        <version>${blaze-persistence.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.blazebit</groupId>
-      <artifactId>blaze-persistence-integration-hibernate-6.2</artifactId>
-      <version>${blaze-persistence.version}</version>
+        <groupId>com.blazebit</groupId>
+        <artifactId>blaze-persistence-entity-view-api-jakarta</artifactId>
+        <version>${blaze-persistence.version}</version>
     </dependency>
-    <dependency>
+
+      <dependency>
       <groupId>com.blazebit</groupId>
       <artifactId>blaze-persistence-integration-jaxrs-jackson-jakarta</artifactId>
       <version>${blaze-persistence.version}</version>

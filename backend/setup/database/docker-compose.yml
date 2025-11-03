@@ -3,11 +3,11 @@ version: '3.9'
 services:
   postgres:
     image: postgres:15
-    container_name: team-communication-db
+    container_name: bl-db
     environment:
       POSTGRES_USER: communicator
       POSTGRES_PASSWORD: sAfe_Pass5ord
-      POSTGRES_DB: team-communication-db
+      POSTGRES_DB: bl-db
     ports:
       - "5430:5432"
     volumes:

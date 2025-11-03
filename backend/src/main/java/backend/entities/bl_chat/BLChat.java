@@ -1,7 +1,7 @@
 package backend.entities.bl_chat;
 
 import backend.entities.bl_message.BLMessage;
-import backend.entities.bl_user.BLUser;
+import backend.entities.bl_rel_chat_user.BLRelChatUser;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OrderBy;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -17,7 +16,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -41,13 +39,13 @@ public class BLChat {
     @Column(name = "created_at", nullable = false)
     private String createdAt;
 
-    @OneToMany(mappedBy = "chat")
-    @OrderBy("createdAt ASC")
+    @OneToMany(mappedBy = "chatId")
+    //@OrderBy("message.createdAt ASC")
     private Set<BLMessage> messages;
 
     @OneToMany(mappedBy = "chat")
-    @OrderBy("username ASC")
-    private Set<BLUser> users;
+    //@OrderBy("user.username ASC")
+    private Set<BLRelChatUser> users;
 
     /*@OneToMany(
             mappedBy = "bl_chat",

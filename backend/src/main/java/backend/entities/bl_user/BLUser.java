@@ -14,7 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "team_communication_user")
+@Table(name = "bl_user")
 @RegisterForReflection
 @Data
 @NoArgsConstructor
