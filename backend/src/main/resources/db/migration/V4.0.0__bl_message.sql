@@ -10,6 +10,6 @@ CREATE TABLE bl_message
     id         BIGINT    PRIMARY KEY,
     text       TEXT      NOT NULL,
     chat_id    BIGINT    REFERENCES bl_chat(id),
-    sender_id  BIGINT    REFERENCES bl_user(id)
-    created_at TIMESTAMP DEFAULT NOW(),
+    sender_id  BIGINT    REFERENCES bl_user(id),
+    created_at TIMESTAMP DEFAULT NOW()
 );
