@@ -36,6 +36,9 @@ public class BLChat {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "title", nullable = false)
+    private String title;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "urgency", nullable = false)
     private Urgency urgency;

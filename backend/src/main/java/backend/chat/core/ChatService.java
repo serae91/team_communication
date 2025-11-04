@@ -1,7 +1,8 @@
 package backend.chat.core;
 
 import backend.entities.bl_chat.BLChat;
-import backend.entities.bl_chat.BLChatWithMessagesAndUsersView;
+import backend.entities.bl_chat.BLChatPlainView;
+import backend.entities.bl_chat.BLChatFullInfoView;
 import com.blazebit.persistence.CriteriaBuilder;
 import com.blazebit.persistence.CriteriaBuilderFactory;
 import com.blazebit.persistence.view.EntityViewManager;
@@ -22,9 +23,16 @@ public class ChatService {
     @Inject
     CriteriaBuilderFactory criteriaBuilderFactory;
 
-    public List<BLChatWithMessagesAndUsersView> getAllByUserId(final Long userId) {
-        CriteriaBuilder<BLChat> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLChat.class);
-        return entityViewManager.applySetting(EntityViewSetting.create(BLChatWithMessagesAndUsersView.class), criteriaBuilder).getResultList();
+    public List<BLChatPlainView> getChatListPlainByUserId(final Long userId) {
+        final CriteriaBuilder<BLChat> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLChat.class);
+        criteriaBuilder.where("users.id").eq(userId);
+        return entityViewManager.applySetting(EntityViewSetting.create(BLChatPlainView.class), criteriaBuilder).getResultList();
 
+    }
+
+    public BLChatFullInfoView getChatFullInfoById(final Long id) {
+        final CriteriaBuilder<BLChat> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLChat.class);
+        criteriaBuilder.where("id").eq(id);
+        return entityViewManager.applySetting(EntityViewSetting.create(BLChatFullInfoView.class), criteriaBuilder).getSingleResult();
     }
 }

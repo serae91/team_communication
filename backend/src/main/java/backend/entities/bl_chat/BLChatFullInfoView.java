@@ -10,10 +10,13 @@ import java.util.Date;
 import java.util.Set;
 
 @EntityView(BLChat.class)
-public interface BLChatWithMessagesAndUsersView {
+public interface BLChatFullInfoView {
 
     @IdMapping
     Long getId();
+
+    @Mapping("title")
+    String getTitle();
 
     @Mapping("urgency")
     Urgency getUrgency();
