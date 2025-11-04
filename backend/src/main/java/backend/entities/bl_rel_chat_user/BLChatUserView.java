@@ -16,9 +16,6 @@ public interface BLChatUserView {
     @Mapping("user")
     BLUser getUser();
 
-    @Mapping("message")
-    BLMessage getMessage();
-
     @Mapping("downed")
     boolean getDowned();
 

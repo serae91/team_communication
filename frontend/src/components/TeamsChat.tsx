@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from 'react';
-import { MessageDto } from '../dtos/MessageDto';
+import { BLMessageDto } from '../dtos/BLMessageDto';
 import { askPost, sayHello } from '../services/GeminiService';
 import BLButton from './ui/bl-button/BLButton';
 import MainPage from './pages/main-page/MainPage';
@@ -37,7 +37,7 @@ const dummymessages = [
 ];
 
 export default function TeamsChat() {
-  const [messages, setMessages] = useState<MessageDto[]>([]);
+  const [messages, setMessages] = useState<BLMessageDto[]>([]);
   useEffect(() => {
     askPost('What time is it in Munich?').then(console.log);
   }, []);

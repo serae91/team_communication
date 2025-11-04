@@ -1,5 +1,7 @@
 package backend.entities.bl_message;
 
+import backend.entities.bl_chat.BLChat;
+import backend.entities.bl_user.BLUser;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
@@ -7,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -35,11 +39,13 @@ public class BLMessage {
     @Column(name = "text", nullable = false)
     private String text;
 
-    @Column(name = "chat_id", nullable = false)
-    private Long chatId;
+    @ManyToOne
+    @JoinColumn(name = "chat_id")
+    private BLChat chat;
 
-    @Column(name = "sender_id", nullable = false)
-    private Long senderId;
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
+    private BLUser sender;
 
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     @Column(name = "created_at", nullable = false)

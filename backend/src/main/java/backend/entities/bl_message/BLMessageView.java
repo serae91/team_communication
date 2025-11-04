@@ -1,5 +1,6 @@
 package backend.entities.bl_message;
 
+import backend.entities.bl_user.BLUserView;
 import com.blazebit.persistence.view.EntityView;
 import com.blazebit.persistence.view.IdMapping;
 
@@ -15,7 +16,6 @@ public interface BLMessageView {
 
     Date getCreatedAt();
 
-    Long getSenderId();
+    BLUserView getSender();
 
-    Long getReceiverId();
 }
