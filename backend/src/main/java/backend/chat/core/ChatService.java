@@ -7,17 +7,19 @@ import com.blazebit.persistence.CriteriaBuilderFactory;
 import com.blazebit.persistence.view.EntityViewManager;
 import com.blazebit.persistence.view.EntityViewSetting;
 import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @Dependent
-@RequiredArgsConstructor
 public class ChatService {
 
+    @Inject
     EntityViewManager entityViewManager;
+    @Inject
     EntityManager entityManager;
+    @Inject
     CriteriaBuilderFactory criteriaBuilderFactory;
 
     public List<BLChatWithMessagesAndUsersView> getAllByUserId(final Long userId) {

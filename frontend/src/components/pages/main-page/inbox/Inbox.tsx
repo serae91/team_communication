@@ -1,10 +1,11 @@
-import { JSX } from 'react';
+import { JSX, useEffect, useState } from 'react';
 import './Inbox.scss';
 import BLContentCard from '../../../ui/bl-content-card/BLContentCard';
 import MessageCard from './message-card/MessageCard';
 import BLHintCard from '../../../ui/bl-hint-card/BLHintCard';
-import ChatSummary from '../../../system/chat-system/summary/ChatSummary';
 import ChatSystem from '../../../system/chat-system/ChatSystem';
+import { BLChatDto } from '../../../../dtos/BLChatDto';
+import { getAllChatsByUserId } from '../../../../services/ChatService';
 
 
 interface InboxProps {
@@ -12,8 +13,19 @@ interface InboxProps {
 }
 
 function Inbox(props: InboxProps): JSX.Element {
+  const [chats, setChats] = useState<BLChatDto[]>([]);
+
+  useEffect(() => {
+    getAllChatsByUserId(1).then(chats=>{
+      setChats(chats);
+    })
+  }, []);
+
   return(
     <BLContentCard className={'inbox'}>
+      {chats.map(chat=> <div>{chat.messages.map(message=>{
+        <div>{message.text}</div>
+      })}</div>)}
       <div className={ 'title-box flex-col' }>
         <div className={ 'title' }>
           Inbox

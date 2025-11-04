@@ -1,6 +1,5 @@
 package backend.entities.bl_rel_chat_user;
 
-import backend.entities.bl_message.BLMessage;
 import backend.entities.bl_user.BLUser;
 import com.blazebit.persistence.view.EntityView;
 import com.blazebit.persistence.view.IdMapping;
