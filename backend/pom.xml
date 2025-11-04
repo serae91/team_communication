@@ -5,7 +5,6 @@
 
     <groupId>team-communication</groupId>
     <artifactId>team-communication</artifactId>
-    <packaging>jar</packaging>
     <version>2.55.12</version>
 
     <name>TeamCommunication</name>

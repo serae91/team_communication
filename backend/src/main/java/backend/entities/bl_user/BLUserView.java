@@ -1,6 +1,5 @@
 package backend.entities.bl_user;
 
-import backend.entities.bl_message.BLMessage;
 import com.blazebit.persistence.view.EntityView;
 import com.blazebit.persistence.view.IdMapping;
 

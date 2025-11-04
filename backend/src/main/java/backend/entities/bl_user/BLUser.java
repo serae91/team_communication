@@ -25,7 +25,7 @@ public class BLUser {
     @Id
     @GeneratedValue(generator = "user_sequence", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "username", nullable = false)
