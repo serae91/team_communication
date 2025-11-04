@@ -23,6 +23,10 @@ function Inbox(props: InboxProps): JSX.Element {
     getChatFullInfoById(1).then(chat=>console.log('chat', chat));
   }, []);
 
+  const listChatsPlain = () => {
+    return (chats.map(chat=><MessageCard key={chat.id.toString()} title={chat.title} message={'test message'} sender={'test sender'} color={'red'}/>));
+  }
+
   return(
     <BLContentCard className={'inbox'}>
       <div className={ 'title-box flex-col' }>
@@ -34,8 +38,7 @@ function Inbox(props: InboxProps): JSX.Element {
         </div>
       </div>
       <BLHintCard hintCardType={'error'}>Number of messages marked as "Urgent" waiting for your response</BLHintCard>
-      <MessageCard title={'Development'} sender={ 'Phoenix Baker' } message={ 'ask for the api key for the backend.' } color={'red'}></MessageCard>
-      <MessageCard title={'Development'} sender={ 'Marcus Lee' } message={ 'both requires the contact information of Microsoft and Google.' } color={'black'}></MessageCard>
+      {listChatsPlain()}
       <ChatSystem/>
     </BLContentCard>
 
