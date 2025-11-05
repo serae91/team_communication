@@ -1,5 +1,4 @@
 import api from './api';
-import { BLChatFullInfoDto, BLChatPlainDto } from '../dtos/BLChatFullInfoDto';
 
 const path = '/chat'
 

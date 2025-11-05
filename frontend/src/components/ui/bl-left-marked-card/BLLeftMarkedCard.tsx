@@ -1,9 +1,9 @@
 import './BLLeftMarkedCard.scss';
-import { JSX } from 'react';
-import { BLLeftMarkedCardColor } from './types';
+import type { JSX, JSXElementConstructor, ReactElement, ReactNode, ReactPortal } from 'react';
+import type { BLLeftMarkedCardColor } from './types';
 
 interface BLLeftMarkedCardProps {
-  children;
+  children: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined;
   className: string;
   color: BLLeftMarkedCardColor;
 }

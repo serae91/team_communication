@@ -1,12 +1,5 @@
-import { BLMessageDto } from './BLMessageDto';
-import { BLChatUserDto } from './BLUserDto';
-
-export interface BLChatPlainDto {
-  id: number;
-  title: string;
-  urgency: string;
-  createdAt: Date;
-}
+import type { BLMessageDto } from './BLMessageDto.ts';
+import type { BLChatUserDto } from './BLUserDto.ts';
 
 export interface BLChatFullInfoDto {
   id: number;

@@ -1,8 +1,8 @@
-import { JSX } from 'react';
+import type { JSX } from 'react';
 import './MessageCard.scss';
 import BLSideSymbol from '../../../../ui/bl-side-symbol/BLSideSymbol';
 import BLLeftMarkedCard from '../../../../ui/bl-left-marked-card/BLLeftMarkedCard';
-import { BLLeftMarkedCardColor } from '../../../../ui/bl-left-marked-card/types';
+import type { BLLeftMarkedCardColor } from '../../../../ui/bl-left-marked-card/types';
 
 
 interface MessageCardProps {

@@ -1,12 +1,11 @@
-import { JSX, useEffect, useState } from 'react';
-import './Inbox.scss';
-import BLContentCard from '../../../ui/bl-content-card/BLContentCard';
-import MessageCard from './message-card/MessageCard';
-import BLHintCard from '../../../ui/bl-hint-card/BLHintCard';
-import ChatSystem from '../../../system/chat-system/ChatSystem';
-import { BLChatPlainDto } from '../../../../dtos/BLChatFullInfoDto';
-import { getChatListPlainByUserId, getChatFullInfoById } from '../../../../services/ChatService';
-
+import { useEffect, useState } from 'react';
+import type { JSX } from 'react';
+import { getChatFullInfoById, getChatListPlainByUserId } from '../../../../services/ChatService.ts';
+import MessageCard from './message-card/MessageCard.tsx';
+import BLContentCard from '../../../ui/bl-content-card/BLContentCard.tsx';
+import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';
+import ChatSystem from '../../../system/chat-system/ChatSystem.tsx';
+import type { BLChatPlainDto } from '../../../../dtos/BLChatPlainDto.ts';
 
 interface InboxProps {
 

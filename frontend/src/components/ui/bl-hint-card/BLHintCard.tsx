@@ -1,10 +1,10 @@
 import './BlHintCard.scss';
-import { JSX } from 'react';
-import { BLHintCardType } from './types';
+import type { JSX, JSXElementConstructor, ReactElement, ReactNode, ReactPortal } from 'react';
+import type { BLHintCardType } from './types';
 
 
 interface BLHintCardProps {
-  children,
+  children: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined,
   className?: string;
   hintCardType: BLHintCardType;
 }
