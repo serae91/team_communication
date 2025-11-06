@@ -1,9 +1,3 @@
-//import { JSX } from 'react';
-//import './MainPage.scss';
-//import SideNavBar from '../../layout/side-nav-bar/SideNavBar';
-//import Inbox from './inbox/Inbox';
-
-
 import type { JSX } from 'react';
 import SideNavBar from '../../layout/side-nav-bar/SideNavBar.tsx';
 import Inbox from './inbox/Inbox.tsx';

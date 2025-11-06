@@ -7,12 +7,11 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "ESnext",
-    "target": "ESnext",
-    "types": ["vite/client"],
+    "module": "esnext",
+    "target": "esnext",
+    "types": ["vite/client", "node"],
     // For nodejs:
-    "lib": ["DOM", "DOM.Iterable", "ESnext"],
-    // "types": ["node"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     // and npm install -D @types/node
 
     // Other Outputs

@@ -1,5 +1,5 @@
 import './BLInput.scss';
-import { JSX } from 'react';
+import type { JSX } from 'react';
 
 interface BLInputProps {
   className?: string;
