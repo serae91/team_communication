@@ -1,13 +1,14 @@
 import { motion, AnimatePresence } from "framer-motion";
-import React from "react";
+import type React  from "react";
+import type { ReactNode } from "react";
 
 interface ModalProps {
   isOpen: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
+  onClose?: ()=>void;
+  children?: ReactNode;
 }
 
-const BLModal: React.FC<ModalProps> =({ isOpen, onClose, children }: ModalProps)=> {
+const BLModal: React.FC<ModalProps> = ({ isOpen, onClose, children }: ModalProps)=> {
   return (
     <AnimatePresence>
       {isOpen && (

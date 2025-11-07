@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from 'react';
-import { BLMessageDto } from '../dtos/BLMessageDto';
 import { askPost, sayHello } from '../services/GeminiService';
 import BLButton from './ui/bl-button/BLButton';
 import MainPage from './pages/main-page/MainPage';
@@ -37,7 +36,6 @@ const dummymessages = [
 ];
 
 export default function TeamsChat() {
-  const [messages, setMessages] = useState<BLMessageDto[]>([]);
   useEffect(() => {
     askPost('What time is it in Munich?').then(console.log);
   }, []);
@@ -50,7 +48,6 @@ export default function TeamsChat() {
       <BLButton size={'l'}>Button CTA</BLButton>
       <BLButton size={'xl'}>Button CTA</BLButton>
 
-      {messages.map(message=><div key={message.id}><p>{message.text}</p><p>{message.createdAt}</p></div>)}
       {dummymessages.map((msg, index) => {
         const isOwn = msg.sender === "Du";
         const previous = dummymessages[index - 1];

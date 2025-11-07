@@ -1,5 +1,5 @@
 import './BLButton.scss';
-import { BLButtonSize } from './types';
+import type { BLButtonSize } from './types';
 
 
 interface BLButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

@@ -1,21 +1,39 @@
-import { JSX } from 'react';
+import { useEffect, useState } from 'react';
 import './ChatMessenging.scss';
 import ChatMessage from './chat-message/ChatMessage';
 import BLInput from '../../../ui/bl-input/BLInput';
 import {
   FaArrowRight
 } from 'react-icons/fa';
+import type { BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
+import type { BLChatFullInfoDto } from '../../../../dtos/BLChatFullInfoDto.ts';
+import { getChatFullInfoById } from '../../../../services/ChatService.ts';
 
 
 interface ChatMessengingProps {
-
+  chatId: number;
 }
 
-function ChatMessenging(props: ChatMessengingProps): JSX.Element {
+const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId}: ChatMessengingProps)=> {
+  const [chatFullInfo, setChatFullInfo] = useState<BLChatFullInfoDto>();
+
+  useEffect(() => {
+    getChatFullInfoById(chatId).then(setChatFullInfo);
+  }, []);
+
+  const getChatMessages = ()=>{
+    return chatFullInfo?.messages.map(message =>
+      <ChatMessage sender={message.sender.username} postTime={message.createdAt} message={message.text} key={message.id}/>
+    )
+  }
+
   return(
     <div className={'chat-messenging flex-col'}>
-      <ChatMessage sender={'Phoenix Baker'} postTime={new Date()} message={'Hey Olivia! I hope you\'re doing well. I wanted to reach out because I need the API for the backend to move forward with our project. It would really help me out if you could send it over when you have a moment.'}/>
-      <ChatMessage sender={'Sofia Patel'} postTime={new Date()} message={'I would appreciate it if you could also ensure that this is available on my end. Having access to this information will help me stay aligned with our progress and facilitate smoother communication as we move forward with the project.'}/>
+      {getChatMessages()}
+      {
+      //<ChatMessage sender={'Phoenix Baker'} postTime={new Date()} message={'Hey Olivia! I hope you\'re doing well. I wanted to reach out because I need the API for the backend to move forward with our project. It would really help me out if you could send it over when you have a moment.'}/>
+      //<ChatMessage sender={'Sofia Patel'} postTime={new Date()} message={'I would appreciate it if you could also ensure that this is available on my end. Having access to this information will help me stay aligned with our progress and facilitate smoother communication as we move forward with the project.'}/>
+      }
       <div className={'flex-row'}><BLInput className={'full-width'}/><button className={'send-button'}><FaArrowRight/></button></div>
     </div>
   );

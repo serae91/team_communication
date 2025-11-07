@@ -6,6 +6,7 @@ import BLContentCard from '../../../ui/bl-content-card/BLContentCard.tsx';
 import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';
 import ChatSystem from '../../../system/chat-system/ChatSystem.tsx';
 import type { BLChatPlainDto } from '../../../../dtos/BLChatPlainDto.ts';
+import ChatModal from '../../../modals/ChatModal.tsx';
 
 interface InboxProps {
 
@@ -13,6 +14,8 @@ interface InboxProps {
 
 function Inbox(props: InboxProps): JSX.Element {
   const [chats, setChats] = useState<BLChatPlainDto[]>([]);
+  const [isChatOpen, setChatOpen] = useState(false);
+  const [openedChatId, setOpenedChatId] = useState(0);
 
   useEffect(() => {
     getChatListPlainByUserId(1).then(chats=>{
@@ -23,11 +26,17 @@ function Inbox(props: InboxProps): JSX.Element {
   }, []);
 
   const listChatsPlain = () => {
-    return (chats.map(chat=><MessageCard key={chat.id.toString()} title={chat.title} message={'test message'} sender={'test sender'} color={'red'}/>));
+    return (chats.map(chat=><MessageCard key={chat.id.toString()} title={chat.title} message={'test message'} sender={'test sender'} color={'red'}
+                                         onClick={()=>{
+                                           setOpenedChatId(chat.id);
+                                           setChatOpen(true);
+                                           console.log('clicked chat');
+                                         }}/>));
   }
 
   return(
     <BLContentCard className={'inbox'}>
+      <ChatModal isOpen={isChatOpen} chatId={openedChatId} onClose={()=> {setChatOpen(false);}}></ChatModal>
       <div className={ 'title-box flex-col' }>
         <div className={ 'title' }>
           Inbox
@@ -38,7 +47,9 @@ function Inbox(props: InboxProps): JSX.Element {
       </div>
       <BLHintCard hintCardType={'error'}>Number of messages marked as "Urgent" waiting for your response</BLHintCard>
       {listChatsPlain()}
-      <ChatSystem/>
+      {
+        //<ChatSystem/>
+      }
     </BLContentCard>
 
   );

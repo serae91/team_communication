@@ -1,7 +1,6 @@
 @use '../../../styles/colors' as colors;
 @use '../../../styles/constants' as constants;
 
-
 .left-marked-card {
   position: relative;
   align-items: flex-start;
@@ -11,6 +10,7 @@
   border-left-style: solid;
   border-left-width: constants.$border-spacer-width;
   padding-left: 13px;
+  outline: none;
 
   &::before {
     content: "";
@@ -33,4 +33,8 @@
 
 .left-marked-card--red {
   --color: #D92D20;
+}
+
+.left-marked-card:focus {
+  outline: none;
 }

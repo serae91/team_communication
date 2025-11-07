@@ -1,18 +1,17 @@
-import { JSX } from 'react';
 import './ChatSystem.scss';
 import ChatSummary from './summary/ChatSummary';
 import ChatMessenging from './chat-messenging/ChatMessenging';
 
 
 interface ChatSystemProps {
-
+  chatId: number;
 }
 
-function ChatSystem(props: ChatSystemProps): JSX.Element {
+const ChatSystem: React.FC<ChatSystemProps> = ({chatId}: ChatSystemProps) => {
   return(
     <div className={'chat-system'}>
       <ChatSummary/>
-      <ChatMessenging/>
+      <ChatMessenging chatId={chatId}/>
     </div>
   );
 }
