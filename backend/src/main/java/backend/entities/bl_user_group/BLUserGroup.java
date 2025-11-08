@@ -26,8 +26,8 @@ import java.util.Date;
 public class BLUserGroup {
 
     @Id
-    @GeneratedValue(generator = "user_group_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "user_group_sequence", sequenceName = "user_group_sequence", allocationSize = 1)
+    @GeneratedValue(generator = "bl_user_group_sequence", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "bl_user_group_sequence", sequenceName = "bl_user_group_sequence", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 

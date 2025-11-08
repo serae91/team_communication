@@ -31,8 +31,8 @@ import java.util.Set;
 public class BLChat {
 
     @Id
-    @GeneratedValue(generator = "chat_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "chat_sequence", sequenceName = "chat_sequence", allocationSize = 1)
+    @GeneratedValue(generator = "bl_chat_sequence", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "bl_chat_sequence", sequenceName = "bl_chat_sequence", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 

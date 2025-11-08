@@ -23,8 +23,8 @@ import lombok.NoArgsConstructor;
 public class BLUser {
 
     @Id
-    @GeneratedValue(generator = "user_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
+    @GeneratedValue(generator = "bl_user_sequence", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "bl_user_sequence", sequenceName = "bl_user_sequence", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 

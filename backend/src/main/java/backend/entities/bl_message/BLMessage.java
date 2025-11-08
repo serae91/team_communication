@@ -31,8 +31,8 @@ import java.util.Set;
 public class BLMessage {
 
     @Id
-    @GeneratedValue(generator = "message_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "message_sequence", sequenceName = "message_sequence", allocationSize = 1)
+    @GeneratedValue(generator = "bl_message_sequence", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "bl_message_sequence", sequenceName = "bl_message_sequence", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 

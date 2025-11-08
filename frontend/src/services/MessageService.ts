@@ -1,4 +1,5 @@
 import api from './api';
+import type { BLMessageCreateDto } from '../dtos/BLMessageDto.ts';
 
 const path = '/message';
 
@@ -11,4 +12,9 @@ export async function listForSenderIdAndGroupChatId(senderId: number, groupChatI
   const response = await api.get(`${path}/${senderId}/${groupChatId}`);
   return response.data;
 }*/
+
+export async function createMessage(blMessageCreateDto: BLMessageCreateDto){
+  const response = await api.post(`${path}/create`, blMessageCreateDto);
+  return response.data;
+}
 

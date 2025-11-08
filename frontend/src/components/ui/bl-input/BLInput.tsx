@@ -1,13 +1,14 @@
 import './BLInput.scss';
-import type { JSX } from 'react';
+import type { RefObject } from 'react';
 
 interface BLInputProps {
   className?: string;
+  inputRef?: RefObject<HTMLInputElement | null>;
 }
 
-const BLInput = (props: BLInputProps): JSX.Element => {
+const BLInput: React.FC<BLInputProps> = ({className, inputRef}: BLInputProps) => {
   return (
-    <input className={ `bl-input ${props.className??''}` }/>
+    <input className={ `bl-input ${className??''}`} ref={inputRef}/>
   );
 };
 
