@@ -5,9 +5,10 @@ import backend.entities.bl_rel_chat_user.BLChatUserView;
 import com.blazebit.persistence.view.EntityView;
 import com.blazebit.persistence.view.IdMapping;
 import com.blazebit.persistence.view.Mapping;
+import jakarta.persistence.OrderBy;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @EntityView(BLChat.class)
 public interface BLChatFullInfoView {
@@ -25,8 +26,9 @@ public interface BLChatFullInfoView {
     Date getCreatedAt();
 
     @Mapping("messages")
-    Set<BLMessageView> getMessages();
+    @OrderBy("createdAt DESC")
+    List<BLMessageView> getMessages();
 
     @Mapping("users")
-    Set<BLChatUserView> getUsers();
+    List<BLChatUserView> getUsers();
 }
