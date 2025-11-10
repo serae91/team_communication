@@ -15,7 +15,6 @@ function ChatMessage(props: ChatMessageProps) {
         <div className={'flex-row'}>
           <div className={'sender'}>{props.sender}</div>
           <div className={'post-time'}>{
-          //${props.postTime.getHours()}:${props.postTime.getMinutes()}
           `${props.postTime}`}</div>
         </div>
         <div className={'message'}>{props.message}</div>

@@ -35,7 +35,7 @@ function Inbox(props: InboxProps): JSX.Element {
   }
 
   return(
-    <BLContentCard className={'inbox'}>
+    <BLContentCard className={'inbox relative'}>
       <ChatModal isOpen={isChatOpen} chatId={openedChatId} onClose={()=> {setChatOpen(false);}}></ChatModal>
       <div className={ 'title-box flex-col' }>
         <div className={ 'title' }>

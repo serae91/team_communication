@@ -1,14 +1,14 @@
-import { JSX } from 'react';
+import type { JSX } from 'react';
 import './ChatSummary.scss';
 
 
 interface ChatSummaryProps {
-
+  className?: string;
 }
 
 function ChatSummary(props: ChatSummaryProps): JSX.Element {
   return(
-    <div className={'summary'}>
+    <div className={`summary ${props.className??''}`}>
       Summarize:
       <ul>
         <li>

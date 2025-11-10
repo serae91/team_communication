@@ -13,9 +13,10 @@ import type { BLMessageCreateDto } from '../../../../dtos/BLMessageDto.ts';
 
 interface ChatMessengingProps {
   chatId: number;
+  className?: string;
 }
 
-const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId}: ChatMessengingProps)=> {
+const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: ChatMessengingProps)=> {
   const [chatFullInfo, setChatFullInfo] = useState<BLChatFullInfoDto>();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -37,20 +38,24 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId}: ChatMessengingP
       sender: {id: 1}
     } as BLMessageCreateDto;
     createMessage(blMessageCreateDto).then((newMessage)=>{
+      console.log(newMessage);
       chatFullInfo?.messages.push(newMessage);
       setChatFullInfo(chatFullInfo);
     });
   }
 
   return(
-    <div className={'chat-messenging flex-col'}>
-      {getChatMessages()}
-      {
-      //<ChatMessage sender={'Phoenix Baker'} postTime={new Date()} message={'Hey Olivia! I hope you\'re doing well. I wanted to reach out because I need the API for the backend to move forward with our project. It would really help me out if you could send it over when you have a moment.'}/>
-      //<ChatMessage sender={'Sofia Patel'} postTime={new Date()} message={'I would appreciate it if you could also ensure that this is available on my end. Having access to this information will help me stay aligned with our progress and facilitate smoother communication as we move forward with the project.'}/>
-      }
-      <div className={'flex-row'}><BLInput className={'full-width'} inputRef={inputRef}/><button className={'send-button'} onClick={sendMessage}><FaArrowRight/></button></div>
-    </div>
+    <>
+      <div className={'flex-1 overflow-y-auto p-4 bg-white rounded-2xl shadow-inner border border-gray-200'}>
+        {getChatMessages()}
+      </div>
+      <div className={'flex-row sticky bottom-0'}>
+        <BLInput className={'full-width'} inputRef={inputRef}/>
+        <button className={'send-button'} onClick={sendMessage}>
+          <FaArrowRight/>
+        </button>
+      </div>
+    </>
   );
 }
 export default ChatMessenging;
