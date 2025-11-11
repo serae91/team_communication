@@ -25,7 +25,7 @@ public class ChatService {
 
     public List<BLChatPlainView> getChatListPlainByUserId(final Long userId) {
         final CriteriaBuilder<BLChat> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLChat.class);
-        criteriaBuilder.where("users.id").eq(userId);
+        criteriaBuilder.where("users.user.id").eq(userId);
         return entityViewManager.applySetting(EntityViewSetting.create(BLChatPlainView.class), criteriaBuilder).getResultList();
 
     }

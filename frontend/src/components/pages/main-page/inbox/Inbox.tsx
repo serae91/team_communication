@@ -20,23 +20,31 @@ function Inbox(props: InboxProps): JSX.Element {
   useEffect(() => {
     getChatListPlainByUserId(1).then(chats=>{
       setChats(chats);
-      console.log('chats', chats);
-    })
-    getChatFullInfoById(1).then(chat=>console.log('chat', chat));
+    });
   }, []);
 
-  const listChatsPlain = () => {
-    return (chats.map(chat=><MessageCard key={chat.id.toString()} title={chat.title} message={'test message'} sender={'test sender'} color={'red'}
-                                         onClick={()=>{
-                                           setOpenedChatId(chat.id);
-                                           setChatOpen(true);
-                                           console.log('clicked chat');
-                                         }}/>));
-  }
+  const listChatsPlain = () =>
+    (chats.map(chat=>
+      <MessageCard
+        key={chat.id.toString()}
+        title={chat.title} message={'test message'}
+        sender={'test sender'} color={'red'}
+        onClick={()=>{
+          setOpenedChatId(chat.id);
+          setChatOpen(true);
+        }}
+      />
+    ));
+
 
   return(
     <BLContentCard className={'inbox relative'}>
-      <ChatModal isOpen={isChatOpen} chatId={openedChatId} onClose={()=> {setChatOpen(false);}}></ChatModal>
+      <ChatModal
+        isOpen={isChatOpen}
+        chatId={openedChatId}
+        onClose={()=> {setChatOpen(false);}}
+      />
+
       <div className={ 'title-box flex-col' }>
         <div className={ 'title' }>
           Inbox
@@ -47,9 +55,6 @@ function Inbox(props: InboxProps): JSX.Element {
       </div>
       <BLHintCard hintCardType={'error'}>Number of messages marked as "Urgent" waiting for your response</BLHintCard>
       {listChatsPlain()}
-      {
-        //<ChatSystem/>
-      }
     </BLContentCard>
 
   );
