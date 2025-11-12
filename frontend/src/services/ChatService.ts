@@ -10,3 +10,7 @@ export async function getChatListPlainByUserId(userId: number)  {
 export async function getChatFullInfoById(id: number) {
   return (await api.get(`${path}/fullinfo/${id}`)).data;
 }
+
+export async function triggerDown(chatId: number, userId: number) {
+  return (await api.patch(`${path}/triggerdown/${chatId}/${userId}`)).data;
+}

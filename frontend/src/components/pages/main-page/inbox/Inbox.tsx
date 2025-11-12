@@ -17,7 +17,7 @@ function Inbox(props: InboxProps): JSX.Element {
   const [openedChatId, setOpenedChatId] = useState(0);
 
   useEffect(() => {
-    getChatListPlainByUserId(1).then(chats=>{
+    getChatListPlainByUserId(1/*TODO replace*/).then(chats=>{
       setChats(chats);
     });
   }, []);

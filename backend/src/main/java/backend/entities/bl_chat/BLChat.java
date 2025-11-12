@@ -47,20 +47,8 @@ public class BLChat {
     private Date createdAt;
 
     @OneToMany(mappedBy = "chat")
-    //@OrderBy("message.createdAt ASC")
     private Set<BLMessage> messages;
 
     @OneToMany(mappedBy = "chat")
-    //@OrderBy("user.username ASC")
     private Set<BLRelChatUser> users;
-
-    /*@OneToMany(
-            mappedBy = "bl_chat",
-            targetEntity = BLMessage.class,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
-    @OrderBy("createdAt ASC")
-    private Set<BLMessage> messages;*/
 }

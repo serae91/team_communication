@@ -3,6 +3,7 @@ import BLModal from '../ui/bl-modal/BLModal.tsx';
 import BLLeftMarkedCard from '../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
 import ChatSystem from '../system/chat-system/ChatSystem.tsx';
 import './ChatModal.scss';
+import { triggerDown } from '../../services/ChatService.ts';
 
 interface ChatModalProps {
   isOpen: boolean;
@@ -16,6 +17,10 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, title, chatId, s
     <BLModal isOpen={isOpen} onClose={onClose}>
       {title}
       <button onClick={setNextChat}>Set next chat</button>
+      <button onClick={()=>{
+        console.log('trigger down', chatId, 1)
+        triggerDown(chatId, 1/*TODO replace*/);}
+      }>Down</button>
       <BLLeftMarkedCard className={'cursor-pointer'}>
         <ChatSystem chatId={chatId}/>
       </BLLeftMarkedCard>

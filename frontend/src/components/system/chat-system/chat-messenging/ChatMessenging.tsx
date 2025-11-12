@@ -63,7 +63,7 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
     const blMessageCreateDto = {
       chat: {id: chatId},
       text: inputRef.current.value,
-      sender: {id: 1}
+      sender: {id: 1/*TODO replace*/}
     } as BLMessageCreateDto;
     createMessage(blMessageCreateDto).then((newMessage)=>{
       setChatFullInfo(prev=> (
