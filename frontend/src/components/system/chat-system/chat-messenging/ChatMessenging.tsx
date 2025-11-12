@@ -24,7 +24,7 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
 
   useEffect(() => {
     loadChatFullInfoAndScrollToBottom();
-  }, []);
+  }, [chatId]);
 
   const loadChatFullInfoAndScrollToBottom = () => {
     getChatFullInfoById(chatId).then(fullInfo=> {

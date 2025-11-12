@@ -4,7 +4,6 @@ import { getChatFullInfoById, getChatListPlainByUserId } from '../../../../servi
 import MessageCard from './message-card/MessageCard.tsx';
 import BLContentCard from '../../../ui/bl-content-card/BLContentCard.tsx';
 import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';
-import ChatSystem from '../../../system/chat-system/ChatSystem.tsx';
 import type { BLChatPlainDto } from '../../../../dtos/BLChatPlainDto.ts';
 import ChatModal from '../../../modals/ChatModal.tsx';
 
@@ -36,6 +35,14 @@ function Inbox(props: InboxProps): JSX.Element {
       />
     ));
 
+  const setNextChat = () => {
+    const currentChatIndex = chats.findIndex(chat=>chat.id===openedChatId);
+    if (currentChatIndex === undefined) return;
+    const nextChatIndex = (currentChatIndex < chats.length - 1) ? currentChatIndex + 1 : 0;
+    const nextId = chats[nextChatIndex]?.id;
+    if (!nextId) return;
+    setOpenedChatId(nextId);
+  }
 
   return(
     <BLContentCard className={'inbox relative'}>
@@ -43,8 +50,8 @@ function Inbox(props: InboxProps): JSX.Element {
         isOpen={isChatOpen}
         chatId={openedChatId}
         onClose={()=> {setChatOpen(false);}}
+        setNextChat={setNextChat}
       />
-
       <div className={ 'title-box flex-col' }>
         <div className={ 'title' }>
           Inbox
@@ -53,7 +60,9 @@ function Inbox(props: InboxProps): JSX.Element {
           A collection of all your messages
         </div>
       </div>
-      <BLHintCard hintCardType={'error'}>Number of messages marked as "Urgent" waiting for your response</BLHintCard>
+      <BLHintCard hintCardType={'error'}>
+        Number of messages marked as "Urgent" waiting for your response
+      </BLHintCard>
       {listChatsPlain()}
     </BLContentCard>
 
