@@ -18,7 +18,6 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, title, chatId, s
       {title}
       <button onClick={setNextChat}>Set next chat</button>
       <button onClick={()=>{
-        console.log('trigger down', chatId, 1)
         triggerDown(chatId, 1/*TODO replace*/);}
       }>Down</button>
       <BLLeftMarkedCard className={'cursor-pointer'}>
