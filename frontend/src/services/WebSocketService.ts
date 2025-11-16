@@ -32,8 +32,8 @@ export class WebSocketService<T> {
   }
 
   send(message: T) {
-    if (this.socket?.readyState === WebSocket.OPEN) {
-      this.socket.send(JSON.stringify(message));
+    if (this.isConnected()) {
+      this.socket!.send(JSON.stringify(message));
     } else {
       console.warn("[WS] Not connected, cannot send", message);
     }
@@ -41,5 +41,9 @@ export class WebSocketService<T> {
 
   onMessage(handler: MessageHandler<T>) {
     this.handlers.push(handler);
+  }
+
+  isConnected(): boolean {
+    return this.socket?.readyState === WebSocket.OPEN;
   }
 }

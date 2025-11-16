@@ -6,6 +6,7 @@ import React, {
   type ReactNode,
 } from "react";
 import { WebSocketService } from "../services/WebSocketService";
+import { getChatListPlainByUserId } from '../services/ChatService.ts';
 
 export interface ProviderProps {
   children: ReactNode;
@@ -27,6 +28,10 @@ export function createWebSocketContext<T>(url: string) {
       service.connect();
       service.onMessage((msg) => setMessages((prev) => [...prev, msg]));
     }, [service]);
+
+    useEffect(() => {
+      getChatListPlainByUserId(1/*TODO use real user Id*/).then(setMessages)
+    }, []);
 
     return (
       <Context.Provider value={{ messages, sendMessage: (msg: T) => service.send(msg) }}>

@@ -1,6 +1,7 @@
 package backend.chat.websocket;
 
 import backend.chat.core.ChatService;
+import backend.entities.bl_chat.BLChat;
 import backend.entities.bl_chat.BLChatPlainView;
 import backend.entities.bl_message.BLMessage;
 import backend.webregistry.BLWebRegistry;
@@ -20,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -41,17 +41,6 @@ public class ChatWebSocket {
     @OnOpen
     void onOpen(final WebSocketConnection connection) {
         log.info("Client connected: {}", connection.id());
-        final String query = connection.handshakeRequest().query();
-        final Map<String, String> params = parseQuery(query);
-        final String userName = params.get("userName");
-        log.info("Client user name: {}", userName);
-        final List<BLChatPlainView> chatListPlain = chatService.getChatListPlainByUserName(userName);
-        try {
-            final String stringChatListPlain = objectMapper.writeValueAsString(chatListPlain);
-            connection.sendText(stringChatListPlain);
-        } catch (final JsonProcessingException jpe) {
-            log.error("Error sending chat list plain", jpe);
-        }
     }
 
     @OnClose
@@ -60,11 +49,11 @@ public class ChatWebSocket {
     }
 
     @OnTextMessage
-    void onMessage(final BLMessage message) {
-        log.info("Received: {}", message);
+    void onMessage(final BLChat chat, final WebSocketConnection connection) {
+        log.info("Received: {}", chat);
         try {
-            final Long chatId = message.getChat().getId();
-            final String stringMessage = objectMapper.writeValueAsString(message);
+            final Long chatId = chat.getId();
+            final String stringMessage = objectMapper.writeValueAsString(chat);
             chatRegistry.sendToRoom(chatId, stringMessage);
         } catch (final JsonProcessingException jpe) {
             log.error("Error sending chat message", jpe);
