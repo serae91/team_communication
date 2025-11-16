@@ -1,5 +1,7 @@
 package backend.chat.websocket;
 
+import backend.chat.core.ChatService;
+import backend.entities.bl_chat.BLChatPlainView;
 import backend.entities.bl_message.BLMessage;
 import backend.webregistry.BLWebRegistry;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,6 +17,13 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Singleton
 @Slf4j
 @WebSocket(path = "/chatwebsocket")
@@ -26,9 +35,23 @@ public class ChatWebSocket {
     @Inject
     ObjectMapper objectMapper;
 
+    @Inject
+    ChatService chatService;
+
     @OnOpen
     void onOpen(final WebSocketConnection connection) {
         log.info("Client connected: {}", connection.id());
+        final String query = connection.handshakeRequest().query();
+        final Map<String, String> params = parseQuery(query);
+        final String userName = params.get("userName");
+        log.info("Client user name: {}", userName);
+        final List<BLChatPlainView> chatListPlain = chatService.getChatListPlainByUserName(userName);
+        try {
+            final String stringChatListPlain = objectMapper.writeValueAsString(chatListPlain);
+            connection.sendText(stringChatListPlain);
+        } catch (final JsonProcessingException jpe) {
+            log.error("Error sending chat list plain", jpe);
+        }
     }
 
     @OnClose
@@ -40,8 +63,9 @@ public class ChatWebSocket {
     void onMessage(final BLMessage message) {
         log.info("Received: {}", message);
         try {
+            final Long chatId = message.getChat().getId();
             final String stringMessage = objectMapper.writeValueAsString(message);
-            chatRegistry.sendToRoom(message.getChat().getId(), objectMapper.writeValueAsString(message));
+            chatRegistry.sendToRoom(chatId, stringMessage);
         } catch (final JsonProcessingException jpe) {
             log.error("Error sending chat message", jpe);
         }
@@ -50,5 +74,13 @@ public class ChatWebSocket {
     @OnError
     public void onError(final Throwable error, final WebSocketConnection connection) {
         log.error("WebSocket Error: ", error);
+    }
+
+    private Map<String, String> parseQuery(String query) {
+        return Arrays.stream(query.split("&"))
+                .map(s -> s.split("=", 2))
+                .filter(arr -> arr.length == 2)
+                .collect(Collectors.toMap(arr -> URLDecoder.decode(arr[0], StandardCharsets.UTF_8),
+                        arr -> URLDecoder.decode(arr[1], StandardCharsets.UTF_8)));
     }
 }

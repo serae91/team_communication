@@ -25,18 +25,25 @@ public class ChatService {
     CriteriaBuilderFactory criteriaBuilderFactory;
 
     public List<BLChatPlainView> getChatListPlainByUserId(final Long userId) {
+        return getChatListPlainByUniqueProperty("id", userId);
+    }
+
+    public List<BLChatPlainView> getChatListPlainByUserName(final String userName) {
+        return getChatListPlainByUniqueProperty("username", userName);
+    }
+
+    private List<BLChatPlainView> getChatListPlainByUniqueProperty(final String uniqueUserPropertyName, final Object uniqueUserProperty) {
         final CriteriaBuilder<BLChat> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLChat.class);
 
         criteriaBuilder
-                .where("users.user.id").eq(userId)
+                .where("users.user." + uniqueUserPropertyName).eq(uniqueUserProperty)
                 .whereExists()
                 .from(BLRelChatUser.class, "c")
                 .where("chat.id").eqExpression("OUTER(id)")
-                .where("user.id").eq(userId)
+                .where("user." + uniqueUserPropertyName).eq(uniqueUserProperty)
                 .where("downed").eq(false)
                 .end();
         return entityViewManager.applySetting(EntityViewSetting.create(BLChatPlainView.class), criteriaBuilder).getResultList();
-
     }
 
     public BLChatFullInfoView getChatFullInfoById(final Long id) {

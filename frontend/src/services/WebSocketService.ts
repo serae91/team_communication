@@ -22,7 +22,7 @@ export class WebSocketService<T> {
 
     this.socket.onmessage = (event: MessageEvent<string>) => {
       const data = JSON.parse(event.data) as T;
-      this.handlers.forEach((h) => h(data));
+      this.handlers.forEach(h => h(data));
     };
 
     this.socket.onclose = () => {

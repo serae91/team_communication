@@ -10,8 +10,6 @@ interface ChatSystemProps {
 const ChatSystem: React.FC<ChatSystemProps> = ({chatId}: ChatSystemProps) => {
   return(
     <div className={'flex flex-col h-[80vh]'}>
-      {//'chat-system'}>
-         }
       <ChatSummary className={'mb-4'}/>
       <ChatMessenging chatId={chatId}/>
     </div>
