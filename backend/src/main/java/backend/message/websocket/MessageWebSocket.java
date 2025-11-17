@@ -1,7 +1,8 @@
-package backend.chat.websocket;
+package backend.message.websocket;
 
-import backend.chat.core.ChatService;
-import backend.entities.bl_chat.BLChat;
+import backend.entities.bl_message.BLMessage;
+import backend.entities.bl_message.BLMessageCommand;
+import backend.message.core.MessageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.websockets.next.OnClose;
@@ -9,8 +10,8 @@ import io.quarkus.websockets.next.OnError;
 import io.quarkus.websockets.next.OnOpen;
 import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.WebSocket;
-
 import io.quarkus.websockets.next.WebSocketConnection;
+import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -18,22 +19,23 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.function.Consumer;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Singleton
 @Slf4j
-@WebSocket(path = "/chatwebsocket")
-public class ChatWebSocket {
-
-    @Inject
-    ChatWebRegistry chatRegistry;
+@WebSocket(path = "/messagewebsocket")
+public class MessageWebSocket {
 
     @Inject
     ObjectMapper objectMapper;
 
     @Inject
-    ChatService chatService;
+    MessageCommandHandler messageCommandHandler;
+
+
 
     @OnOpen
     void onOpen(final WebSocketConnection connection) {
@@ -46,14 +48,12 @@ public class ChatWebSocket {
     }
 
     @OnTextMessage
-    void onMessage(final BLChat chat, final WebSocketConnection connection) {
-        log.info("Received: {}", chat);
+    void onMessage(final String jsonStr, final WebSocketConnection connection) {
         try {
-            final Long chatId = chat.getId();
-            final String stringMessage = objectMapper.writeValueAsString(chat);
-            chatRegistry.sendToChat(chatId, stringMessage);
-        } catch (final JsonProcessingException jpe) {
-            log.error("Error sending chat message", jpe);
+            final BLMessageCommand command = objectMapper.readValue(jsonStr, BLMessageCommand.class);
+            messageCommandHandler.handleMessageCommand(command);
+        } catch (JsonProcessingException jpe) {
+            log.error("Invalid JSON", jpe);
         }
     }
 
@@ -69,4 +69,6 @@ public class ChatWebSocket {
                 .collect(Collectors.toMap(arr -> URLDecoder.decode(arr[0], StandardCharsets.UTF_8),
                         arr -> URLDecoder.decode(arr[1], StandardCharsets.UTF_8)));
     }
+
+
 }
