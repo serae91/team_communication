@@ -1,4 +1,4 @@
-package backend.chat.websocket;
+package backend.message.websocket;
 
 import io.quarkus.websockets.next.WebSocketConnection;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -8,8 +8,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
-public class ChatWebRegistry {
-
+public class WebRegistry {
     private final Map<Long, Set<WebSocketConnection>> chatIdConnections = new ConcurrentHashMap<>();
 
     public void joinChat(final Long chatId, final WebSocketConnection connection) {
@@ -21,7 +20,7 @@ public class ChatWebRegistry {
         chatIdConnections.getOrDefault(chatId, Set.of()).remove(connection);
     }
 
-    public void sendToChat(final Long chatId, final String message) {
+    public void sendToRoom(final Long chatId, final String message) {
         for (final WebSocketConnection c : chatIdConnections.getOrDefault(chatId, Set.of())) {
             c.sendText(message);
         }

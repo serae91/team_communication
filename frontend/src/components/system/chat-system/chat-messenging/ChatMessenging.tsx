@@ -8,7 +8,9 @@ import {
 import type { BLChatFullInfoDto } from '../../../../dtos/BLChatFullInfoDto.ts';
 import { getChatFullInfoById } from '../../../../services/ChatService.ts';
 import { createMessage } from '../../../../services/MessageService.ts';
-import type { BLMessageCreateDto, BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
+import type { BLMessageCommandDto, BLMessageCreateDto, BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
+import { useChats } from '../../../../contexts/BLChatContext.tsx';
+import { useWebSocket } from '../../../../contexts/createWebSocketContext.tsx';
 
 
 interface ChatMessengingProps {
@@ -17,53 +19,68 @@ interface ChatMessengingProps {
 }
 
 const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: ChatMessengingProps)=> {
-  const [chatFullInfo, setChatFullInfo] = useState<BLChatFullInfoDto>({messages:[]as BLMessageDto[]} as BLChatFullInfoDto);
+  //const [chatFullInfo, setChatFullInfo] = useState<BLChatFullInfoDto>({messages:[]as BLMessageDto[]} as BLChatFullInfoDto);
+  //const {message} = useWebSocket();
   const inputRef = useRef<HTMLInputElement>(null);
   const chatScrollRef = useRef<HTMLDivElement>(null);
-  const prevLength = useRef(chatFullInfo?.messages?.length??0);
+
+  const { chats, activeChatId, setActiveChatId } = useChats();
+  const { messages, sendMessage, switchActiveChatId } = useWebSocket();
+  const prevLength = useRef(messages?.length??0);
 
   useEffect(() => {
-    loadChatFullInfoAndScrollToBottom();
+    sendMessage({ } as BLMessageDto)
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
   }, [chatId]);
 
-  const loadChatFullInfoAndScrollToBottom = () => {
-    getChatFullInfoById(chatId).then(fullInfo=> {
-      setChatFullInfo(fullInfo);
+  const scrollToBottom = () => {
       const currentChatScroll = chatScrollRef.current;
       if (currentChatScroll) {
         currentChatScroll.scrollTop = currentChatScroll.scrollHeight;
       }
-    });
   }
 
   useEffect(() => {
     scrollDownWhenAtBottomAndAddingNewMessage();
-  }, [chatFullInfo.messages.length]);
+  }, [messages.length]);
 
   const scrollDownWhenAtBottomAndAddingNewMessage = ()=> {
     const currentChatScroll = chatScrollRef.current;
     if (!currentChatScroll) return;
 
     const isAtBottom = currentChatScroll.scrollHeight - currentChatScroll.scrollTop - currentChatScroll.clientHeight < 50;
-    if (isAtBottom && (chatFullInfo?.messages?.length ?? 0 > prevLength.current)) {
+    if (isAtBottom && (messages?.length ?? 0 > prevLength.current)) {
       currentChatScroll.scrollTo({ top: currentChatScroll.scrollHeight, behavior: "smooth" });
     }
 
-    prevLength.current = chatFullInfo?.messages?.length??0;
+    prevLength.current = messages?.length??0;
   }
 
   const getChatMessages = ()=> {
-    return chatFullInfo?.messages.map(message =>
+    return messages.map(message =>
       <ChatMessage sender={message.sender.username} postTime={message.createdAt} message={message.text} key={message.id}/>
     )
   }
 
-  const sendMessage = ()=>{
+  const getMessage=()=>(
+    {
+      id:0,
+      chat: {id: chatId},
+      text: inputRef?.current?.value,
+      sender: {id: 1, username:'me'/*TODO replace*/},
+      createdAt:new Date(),
+    } as BLMessageDto
+  );
+
+  /*const sendMessage = ()=>{
     if(!inputRef.current?.value) return;
     const blMessageCreateDto = {
       chat: {id: chatId},
       text: inputRef.current.value,
-      sender: {id: 1/*TODO replace*/}
+      sender: {id: 1/*TODO replace*//*}
     } as BLMessageCreateDto;
     createMessage(blMessageCreateDto).then((newMessage)=>{
       setChatFullInfo(prev=> (
@@ -73,7 +90,7 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
         })
       );
     });
-  }
+  }*/
 
   return(
     <>
@@ -82,7 +99,7 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
       </div>
       <div className={'flex-row sticky bottom-0'}>
         <BLInput className={'full-width'} inputRef={inputRef}/>
-        <button className={'send-button'} onClick={sendMessage}>
+        <button className={'send-button'} onClick={()=>sendMessage(getMessage())}>
           <FaArrowRight/>
         </button>
       </div>

@@ -13,3 +13,9 @@ export interface BLMessageCreateDto {
   chat: BLIdDto;
   sender: BLIdDto;
 }
+
+export interface BLMessageCommandDto {
+  type: string;
+  chatId: number;
+  blMessage: BLMessageDto;
+}

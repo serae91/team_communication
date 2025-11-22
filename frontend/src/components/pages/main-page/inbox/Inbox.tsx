@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import type { JSX } from 'react';
-import { getChatFullInfoById, getChatListPlainByUserId } from '../../../../services/ChatService.ts';
 import MessageCard from './message-card/MessageCard.tsx';
 import BLContentCard from '../../../ui/bl-content-card/BLContentCard.tsx';
 import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';
-import type { BLChatPlainDto } from '../../../../dtos/BLChatPlainDto.ts';
 import ChatModal from '../../../modals/ChatModal.tsx';
-import { useBLChatPlainWebSocket } from '../../../../contexts/BLChatPlainWebSocketContext.ts';
+import { useWebSocket } from '../../../../contexts/createWebSocketContext.tsx';
+import { useChats } from '../../../../contexts/BLChatContext.tsx';
 
 interface InboxProps {
 
@@ -14,9 +13,10 @@ interface InboxProps {
 
 function Inbox(props: InboxProps): JSX.Element {
   //const [chats, setChats] = useState<BLChatPlainDto[]>([]);
-  const {messages, sendMessage} = useBLChatPlainWebSocket();
+  const {messages, sendMessage, switchActiveChatId} = useWebSocket();
+  const { chats, activeChatId, setActiveChatId } = useChats();
   const [isChatOpen, setChatOpen] = useState(false);
-  const [openedChatId, setOpenedChatId] = useState(0);
+  //const [openedChatId, setOpenedChatId] = useState(0);
 
   useEffect(() => {
     /*getChatListPlainByUserId(1/*TODO replace*//*).then(chats=>{
@@ -26,34 +26,34 @@ function Inbox(props: InboxProps): JSX.Element {
 
   const listChatsPlain = () =>
   {
-    console.log(messages?.length)
-    if(!messages?.length) return <p>No messages received yet</p>
-    return (messages.map(message=>
+    if(!chats?.length) return <p>No messages received yet</p>
+    return (chats.map(chat=>
       <MessageCard
-        key={message.id.toString()}
-        title={message.title} message={'test message'}
+        key={chat.id.toString()}
+        title={chat.title} message={'test message'}
         sender={'test sender'} color={'red'}
         onClick={()=>{
-          setOpenedChatId(message.id);
+          console.log('chat.id',chat.id)
+          switchActiveChatId(chat.id);
           setChatOpen(true);
         }}
       />
     ))};
 
   const setNextChat = () => {
-    const currentChatIndex = messages.findIndex(message=>message.id===openedChatId);
+    const currentChatIndex = chats.findIndex(chat=>chat.id===activeChatId);
     if (currentChatIndex === undefined) return;
     const nextChatIndex = (currentChatIndex < messages.length - 1) ? currentChatIndex + 1 : 0;
     const nextId = messages[nextChatIndex]?.id;
     if (!nextId) return;
-    setOpenedChatId(nextId);
+    setActiveChatId(nextId);
   }
   console.log('messages', messages);
   return(
     <BLContentCard className={'inbox relative'}>
       <ChatModal
         isOpen={isChatOpen}
-        chatId={openedChatId}
+        chatId={activeChatId??0}
         onClose={()=> {setChatOpen(false);}}
         setNextChat={setNextChat}
       />

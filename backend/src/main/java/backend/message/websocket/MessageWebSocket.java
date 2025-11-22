@@ -1,8 +1,6 @@
 package backend.message.websocket;
 
-import backend.entities.bl_message.BLMessage;
-import backend.entities.bl_message.BLMessageCommand;
-import backend.message.core.MessageService;
+import backend.message.websocket.model.WebsocketMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.websockets.next.OnClose;
@@ -11,7 +9,6 @@ import io.quarkus.websockets.next.OnOpen;
 import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.WebSocket;
 import io.quarkus.websockets.next.WebSocketConnection;
-import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.function.Consumer;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -33,7 +28,7 @@ public class MessageWebSocket {
     ObjectMapper objectMapper;
 
     @Inject
-    MessageCommandHandler messageCommandHandler;
+    CommandHandler commandHandler;
 
 
 
@@ -49,9 +44,12 @@ public class MessageWebSocket {
 
     @OnTextMessage
     void onMessage(final String jsonStr, final WebSocketConnection connection) {
+        log.info("Received something on Message");
+        connection.sendText("{\"type\": \"SWITCH_CHAT\", \"chatId\": 1111}").subscribe().with(v -> {});;
         try {
-            final BLMessageCommand command = objectMapper.readValue(jsonStr, BLMessageCommand.class);
-            messageCommandHandler.handleMessageCommand(command);
+            final WebsocketMessage websocketMessage = objectMapper.readValue(jsonStr, WebsocketMessage.class);
+            log.info("Received message string: {}", jsonStr);
+            commandHandler.handleCommand(websocketMessage, connection);
         } catch (JsonProcessingException jpe) {
             log.error("Invalid JSON", jpe);
         }
@@ -59,7 +57,7 @@ public class MessageWebSocket {
 
     @OnError
     public void onError(final Throwable error, final WebSocketConnection connection) {
-        log.error("WebSocket Error: ", error);
+        log.error("MessageWebSocket Error: ", error);
     }
 
     private Map<String, String> parseQuery(String query) {

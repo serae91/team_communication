@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import BLModal from '../ui/bl-modal/BLModal.tsx';
 import BLLeftMarkedCard from '../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
 import ChatSystem from '../system/chat-system/ChatSystem.tsx';
@@ -13,6 +13,8 @@ interface ChatModalProps {
   setNextChat: () => void;
 }
 const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose, title, chatId, setNextChat }: ChatModalProps) => {
+
+
   return(
     <BLModal isOpen={isOpen} onClose={onClose}>
       {title}

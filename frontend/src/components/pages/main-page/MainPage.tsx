@@ -2,7 +2,8 @@ import type { JSX } from 'react';
 import SideNavBar from '../../layout/side-nav-bar/SideNavBar.tsx';
 import Inbox from './inbox/Inbox.tsx';
 import './MainPage.scss';
-import { BLChatPlainWebSocketProvider } from '../../../contexts/BLChatPlainWebSocketContext.ts';
+import { BLChatProvider } from '../../../contexts/BLChatContext.tsx';
+import { BLMessageProvider } from '../../../contexts/createWebSocketContext.tsx';
 
 interface BLMainPageProps {
 
@@ -10,12 +11,14 @@ interface BLMainPageProps {
 
 function MainPage(props: BLMainPageProps): JSX.Element {
   return(
-    <BLChatPlainWebSocketProvider>
-      <div className={'main-page full-width full-height'}>
-        <SideNavBar/>
-        <Inbox/>
-      </div>
-    </BLChatPlainWebSocketProvider>
+    <BLChatProvider>
+      <BLMessageProvider>
+        <div className={'main-page full-width full-height'}>
+          <SideNavBar/>
+          <Inbox/>
+        </div>
+      </BLMessageProvider>
+    </BLChatProvider>
   );
 }
 export default MainPage;
