@@ -1,11 +1,10 @@
-package backend.message.websocket;
+package backend.websocket;
 
 import backend.entities.bl_message.BLMessageView;
 import backend.message.core.MessageService;
-import backend.message.websocket.model.ChatMessagesWebSocketMessage;
-import backend.message.websocket.model.WebsocketMessage;
+import backend.websocket.model.ChatMessagesWebSocketMessage;
+import backend.websocket.model.WebsocketMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.websockets.next.WebSocketConnection;
 import jakarta.annotation.PostConstruct;
@@ -17,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 @Slf4j
 @ApplicationScoped
@@ -66,12 +64,13 @@ public class CommandHandler {
         log.info("Switching chat");
         log.info(websocketMessage.getChatId().toString());
         try{
+            chatRegistry.leaveAllChats(connection);
             chatRegistry.joinChat(websocketMessage.getChatId(), connection);
             final List<BLMessageView> blMessageViews = messageService.getBLMessageViewsByChatId(websocketMessage.getChatId());
             final ChatMessagesWebSocketMessage chatMessages = new ChatMessagesWebSocketMessage(blMessageViews, "CHAT_MESSAGES", websocketMessage.getChatId());
             final String jsonString = objectMapper.writeValueAsString(chatMessages);
             log.info("Sending chat messages {} ", jsonString);
-            connection.sendText(jsonString);
+            connection.sendText(jsonString).subscribe().with(v -> {});
         }
         catch (JsonProcessingException jpe) {
             jpe.printStackTrace();

@@ -13,7 +13,7 @@ interface InboxProps {
 
 function Inbox(props: InboxProps): JSX.Element {
   //const [chats, setChats] = useState<BLChatPlainDto[]>([]);
-  const {messages, sendMessage, switchActiveChatId} = useWebSocket();
+  const {messages, sendMessage} = useWebSocket();
   const { chats, activeChatId, setActiveChatId } = useChats();
   const [isChatOpen, setChatOpen] = useState(false);
   //const [openedChatId, setOpenedChatId] = useState(0);
@@ -34,7 +34,7 @@ function Inbox(props: InboxProps): JSX.Element {
         sender={'test sender'} color={'red'}
         onClick={()=>{
           console.log('chat.id',chat.id)
-          switchActiveChatId(chat.id);
+          setActiveChatId(chat.id);
           setChatOpen(true);
         }}
       />

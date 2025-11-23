@@ -22,7 +22,7 @@ type WebSocketMessage =
 type WebSocketContextType = {
   messages: BLMessageDto[];
   sendMessage: (msg: BLMessageDto) => void;
-  switchActiveChatId: (newActiveChatId: number) => void;
+  setActiveChatId: (newActiveChatId: number) => void;
 };
   const WebSocketContext = createContext<WebSocketContextType | null>(null);
 
@@ -37,10 +37,12 @@ type WebSocketContextType = {
       console.log('register on message')
       ws.current.onMessage((msg) => {
         console.log('msg',msg)
-        if(msg.chatId !== activeChatId) return;
+        //if(msg.chatId !== activeChatId) return;
+        console.log('id',msg.chatId !== activeChatId)
+        console.log('type',msg.type !== 'CHAT_MESSAGES')
         switch (msg.type) {
-          case "CHAT_MESSAGES": setMessages(msg.blMessages);break;
-          case "RECEIVE_MESSAGE": setMessages((prev) => [...prev, msg.blMessage]);break;
+          case 'CHAT_MESSAGES': {setMessages(msg.blMessages);console.log('set messages', msg.blMessages);break;}
+          case 'RECEIVE_MESSAGE': setMessages((prev) => [...prev, msg.blMessage]);break;
         }
 
 
@@ -49,14 +51,16 @@ type WebSocketContextType = {
     }, [ws.current]);
 
     useEffect(() => {
+      console.log('Switch chat',activeChatId)
       if (!activeChatId) return;
+      console.log('Switching chat')
 
       ws.current.send({
         type: "SWITCH_CHAT",
         chatId: activeChatId,
       } as WebSocketMessage);
 
-      setMessages([]);
+      //setMessages([]);
 
     }, [activeChatId]);
 
@@ -70,17 +74,18 @@ type WebSocketContextType = {
       });
     };
 
-    const switchActiveChatId = (newActiveChatId: number) => {
-      console.log('Switch Chat', newActiveChatId)
+
+    /*const switchActiveChatId = (newActiveChatId: number) => {
+
+   console.log('Switch Chat', newActiveChatId)
       ws.current.send({
         type: "SWITCH_CHAT",
         chatId: newActiveChatId,
       });
-
-    }
+    }*/
 
     return (
-      <WebSocketContext.Provider value={{ messages, sendMessage, switchActiveChatId }}>
+      <WebSocketContext.Provider value={{ messages, sendMessage, setActiveChatId }}>
         {children}
       </WebSocketContext.Provider>
   );

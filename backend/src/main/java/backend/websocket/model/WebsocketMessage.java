@@ -1,4 +1,4 @@
-package backend.message.websocket.model;
+package backend.websocket.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -25,7 +25,7 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
   const chatScrollRef = useRef<HTMLDivElement>(null);
 
   const { chats, activeChatId, setActiveChatId } = useChats();
-  const { messages, sendMessage, switchActiveChatId } = useWebSocket();
+  const { messages, sendMessage } = useWebSocket();
   const prevLength = useRef(messages?.length??0);
 
   useEffect(() => {

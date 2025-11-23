@@ -1,23 +1,17 @@
-package backend.message.websocket;
+package backend.websocket;
 
-import backend.message.core.MessageService;
 import io.quarkus.websockets.next.WebSocketConnection;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
-public class ChatWebRegistry {
-
+public class WebRegistry {
     private final Map<Long, Set<WebSocketConnection>> chatIdConnections = new ConcurrentHashMap<>();
 
     public void joinChat(final Long chatId, final WebSocketConnection connection) {
-        if (Objects.isNull(chatId)) return;
-        leaveAllChats(connection);
         chatIdConnections.computeIfAbsent(chatId, r -> ConcurrentHashMap.newKeySet())
                 .add(connection);
     }
@@ -26,11 +20,7 @@ public class ChatWebRegistry {
         chatIdConnections.getOrDefault(chatId, Set.of()).remove(connection);
     }
 
-    public void leaveAllChats(final WebSocketConnection connection) {
-        chatIdConnections.values().forEach(connections -> connections.remove(connection));
-    }
-
-    public void sendToChat(final Long chatId, final String message) {
+    public void sendToRoom(final Long chatId, final String message) {
         for (final WebSocketConnection c : chatIdConnections.getOrDefault(chatId, Set.of())) {
             c.sendText(message);
         }

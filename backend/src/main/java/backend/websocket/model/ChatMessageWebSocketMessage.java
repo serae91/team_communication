@@ -1,4 +1,4 @@
-package backend.message.websocket.model;
+package backend.websocket.model;
 
 import backend.entities.bl_message.BLMessage;
 import lombok.Getter;
