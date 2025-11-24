@@ -5,12 +5,10 @@ import type { BLMessageDto } from '../dtos/BLMessageDto.ts';
 
 interface BLChatContextType {
   chats: BLChatPlainDto[];
+  setChats: (blChats: BLChatPlainDto[] | ((blChats: BLChatPlainDto[]) => BLChatPlainDto[])) => void
   activeChatId: number | null;
   setActiveChatId: (chatId: number) => void;
 }
-
-type WebSocketMessage =
-  | { type: "SWITCH_CHAT"; chatId: number; };
 
 const BLChatContext = createContext<BLChatContextType | null>(null);
 
@@ -20,7 +18,6 @@ export const BLChatProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     getChatListPlainByUserId(1/*TODO USER ID*/)
-      //.then((res) => res.json())
       .then((data: BLChatPlainDto[]) => {
         setChats(data);
         if (data[0]?.id) {
@@ -31,7 +28,7 @@ export const BLChatProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <BLChatContext.Provider value={{ chats, activeChatId, setActiveChatId }}>
+    <BLChatContext.Provider value={{ chats, setChats, activeChatId, setActiveChatId }}>
       {children}
     </BLChatContext.Provider>
   );
