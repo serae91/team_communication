@@ -8,14 +8,14 @@ export interface BLMessageDto {
   sender: BLUserDto;
 }
 
-export interface BLMessageCreateDto {
+export interface BLMessageCreateView {
   text: string;
   chat: BLIdDto;
   sender: BLIdDto;
 }
 
-export interface BLMessageCommandDto {
-  type: string;
+export interface BLMessageCreateDto {
+  text: string;
   chatId: number;
-  blMessage: BLMessageDto;
+  senderId: number;
 }

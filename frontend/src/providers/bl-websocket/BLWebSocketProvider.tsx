@@ -5,18 +5,11 @@ import React, {
   type ReactNode, useRef, type RefObject, useEffect,
 } from "react";
 import { WebSocketService } from "../../services/WebSocketService.ts";
-import { useBLChats } from '../bl-chat/BLChatProvider.tsx';
-import type { BLMessageDto } from '../../dtos/BLMessageDto.ts';
-import { useBLMessages } from '../bl-message/BLMessageProvider.tsx';
 
 export interface ProviderProps {
   children: ReactNode;
   connectionURL: string;
 }
-
-export type MessageBaseType<T extends string> = {type: T}
-
-
 
 export type WebSocketContextType<T> = {
   connected: boolean;

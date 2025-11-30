@@ -7,4 +7,6 @@ import com.blazebit.persistence.view.IdMapping;
 public interface BLUserIdView {
     @IdMapping
     public Long getId();
+
+    void setId(Long id);
 }

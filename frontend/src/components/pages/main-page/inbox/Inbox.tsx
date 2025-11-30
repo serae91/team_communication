@@ -5,13 +5,11 @@ import BLContentCard from '../../../ui/bl-content-card/BLContentCard.tsx';
 import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';
 import ChatModal from '../../../modals/ChatModal.tsx';
 import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
-import { type MessageBaseType, useWebSocket } from '../../../../providers/bl-websocket/BLWebSocketProvider.tsx';
+import { useWebSocket } from '../../../../providers/bl-websocket/BLWebSocketProvider.tsx';
 import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
 import type {
   WebsocketMessage,
-  WebSocketMessageIncoming
 } from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
-import type { BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
 
 interface InboxProps {
 
@@ -35,14 +33,14 @@ function Inbox(props: InboxProps): JSX.Element {
     });
   }
 
-  const sendMessage = (message: BLMessageDto) => {
+  /*const sendMessage = (message: BLMessageDto) => {
     if (!activeChatId) return;
     send({
       chatId: activeChatId,
       blMessage: message,
       type: 'SEND_MESSAGE'
     });
-  };
+  };*/
 
   const onActiveChatId = (): void => {
     if(!activeChatId)return;

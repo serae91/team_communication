@@ -1,6 +1,5 @@
 import type { BLChatPlainDto } from '../../../../dtos/BLChatPlainDto.ts';
-import type { BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
-import type { MessageBaseType } from '../../BLWebSocketProvider.tsx';
+import type { BLMessageCreateDto, BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
 
 export type WebsocketMessage = WebSocketMessageIncoming | WebSocketMessageOutgoing;
 
@@ -9,13 +8,13 @@ export type WebSocketMessageIncoming =
   | ReceiveMessages
   | ReceiveChat;
 
-type ChatMessages = { chatId: number; blMessages: BLMessageDto[] } & MessageBaseType<'CHAT_MESSAGES'>;
-type ReceiveMessages = { chatId: number; blMessage: BLMessageDto } & MessageBaseType<'RECEIVE_MESSAGE'>;
-type ReceiveChat = { blChat: BLChatPlainDto } & MessageBaseType<'RECEIVE_CHAT'>;
+type ChatMessages = { type: 'CHAT_MESSAGES'; chatId: number; blMessages: BLMessageDto[] };
+type ReceiveMessages = { type: 'RECEIVE_MESSAGE'; chatId: number; blMessage: BLMessageDto };
+type ReceiveChat = {type: 'RECEIVE_CHAT';  blChat: BLChatPlainDto };
 
 type WebSocketMessageOutgoing =
   | SendMessage
   | SwitchChat
 
-type SendMessage = { chatId: number; blMessage: BLMessageDto } & MessageBaseType<'SEND_MESSAGE'>
-type SwitchChat = { chatId: number; } & MessageBaseType<'SWITCH_CHAT'>
+type SendMessage = { type: 'SEND_MESSAGE'; chatId: number; blMessage: BLMessageCreateDto }
+type SwitchChat = { type: 'SWITCH_CHAT'; chatId: number; }

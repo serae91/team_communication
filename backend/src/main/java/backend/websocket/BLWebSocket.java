@@ -1,6 +1,6 @@
 package backend.websocket;
 
-import backend.websocket.model.WebsocketMessage;
+import backend.websocket.model.outgoing.OutgoingWebSocketMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.websockets.next.OnClose;
@@ -40,9 +40,9 @@ public class BLWebSocket {
     void onMessage(final String message, final WebSocketConnection connection) {
         log.info("Message received: {}", message);
         try {
-            final WebsocketMessage websocketMessage = objectMapper.readValue(message, WebsocketMessage.class);
+            final OutgoingWebSocketMessage outgoingWebsocketMessage = objectMapper.readValue(message, OutgoingWebSocketMessage.class);
             log.info("Received message string: {}", message);
-            commandHandler.handleCommand(websocketMessage, connection);
+            commandHandler.handleCommand(outgoingWebsocketMessage, connection);
         } catch (JsonProcessingException jpe) {
             log.error("Invalid JSON", jpe);
         }

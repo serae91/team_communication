@@ -29,7 +29,7 @@ public class ChatWebRegistry {
 
     public void sendToChat(final Long chatId, final String message) {
         for (final WebSocketConnection c : chatIdConnections.getOrDefault(chatId, Set.of())) {
-            c.sendText(message);
+            c.sendText(message).subscribe().with(v -> {});
         }
     }
 }

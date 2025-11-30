@@ -7,4 +7,6 @@ import com.blazebit.persistence.view.IdMapping;
 public interface BLChatIdView {
     @IdMapping
     Long getId();
+
+    void setId(Long id);
 }

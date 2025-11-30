@@ -39,7 +39,7 @@ public class MessageResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public BLMessageView createMessage(final BLMessageCreateView blMessageCreateView) {
-        messageCreateService.createMessage(blMessageCreateView);
+        messageCreateService.createMessageFromView(blMessageCreateView);
         return messageService.getBLMessageView(blMessageCreateView.getId());
     }
 }

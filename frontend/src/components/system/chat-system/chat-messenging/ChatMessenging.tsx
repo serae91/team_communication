@@ -1,17 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import './ChatMessenging.scss';
 import ChatMessage from './chat-message/ChatMessage';
 import BLInput from '../../../ui/bl-input/BLInput';
 import {
   FaArrowRight
 } from 'react-icons/fa';
-import type { BLChatFullInfoDto } from '../../../../dtos/BLChatFullInfoDto.ts';
-import { getChatFullInfoById } from '../../../../services/ChatService.ts';
-import { createMessage } from '../../../../services/MessageService.ts';
-import type { BLMessageCommandDto, BLMessageCreateDto, BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
+import type {
+  BLMessageCreateDto,
+} from '../../../../dtos/BLMessageDto.ts';
 import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
 import { useWebSocket } from '../../../../providers/bl-websocket/BLWebSocketProvider.tsx';
 import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
+import type {
+  WebsocketMessage
+} from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
 
 
 interface ChatMessengingProps {
@@ -27,7 +29,7 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
 
   const { chats, activeChatId, setActiveChatId } = useBLChats();
   const { messages, setMessages } = useBLMessages();
-  const { send, addMessageHandler, removeMessageHandler, connected } = useWebSocket();
+  const { send, addMessageHandler, removeMessageHandler, connected } = useWebSocket<WebsocketMessage>();
   const prevLength = useRef(messages?.length??0);
 
   useEffect(() => {
@@ -58,7 +60,7 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
       currentChatScroll.scrollTo({ top: currentChatScroll.scrollHeight, behavior: "smooth" });
     }
 
-    prevLength.current = messages?.length??0;
+    prevLength.current = messages?.length ?? 0;
   }
 
   const getChatMessages = ()=> {
@@ -67,32 +69,15 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
     )
   }
 
-  const getMessage=()=>(
-    {
-      id:0,
-      chat: {id: chatId},
-      text: inputRef?.current?.value,
-      sender: {id: 1, username:'me'/*TODO replace*/},
-      createdAt:new Date(),
-    } as BLMessageDto
-  );
-
-  /*const sendMessage = ()=>{
-    if(!inputRef.current?.value) return;
+  const sendMessage = ()=>{
+    if(!inputRef.current?.value || !activeChatId) return;
     const blMessageCreateDto = {
-      chat: {id: chatId},
+      chatId:  chatId,
       text: inputRef.current.value,
-      sender: {id: 1/*TODO replace*//*}
+      senderId:  1/*TODO replace*/
     } as BLMessageCreateDto;
-    createMessage(blMessageCreateDto).then((newMessage)=>{
-      setChatFullInfo(prev=> (
-        {
-          ...prev,
-          messages: prev?.messages ? [...prev.messages, newMessage] : [newMessage],
-        })
-      );
-    });
-  }*/
+    send({type: 'SEND_MESSAGE', chatId: activeChatId, blMessage: blMessageCreateDto})
+  }
 
   return(
     <>
@@ -101,7 +86,7 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
       </div>
       <div className={'flex-row sticky bottom-0'}>
         <BLInput className={'full-width'} inputRef={inputRef}/>
-        <button className={'send-button'} onClick={()=>{}/*()=>sendMessage(getMessage())*/}>
+        <button className={'send-button'} onClick={()=>sendMessage()}>
           <FaArrowRight/>
         </button>
       </div>
