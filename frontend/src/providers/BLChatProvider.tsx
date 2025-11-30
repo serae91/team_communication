@@ -34,7 +34,7 @@ export const BLChatProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export const useChats = () => {
+export const useBLChats = () => {
   const ctx = useContext(BLChatContext);
   if (!ctx) {
     throw new Error("useRooms must be used inside <RoomProvider>");

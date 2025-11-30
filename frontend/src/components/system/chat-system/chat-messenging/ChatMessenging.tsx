@@ -9,8 +9,9 @@ import type { BLChatFullInfoDto } from '../../../../dtos/BLChatFullInfoDto.ts';
 import { getChatFullInfoById } from '../../../../services/ChatService.ts';
 import { createMessage } from '../../../../services/MessageService.ts';
 import type { BLMessageCommandDto, BLMessageCreateDto, BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
-import { useChats } from '../../../../contexts/BLChatContext.tsx';
-import { useWebSocket } from '../../../../contexts/createWebSocketContext.tsx';
+import { useBLChats } from '../../../../providers/BLChatProvider.tsx';
+import { useWebSocket } from '../../../../providers/BLWebSocketProvider.tsx';
+import { useBLMessages } from '../../../../providers/BLMessageProvider.tsx';
 
 
 interface ChatMessengingProps {
@@ -24,12 +25,13 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
   const inputRef = useRef<HTMLInputElement>(null);
   const chatScrollRef = useRef<HTMLDivElement>(null);
 
-  const { chats, activeChatId, setActiveChatId } = useChats();
-  const { messages, sendMessage } = useWebSocket();
+  const { chats, activeChatId, setActiveChatId } = useBLChats();
+  const { messages, setMessages } = useBLMessages();
+  const { send, addMessageHandler, removeMessageHandler, connected } = useWebSocket();
   const prevLength = useRef(messages?.length??0);
 
   useEffect(() => {
-    sendMessage({ } as BLMessageDto)
+    //send({ } as BLMessageDto)
   }, []);
 
   useEffect(() => {
@@ -99,7 +101,7 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
       </div>
       <div className={'flex-row sticky bottom-0'}>
         <BLInput className={'full-width'} inputRef={inputRef}/>
-        <button className={'send-button'} onClick={()=>sendMessage(getMessage())}>
+        <button className={'send-button'} onClick={()=>{}/*()=>sendMessage(getMessage())*/}>
           <FaArrowRight/>
         </button>
       </div>

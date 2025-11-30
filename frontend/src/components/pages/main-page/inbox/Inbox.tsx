@@ -4,19 +4,19 @@ import MessageCard from './message-card/MessageCard.tsx';
 import BLContentCard from '../../../ui/bl-content-card/BLContentCard.tsx';
 import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';
 import ChatModal from '../../../modals/ChatModal.tsx';
-import { useWebSocket } from '../../../../contexts/createWebSocketContext.tsx';
-import { useChats } from '../../../../contexts/BLChatContext.tsx';
+import { useBLChats } from '../../../../providers/BLChatProvider.tsx';
+import { useWebSocket } from '../../../../providers/BLWebSocketProvider.tsx';
+import { useBLMessages } from '../../../../providers/BLMessageProvider.tsx';
 
 interface InboxProps {
 
 }
 
 function Inbox(props: InboxProps): JSX.Element {
-  //const [chats, setChats] = useState<BLChatPlainDto[]>([]);
-  const {messages, sendMessage} = useWebSocket();
-  const { chats, activeChatId, setActiveChatId } = useChats();
+  const { connected, removeMessageHandler, addMessageHandler, send } = useWebSocket();
+  const { chats, activeChatId, setActiveChatId } = useBLChats();
+  const { messages, setMessages } = useBLMessages();
   const [isChatOpen, setChatOpen] = useState(false);
-  //const [openedChatId, setOpenedChatId] = useState(0);
 
   useEffect(() => {
     /*getChatListPlainByUserId(1/*TODO replace*//*).then(chats=>{
@@ -33,7 +33,6 @@ function Inbox(props: InboxProps): JSX.Element {
         title={chat.title} message={'test message'}
         sender={'test sender'} color={'red'}
         onClick={()=>{
-          console.log('chat.id',chat.id)
           setActiveChatId(chat.id);
           setChatOpen(true);
         }}
@@ -48,7 +47,6 @@ function Inbox(props: InboxProps): JSX.Element {
     if (!nextId) return;
     setActiveChatId(nextId);
   }
-  console.log('messages', messages);
   return(
     <BLContentCard className={'inbox relative'}>
       <ChatModal

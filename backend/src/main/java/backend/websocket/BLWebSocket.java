@@ -13,16 +13,10 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 @Singleton
 @Slf4j
-@WebSocket(path = "/messagewebsocket")
-public class MessageWebSocket {
+@WebSocket(path = "/blwebsocket")
+public class BLWebSocket {
 
     @Inject
     ObjectMapper objectMapper;
@@ -44,6 +38,7 @@ public class MessageWebSocket {
 
     @OnTextMessage
     void onMessage(final String message, final WebSocketConnection connection) {
+        log.info("Message received: {}", message);
         try {
             final WebsocketMessage websocketMessage = objectMapper.readValue(message, WebsocketMessage.class);
             log.info("Received message string: {}", message);
@@ -55,6 +50,6 @@ public class MessageWebSocket {
 
     @OnError
     public void onError(final Throwable error, final WebSocketConnection connection) {
-        log.error("MessageWebSocket Error: ", error);
+        log.error("BLWebSocket Error: ", error);
     }
 }
