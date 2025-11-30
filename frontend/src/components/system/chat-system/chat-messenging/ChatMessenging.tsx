@@ -9,9 +9,9 @@ import type { BLChatFullInfoDto } from '../../../../dtos/BLChatFullInfoDto.ts';
 import { getChatFullInfoById } from '../../../../services/ChatService.ts';
 import { createMessage } from '../../../../services/MessageService.ts';
 import type { BLMessageCommandDto, BLMessageCreateDto, BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
-import { useBLChats } from '../../../../providers/BLChatProvider.tsx';
-import { useWebSocket } from '../../../../providers/BLWebSocketProvider.tsx';
-import { useBLMessages } from '../../../../providers/BLMessageProvider.tsx';
+import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
+import { useWebSocket } from '../../../../providers/bl-websocket/BLWebSocketProvider.tsx';
+import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
 
 
 interface ChatMessengingProps {

@@ -43,6 +43,10 @@ export class WebSocketService<T> {
     this.handlers.push(handler);
   }
 
+  removeMessageHandler(handler: MessageHandler<T>) {
+    this.handlers = this.handlers.filter((h) => h !== handler);
+  }
+
   isConnected(): boolean {
     return this.socket?.readyState === WebSocket.OPEN;
   }

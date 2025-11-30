@@ -5,7 +5,7 @@ import React, {
   useState,
   type ReactNode, useRef, type RefObject,
 } from "react";
-import type { BLMessageDto } from '../dtos/BLMessageDto.ts';
+import type { BLMessageDto } from '../../dtos/BLMessageDto.ts';
 
 export interface ProviderProps {
   children: ReactNode;
