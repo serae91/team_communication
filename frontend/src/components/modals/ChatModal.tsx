@@ -42,7 +42,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }: ChatModalProps
   }
   return(
     <BLModal isOpen={isOpen} onClose={onClose}>
-      {chats.find(chat=>chat.id===activeChatId)?.title??'Error: Selected chat could not be found'}
+      {chats?.find(chat=>chat.id===activeChatId)?.title??'Error: Selected chat could not be found'}
       <button onClick={setNextChat}>Set next chat</button>
       <button onClick={()=>{if(activeChatId)
         triggerDown(activeChatId, 1/*TODO replace*/);}

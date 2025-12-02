@@ -41,7 +41,7 @@ public class ChatService {
                 .from(BLRelChatUser.class, "c")
                 .where("chat.id").eqExpression("OUTER(id)")
                 .where("user." + uniqueUserPropertyName).eq(uniqueUserProperty)
-                .where("downed").eq(false)
+                //.where("downed").eq(false)
                 .end();
         return entityViewManager.applySetting(EntityViewSetting.create(BLChatPlainView.class), criteriaBuilder).getResultList();
     }

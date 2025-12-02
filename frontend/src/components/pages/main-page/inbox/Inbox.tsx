@@ -21,13 +21,20 @@ function Inbox(props: InboxProps): JSX.Element {
   const { messages, setMessages } = useBLMessages();
   const [isChatOpen, setChatOpen] = useState(false);
 
-  const onMessageIncoming = (): void => {
-    addMessageHandler((msg) => {
+  const onMessageIncoming = (msg: WebsocketMessage) => {
+      console.log('received message: ',msg)
       switch (msg.type) {
         case 'CHAT_MESSAGES': {setMessages(msg.blMessages);break;}
         case 'RECEIVE_MESSAGE': setMessages((prev) => [...prev, msg.blMessage]);break;
+        case 'RECEIVE_CHATS': console.log('receive chats');setChats(msg.blChats);break;
         case 'RECEIVE_CHAT': setChats((prev) => [...prev, msg.blChat]);break;
       }
+    };
+
+  const requestChats = () => {
+    send({
+      type: 'REQUEST_CHATS',
+      userId: 1,/*TODO replace*/
     });
   }
 
@@ -40,8 +47,13 @@ function Inbox(props: InboxProps): JSX.Element {
   }
 
   useEffect(() => {
-    onMessageIncoming();
-  }, []);
+    if(!connected) return;
+    addMessageHandler(onMessageIncoming);
+    requestChats();
+    return () => {
+      removeMessageHandler(onMessageIncoming)
+    };
+  }, [connected]);
 
   useEffect(() => {
     onActiveChatId()

@@ -2,7 +2,8 @@ import React, {
   createContext,
   useContext,
   useState,
-  type ReactNode, useRef, type RefObject, useEffect,
+  type ReactNode,
+  useEffect,
 } from "react";
 import { WebSocketService } from "../../services/WebSocketService.ts";
 
@@ -28,11 +29,15 @@ export const createBLWebSocketProvider = <T, >()=> {
     useEffect(() => {
       service.connect();
 
-      const statusHandler = () => setConnected(service.isConnected());
-      service.onMessage(statusHandler);
+      const handleOpen = () => setConnected(true);
+      const handleClose = () => setConnected(false);
+
+      service.onOpen(handleOpen);
+      service.onClose(handleClose);
 
       return () => {
-        service.removeMessageHandler(statusHandler);
+        service.removeOnOpen(handleOpen);
+        service.removeOnClose(handleClose);
       };
     }, [service]);
 

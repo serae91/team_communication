@@ -1,8 +1,12 @@
 type MessageHandler<T> = (msg: T) => void;
+type Handler = () => void;
 
 export class WebSocketService<T> {
   private socket: WebSocket | null = null;
   private handlers: MessageHandler<T>[] = [];
+  private openHandlers: Handler[] = [];
+  private closeHandlers: Handler[] = [];
+  private sendQueue: T[] = [];
   private readonly url: string;
 
   constructor(url: string) {
@@ -18,6 +22,9 @@ export class WebSocketService<T> {
 
     this.socket.onopen = () => {
       console.log("[WS] Connected:", this.url);
+      this.openHandlers.forEach(h => h());
+      this.sendQueue.forEach(m => this.socket!.send(JSON.stringify(m)));
+      this.sendQueue = [];
     };
 
     this.socket.onmessage = (event: MessageEvent<string>) => {
@@ -27,6 +34,8 @@ export class WebSocketService<T> {
 
     this.socket.onclose = () => {
       console.log("[WS] Disconnected — retry in 2s");
+      this.closeHandlers.forEach(h => h());
+      this.socket = null;
       setTimeout(() => this.connect(), 2000);
     };
   }
@@ -35,12 +44,29 @@ export class WebSocketService<T> {
     if (this.isConnected()) {
       this.socket!.send(JSON.stringify(message));
     } else {
+      this.sendQueue.push(message);
       console.warn("[WS] Not connected, cannot send", message);
     }
   }
 
-  onMessage(handler: MessageHandler<T>) {
-    this.handlers.push(handler);
+  onOpen(handler: Handler) {
+    this.openHandlers.push(handler);
+  }
+
+  removeOnOpen(handler: Handler) {
+    this.openHandlers = this.openHandlers.filter(h => h !== handler);
+  }
+
+  onClose(handler: Handler) {
+    this.closeHandlers.push(handler);
+  }
+
+  removeOnClose(handler: Handler) {
+    this.closeHandlers = this.closeHandlers.filter(h => h !== handler);
+  }
+
+  onMessage(messageHandler: MessageHandler<T>) {
+    this.handlers.push(messageHandler);
   }
 
   removeMessageHandler(handler: MessageHandler<T>) {

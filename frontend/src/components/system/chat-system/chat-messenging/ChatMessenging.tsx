@@ -5,15 +5,7 @@ import BLInput from '../../../ui/bl-input/BLInput';
 import {
   FaArrowRight
 } from 'react-icons/fa';
-import type {
-  BLMessageCreateDto, BLMessageDto,
-} from '../../../../dtos/BLMessageDto.ts';
-import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
-import { useWebSocket } from '../../../../providers/bl-websocket/BLWebSocketProvider.tsx';
-import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
-import type {
-  WebsocketMessage
-} from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
+import type { BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
 
 
 interface ChatMessengingProps {
@@ -27,10 +19,6 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({className, messages, sen
   const chatScrollRef = useRef<HTMLDivElement>(null);
 
   const prevLength = useRef(messages?.length??0);
-
-  useEffect(() => {
-    //send({ } as BLMessageDto)
-  }, []);
 
   useEffect(() => {
     scrollToBottom();

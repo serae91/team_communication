@@ -6,15 +6,19 @@ export type WebsocketMessage = WebSocketMessageIncoming | WebSocketMessageOutgoi
 export type WebSocketMessageIncoming =
   | ChatMessages
   | ReceiveMessages
+  | ReceiveChats
   | ReceiveChat;
 
 type ChatMessages = { type: 'CHAT_MESSAGES'; chatId: number; blMessages: BLMessageDto[] };
 type ReceiveMessages = { type: 'RECEIVE_MESSAGE'; chatId: number; blMessage: BLMessageDto };
-type ReceiveChat = {type: 'RECEIVE_CHAT';  blChat: BLChatPlainDto };
+type ReceiveChats = { type: 'RECEIVE_CHATS';  blChats: BLChatPlainDto[] };
+type ReceiveChat = { type: 'RECEIVE_CHAT';  blChat: BLChatPlainDto };
 
 type WebSocketMessageOutgoing =
+  | RequestChats
   | SendMessage
-  | SwitchChat
+  | SwitchChat;
 
+type RequestChats = { type: 'REQUEST_CHATS'; userId: number; }
 type SendMessage = { type: 'SEND_MESSAGE'; chatId: number; blMessage: BLMessageCreateDto }
 type SwitchChat = { type: 'SWITCH_CHAT'; chatId: number; }

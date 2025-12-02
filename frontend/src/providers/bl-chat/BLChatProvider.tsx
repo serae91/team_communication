@@ -5,9 +5,9 @@ import type { BLMessageDto } from '../../dtos/BLMessageDto.ts';
 
 interface BLChatContextType {
   chats: BLChatPlainDto[];
-  setChats: (blChats: BLChatPlainDto[] | ((blChats: BLChatPlainDto[]) => BLChatPlainDto[])) => void
+  setChats:  React.Dispatch<React.SetStateAction<BLChatPlainDto[]>>
   activeChatId: number | null;
-  setActiveChatId: (chatId: number) => void;
+  setActiveChatId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 const BLChatContext = createContext<BLChatContextType | null>(null);
@@ -15,14 +15,6 @@ const BLChatContext = createContext<BLChatContextType | null>(null);
 export const BLChatProvider = ({ children }: { children: React.ReactNode }) => {
   const [chats, setChats] = useState<BLChatPlainDto[]>([]);
   const [activeChatId, setActiveChatId] = useState<number | null>(null);
-
-  useEffect(() => {
-    getChatListPlainByUserId(1/*TODO USER ID*/)
-      .then((data: BLChatPlainDto[]) => {
-        setChats(data);
-      })
-      .catch((e) => console.error("Failed to load chats:", e));
-  }, []);
 
   return (
     <BLChatContext.Provider value={{ chats, setChats, activeChatId, setActiveChatId }}>
@@ -32,9 +24,9 @@ export const BLChatProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const useBLChats = () => {
-  const ctx = useContext(BLChatContext);
-  if (!ctx) {
-    throw new Error("useRooms must be used inside <RoomProvider>");
+  const context = useContext(BLChatContext);
+  if (!context) {
+    throw new Error("useBLChats must be used inside <BLChatProvider>");
   }
-  return ctx;
+  return context;
 };
