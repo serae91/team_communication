@@ -6,7 +6,7 @@ import {
   FaArrowRight
 } from 'react-icons/fa';
 import type {
-  BLMessageCreateDto,
+  BLMessageCreateDto, BLMessageDto,
 } from '../../../../dtos/BLMessageDto.ts';
 import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
 import { useWebSocket } from '../../../../providers/bl-websocket/BLWebSocketProvider.tsx';
@@ -17,19 +17,15 @@ import type {
 
 
 interface ChatMessengingProps {
-  chatId: number;
   className?: string;
+  messages: BLMessageDto[];
+  sendMessage: (text: string)=>void
 }
 
-const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: ChatMessengingProps)=> {
-  //const [chatFullInfo, setChatFullInfo] = useState<BLChatFullInfoDto>({messages:[]as BLMessageDto[]} as BLChatFullInfoDto);
-  //const {message} = useWebSocket();
+const ChatMessenging: React.FC<ChatMessengingProps> = ({className, messages, sendMessage}: ChatMessengingProps)=> {
   const inputRef = useRef<HTMLInputElement>(null);
   const chatScrollRef = useRef<HTMLDivElement>(null);
 
-  const { chats, activeChatId, setActiveChatId } = useBLChats();
-  const { messages, setMessages } = useBLMessages();
-  const { send, addMessageHandler, removeMessageHandler, connected } = useWebSocket<WebsocketMessage>();
   const prevLength = useRef(messages?.length??0);
 
   useEffect(() => {
@@ -38,7 +34,7 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
 
   useEffect(() => {
     scrollToBottom();
-  }, [chatId]);
+  }, [messages]);
 
   const scrollToBottom = () => {
       const currentChatScroll = chatScrollRef.current;
@@ -69,16 +65,6 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
     )
   }
 
-  const sendMessage = ()=>{
-    if(!inputRef.current?.value || !activeChatId) return;
-    const blMessageCreateDto = {
-      chatId:  chatId,
-      text: inputRef.current.value,
-      senderId:  1/*TODO replace*/
-    } as BLMessageCreateDto;
-    send({type: 'SEND_MESSAGE', chatId: activeChatId, blMessage: blMessageCreateDto})
-  }
-
   return(
     <>
       <div ref={chatScrollRef} className={'flex-1 overflow-y-auto p-4 bg-white rounded-2xl shadow-inner border border-gray-200'}>
@@ -86,7 +72,10 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({chatId, className}: Chat
       </div>
       <div className={'flex-row sticky bottom-0'}>
         <BLInput className={'full-width'} inputRef={inputRef}/>
-        <button className={'send-button'} onClick={()=>sendMessage()}>
+        <button className={'send-button'} onClick={()=> {
+          if(inputRef.current?.value)
+            sendMessage(inputRef.current.value)
+        }}>
           <FaArrowRight/>
         </button>
       </div>

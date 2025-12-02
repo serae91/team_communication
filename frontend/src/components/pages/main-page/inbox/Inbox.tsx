@@ -22,9 +22,7 @@ function Inbox(props: InboxProps): JSX.Element {
   const [isChatOpen, setChatOpen] = useState(false);
 
   const onMessageIncoming = (): void => {
-    console.log('set on message incoming', connected)
     addMessageHandler((msg) => {
-      console.log('message incoming', msg)
       switch (msg.type) {
         case 'CHAT_MESSAGES': {setMessages(msg.blMessages);break;}
         case 'RECEIVE_MESSAGE': setMessages((prev) => [...prev, msg.blMessage]);break;
@@ -32,15 +30,6 @@ function Inbox(props: InboxProps): JSX.Element {
       }
     });
   }
-
-  /*const sendMessage = (message: BLMessageDto) => {
-    if (!activeChatId) return;
-    send({
-      chatId: activeChatId,
-      blMessage: message,
-      type: 'SEND_MESSAGE'
-    });
-  };*/
 
   const onActiveChatId = (): void => {
     if(!activeChatId)return;
@@ -73,21 +62,11 @@ function Inbox(props: InboxProps): JSX.Element {
       />
     ))};
 
-  const setNextChat = () => {
-    const currentChatIndex = chats.findIndex(chat=>chat.id===activeChatId);
-    if (currentChatIndex === undefined) return;
-    const nextChatIndex = (currentChatIndex < messages.length - 1) ? currentChatIndex + 1 : 0;
-    const nextId = messages[nextChatIndex]?.id;
-    if (!nextId) return;
-    setActiveChatId(nextId);
-  }
   return(
     <BLContentCard className={'inbox relative'}>
       <ChatModal
         isOpen={isChatOpen}
-        chatId={activeChatId??0}
-        onClose={()=> {setChatOpen(false);}}
-        setNextChat={setNextChat}
+        onClose={()=> setChatOpen(false)}
       />
       <div className={ 'title-box flex-col' }>
         <div className={ 'title' }>
