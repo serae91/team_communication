@@ -1,7 +1,7 @@
 package backend.chat.web;
 
 import backend.chat.core.ChatService;
-import backend.chat.usecase.update.UpdateChatService;
+import backend.chat.usecase.update.ChatUpdateService;
 import backend.entities.bl_chat.BLChatFullInfoView;
 import backend.entities.bl_chat.BLChatPlainView;
 import jakarta.enterprise.context.RequestScoped;
@@ -21,7 +21,7 @@ public class ChatResource {
     @Inject
     ChatService chatService;
     @Inject
-    UpdateChatService updateChatService;
+    ChatUpdateService chatUpdateService;
 
     @GET
     @Path("/listplain/{userId}")
@@ -39,6 +39,6 @@ public class ChatResource {
     @Path("/triggerdown/{chatId}/{userId}")
     @Transactional
     public void triggerDown(@PathParam("chatId") final Long chatId, @PathParam("userId") final Long userId) {
-        updateChatService.triggerDown(chatId, userId);
+        chatUpdateService.triggerDown(chatId, userId);
     }
 }

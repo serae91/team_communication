@@ -12,6 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ChatWebRegistry {
 
     private final Map<Long, Set<WebSocketConnection>> chatIdConnections = new ConcurrentHashMap<>();
+    private final Map<Long, WebSocketConnection> userIdConnections = new ConcurrentHashMap<>();
+
+    public void registerUserConnection(final Long userId, final WebSocketConnection connection) {
+        userIdConnections.put(userId, connection);
+    }
 
     public void joinChat(final Long chatId, final WebSocketConnection connection) {
         if (Objects.isNull(chatId)) return;

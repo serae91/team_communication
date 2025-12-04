@@ -7,7 +7,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
 @Dependent
-public class UpdateChatService {
+public class ChatUpdateService {
     @Inject
     EntityManager entityManager;
     @Inject

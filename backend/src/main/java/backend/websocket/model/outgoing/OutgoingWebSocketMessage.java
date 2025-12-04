@@ -9,7 +9,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         property = "type"
 )
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = RequestChatsWebSocketMessage.class, name = "REQUEST_CHATS"),
+        @JsonSubTypes.Type(value = CreateChatWebSocketMessage.class, name = "CREATE_CHAT"),
+        @JsonSubTypes.Type(value = InitConnectionWebSocketMessage.class, name = "INIT_CONNECTION"),
         @JsonSubTypes.Type(value = SendMessageWebSocketMessage.class, name = "SEND_MESSAGE"),
         @JsonSubTypes.Type(value = SwitchChatWebSocketMessage.class, name = "SWITCH_CHAT"),
 })

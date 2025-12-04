@@ -5,14 +5,14 @@ import backend.entities.bl_chat.BLChatPlainView;
 import backend.entities.bl_message.BLMessageView;
 import backend.message.core.MessageService;
 import backend.message.usecase.create.MessageCreateService;
+import backend.websocket.model.UserConnection;
 import backend.websocket.model.incoming.ReceiveChatsWebSocketMessage;
 import backend.websocket.model.outgoing.OutgoingWebSocketMessage;
 import backend.websocket.model.incoming.ReceiveMessageWebSocketMessage;
 import backend.websocket.model.incoming.ChatMessagesWebSocketMessage;
-import backend.websocket.model.outgoing.RequestChatsWebSocketMessage;
+import backend.websocket.model.outgoing.InitConnectionWebSocketMessage;
 import backend.websocket.model.outgoing.SendMessageWebSocketMessage;
 import backend.websocket.model.outgoing.SwitchChatWebSocketMessage;
-import com.blazebit.persistence.view.EntityViewManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.websockets.next.WebSocketConnection;
@@ -40,24 +40,24 @@ public class CommandHandler {
 
     @Inject
     ObjectMapper objectMapper;
+    @Inject
+    ChatWebRegistry chatWebRegistry;
 
     public void handleCommand(final OutgoingWebSocketMessage outgoingWebsocketMessage, final WebSocketConnection connection) {
         switch (outgoingWebsocketMessage) {
-            case RequestChatsWebSocketMessage rc -> handleRequestChats(rc, connection);
+            case InitConnectionWebSocketMessage ic -> handleInitConnection(ic, connection);
             case SendMessageWebSocketMessage sm -> handleSendMessage(sm, connection);
             case SwitchChatWebSocketMessage sc -> handleSwitchChat(sc, connection);
             default -> throw new IllegalStateException("Unexpected OutgoingWebsocketMessage type: " + outgoingWebsocketMessage);
         }
     }
 
-    private void handleRequestChats(final RequestChatsWebSocketMessage requestChatsWebSocketMessage, final WebSocketConnection connection) {
+    private void handleInitConnection(final InitConnectionWebSocketMessage initConnectionWebSocketMessage, final WebSocketConnection connection) {
         try{
-            final List<BLChatPlainView> chats = chatService.getChatListPlainByUserId(requestChatsWebSocketMessage.userId());
+            chatWebRegistry.registerUserConnection(initConnectionWebSocketMessage.userId(), connection);
+            final List<BLChatPlainView> chats = chatService.getChatListPlainByUserId(initConnectionWebSocketMessage.userId());
             final ReceiveChatsWebSocketMessage receiveChatsWebSocketMessage = new ReceiveChatsWebSocketMessage("RECEIVE_CHATS", chats);
             final String jsonString = objectMapper.writeValueAsString(receiveChatsWebSocketMessage);
-            chats.forEach(chat -> {
-                chatRegistry.joinChat(chat.getId(), connection);
-            });
             connection.sendText(jsonString).subscribe().with(v -> {});
         } catch (JsonProcessingException jpe) {
             jpe.printStackTrace();

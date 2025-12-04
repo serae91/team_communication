@@ -15,10 +15,10 @@ type ReceiveChats = { type: 'RECEIVE_CHATS';  blChats: BLChatPlainDto[] };
 type ReceiveChat = { type: 'RECEIVE_CHAT';  blChat: BLChatPlainDto };
 
 type WebSocketMessageOutgoing =
-  | RequestChats
+  | InitConnection
   | SendMessage
   | SwitchChat;
 
-type RequestChats = { type: 'REQUEST_CHATS'; userId: number; }
+type InitConnection = { type: 'INIT_CONNECTION'; userId: number; }
 type SendMessage = { type: 'SEND_MESSAGE'; chatId: number; blMessage: BLMessageCreateDto }
 type SwitchChat = { type: 'SWITCH_CHAT'; chatId: number; }

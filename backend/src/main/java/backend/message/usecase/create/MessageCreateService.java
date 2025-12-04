@@ -27,6 +27,10 @@ public class MessageCreateService {
     @Inject
     MessageService messageService;
 
+    public void persist(final BLMessage blMessage) {
+        messageRepository.persist(blMessage);
+    }
+
     public void createMessageFromView(final BLMessageCreateView blMessageCreateView) {
         blMessageCreateView.setCreatedAt(new Date());
         entityViewManager.save(entityManager, blMessageCreateView);
