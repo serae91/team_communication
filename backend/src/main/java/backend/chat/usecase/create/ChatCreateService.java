@@ -1,22 +1,21 @@
 package backend.chat.usecase.create;
 
+import backend.auth.core.UserService;
 import backend.chat.core.ChatRepository;
+import backend.chat.core.ChatService;
+import backend.chat.core.RelChatUserRepository;
 import backend.entities.bl_chat.BLChat;
 import backend.entities.bl_chat.BLChatCreateDto;
-import backend.entities.bl_chat.BLChatCreateView;
+import backend.entities.bl_chat.BLChatPlainView;
 import backend.entities.bl_message.BLMessage;
+import backend.entities.bl_rel_chat_user.BLRelChatUser;
 import backend.entities.bl_user.BLUser;
-import backend.entities.bl_user.BLUserIdView;
 import backend.message.usecase.create.MessageCreateService;
-import com.blazebit.persistence.view.EntityViewManager;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Dependent
 public class ChatCreateService {
@@ -24,38 +23,41 @@ public class ChatCreateService {
     ChatRepository chatRepository;
 
     @Inject
+    ChatService chatService;
+
+    @Inject
+    UserService userService;
+
+    @Inject
+    RelChatUserRepository relChatUserRepository;
+
+    @Inject
     MessageCreateService messageCreateService;
 
-    @Inject
-    EntityManager entityManager;
-
-    @Inject
-    EntityViewManager entityViewManager;
-
     @Transactional
-    public void createChatFromDto(final BLChatCreateDto blChatCreateDto) {
+    public BLChatPlainView createChatFromDto(final BLChatCreateDto blChatCreateDto) {
         final Date createdAt = new Date();
-        final BLChatCreateView chatCreateView = entityViewManager.create(BLChatCreateView.class);
-        final List<BLUserIdView> userIdViews = new ArrayList<>();
-        blChatCreateDto.userIds().forEach(userId->userIdViews.add(entityViewManager.getReference(BLUserIdView.class, userId)));
-        chatCreateView.setCreatedAt(createdAt);
-        chatCreateView.setTitle(blChatCreateDto.title());
-        chatCreateView.setUrgency(blChatCreateDto.urgency());
-        chatCreateView.set(blChatCreateDto.urgency());
-        final BLChat blChat = BLChat.builder()
+        blChatCreateDto.userIds().add(blChatCreateDto.senderId());
+
+        final BLChat chat = BLChat.builder()
                 .title(blChatCreateDto.title())
                 .urgency(blChatCreateDto.urgency())
                 .createdAt(createdAt)
-                .users()
                 .build();
-        chatRepository.persist(blChat);
+        chatRepository.persist(chat);
+        blChatCreateDto.userIds().forEach(id -> {
+            final BLUser user = userService.getUserById(id);
+            final BLRelChatUser relChatUser = BLRelChatUser.builder().user(user).chat(chat).build();
+            relChatUserRepository.persist(relChatUser);
+        });
         final BLUser sender = BLUser.builder().id(blChatCreateDto.senderId()).build();
-        final BLMessage blMessage = BLMessage.builder()
+        final BLMessage firstMessage = BLMessage.builder()
                 .sender(sender)
-                .chat(blChat)
+                .chat(chat)
                 .text(blChatCreateDto.firstMessageText())
                 .createdAt(createdAt)
                 .build();
-        messageCreateService.persist(blMessage);
+        messageCreateService.persist(firstMessage);
+        return chatService.getChatPlainById(chat.getId());
     }
 }

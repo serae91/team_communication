@@ -1,4 +1,6 @@
 package backend.websocket.model.outgoing;
 
-public record CreateChatWebSocketMessage() implements OutgoingWebSocketMessage {
+import backend.entities.bl_chat.BLChatCreateDto;
+
+public record CreateChatWebSocketMessage(String type, BLChatCreateDto chatCreateDto) implements OutgoingWebSocketMessage {
 }

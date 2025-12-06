@@ -34,7 +34,7 @@ const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }: ChatModalProps
   const sendMessage = (text: string)=>{
     if(!activeChatId) return;
     const blMessageCreateDto = {
-      chatId:  activeChatId,
+      chatId: activeChatId,
       text,
       senderId:  1/*TODO replace*/
     } as BLMessageCreateDto;

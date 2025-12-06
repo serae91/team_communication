@@ -29,8 +29,8 @@ import java.util.Date;
 public class BLRelChatUser {
 
     @Id
-    @GeneratedValue(generator = "rel_chat_user_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "rel_chat_user_sequence", sequenceName = "rel_chat_user_sequence", allocationSize = 1)
+    @GeneratedValue(generator = "bl_rel_chat_user_sequence", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "bl_rel_chat_user_sequence", sequenceName = "bl_rel_chat_user_sequence", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 

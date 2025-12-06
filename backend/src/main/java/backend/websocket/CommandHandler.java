@@ -1,16 +1,18 @@
 package backend.websocket;
 
 import backend.chat.core.ChatService;
+import backend.chat.usecase.create.ChatCreateService;
 import backend.entities.bl_chat.BLChatPlainView;
 import backend.entities.bl_message.BLMessageView;
 import backend.message.core.MessageService;
 import backend.message.usecase.create.MessageCreateService;
-import backend.websocket.model.UserConnection;
+import backend.websocket.model.incoming.ReceiveChatWebSocketMessage;
 import backend.websocket.model.incoming.ReceiveChatsWebSocketMessage;
+import backend.websocket.model.outgoing.CreateChatWebSocketMessage;
 import backend.websocket.model.outgoing.OutgoingWebSocketMessage;
 import backend.websocket.model.incoming.ReceiveMessageWebSocketMessage;
-import backend.websocket.model.incoming.ChatMessagesWebSocketMessage;
-import backend.websocket.model.outgoing.InitConnectionWebSocketMessage;
+import backend.websocket.model.incoming.ReceiveMessagesWebSocketMessage;
+import backend.websocket.model.outgoing.RequestChatsWebSocketMessage;
 import backend.websocket.model.outgoing.SendMessageWebSocketMessage;
 import backend.websocket.model.outgoing.SwitchChatWebSocketMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,6 +35,9 @@ public class CommandHandler {
     ChatService chatService;
 
     @Inject
+    ChatCreateService chatCreateService;
+
+    @Inject
     MessageService messageService;
 
     @Inject
@@ -45,17 +50,30 @@ public class CommandHandler {
 
     public void handleCommand(final OutgoingWebSocketMessage outgoingWebsocketMessage, final WebSocketConnection connection) {
         switch (outgoingWebsocketMessage) {
-            case InitConnectionWebSocketMessage ic -> handleInitConnection(ic, connection);
+            case CreateChatWebSocketMessage cc -> handleCreateChat(cc, connection);
+            case RequestChatsWebSocketMessage rc -> handleRequestChats(rc, connection);
             case SendMessageWebSocketMessage sm -> handleSendMessage(sm, connection);
             case SwitchChatWebSocketMessage sc -> handleSwitchChat(sc, connection);
             default -> throw new IllegalStateException("Unexpected OutgoingWebsocketMessage type: " + outgoingWebsocketMessage);
         }
     }
 
-    private void handleInitConnection(final InitConnectionWebSocketMessage initConnectionWebSocketMessage, final WebSocketConnection connection) {
+    private void handleCreateChat(final CreateChatWebSocketMessage createChatWebSocketMessage, final WebSocketConnection connection) {
+        try {
+            final BLChatPlainView chatPlainView = chatCreateService.createChatFromDto(createChatWebSocketMessage.chatCreateDto());
+            final ReceiveChatWebSocketMessage receiveChatWebSocketMessage = new ReceiveChatWebSocketMessage("RECEIVE_CHAT", chatPlainView);
+            final String jsonString = objectMapper.writeValueAsString(receiveChatWebSocketMessage);
+            chatRegistry.addChat(chatPlainView.getId(), createChatWebSocketMessage.chatCreateDto().userIds());
+            chatRegistry.sendToChat(chatPlainView.getId(), jsonString);
+        } catch (JsonProcessingException jpe) {
+            jpe.printStackTrace();
+        }
+    }
+
+    private void handleRequestChats(final RequestChatsWebSocketMessage requestChatsWebSocketMessage, final WebSocketConnection connection) {
         try{
-            chatWebRegistry.registerUserConnection(initConnectionWebSocketMessage.userId(), connection);
-            final List<BLChatPlainView> chats = chatService.getChatListPlainByUserId(initConnectionWebSocketMessage.userId());
+            chatWebRegistry.registerUserConnection(requestChatsWebSocketMessage.userId(), connection);
+            final List<BLChatPlainView> chats = chatService.getChatListPlainByUserId(requestChatsWebSocketMessage.userId());
             final ReceiveChatsWebSocketMessage receiveChatsWebSocketMessage = new ReceiveChatsWebSocketMessage("RECEIVE_CHATS", chats);
             final String jsonString = objectMapper.writeValueAsString(receiveChatsWebSocketMessage);
             connection.sendText(jsonString).subscribe().with(v -> {});
@@ -84,7 +102,7 @@ public class CommandHandler {
             chatRegistry.leaveAllChats(connection);
             chatRegistry.joinChat(switchChatWebSocketMessage.chatId(), connection);
             final List<BLMessageView> blMessageViews = messageService.getBLMessageViewsByChatId(switchChatWebSocketMessage.chatId());
-            final ChatMessagesWebSocketMessage chatMessages = new ChatMessagesWebSocketMessage("CHAT_MESSAGES", switchChatWebSocketMessage.chatId(), blMessageViews);
+            final ReceiveMessagesWebSocketMessage chatMessages = new ReceiveMessagesWebSocketMessage("CHAT_MESSAGES", switchChatWebSocketMessage.chatId(), blMessageViews);
             final String jsonString = objectMapper.writeValueAsString(chatMessages);
             log.info("Sending chat messages {} ", jsonString);
             connection.sendText(jsonString).subscribe().with(v -> {});

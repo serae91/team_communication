@@ -1,5 +1,6 @@
 package backend.auth.core;
 
+import backend.entities.bl_user.BLUser;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -23,6 +24,10 @@ public class UserService {
         //final BLUser user = userRepository.find("username", username).firstResult();
         //return user != null && BcryptUtil.matches(password, user.getPasswordHash());
         return true;
+    }
+
+    public BLUser getUserById(final Long userId) {
+        return userRepository.findById(userId);
     }
 }
 
