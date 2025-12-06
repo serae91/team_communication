@@ -4,6 +4,7 @@ import backend.chat.core.ChatService;
 import backend.chat.usecase.update.ChatUpdateService;
 import backend.entities.bl_chat.BLChatFullInfoView;
 import backend.entities.bl_chat.BLChatPlainView;
+import backend.entities.bl_chat.Urgency;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -12,6 +13,7 @@ import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Path("/chat")
@@ -40,5 +42,13 @@ public class ChatResource {
     @Transactional
     public void triggerDown(@PathParam("chatId") final Long chatId, @PathParam("userId") final Long userId) {
         chatUpdateService.triggerDown(chatId, userId);
+    }
+
+    @GET
+    @Path("/urgencies")
+    public List<String> getUrgencies() {
+        return Arrays.stream(Urgency.values())
+                .map(Enum::name)
+                .toList();
     }
 }
