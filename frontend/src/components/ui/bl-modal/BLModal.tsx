@@ -1,20 +1,26 @@
 import { motion, AnimatePresence } from "framer-motion";
 import type React  from "react";
 import type { ReactNode } from "react";
+import { type ModalType, useModal } from '../../../providers/modal/ModalProvider.tsx';
 
 interface ModalProps {
-  isOpen: boolean;
+  modalType: ModalType;
   onClose?: ()=>void;
   children?: ReactNode;
 }
 
-const BLModal = ({ isOpen, onClose, children }: ModalProps)=> {
+const BLModal = ({ modalType, onClose, children }: ModalProps)=> {
+  const {currentModal, openModal, closeModal} = useModal();
   return (
     <AnimatePresence>
-      {isOpen && (
+      {currentModal === modalType && (
         <motion.div
           className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-          onClick={onClose}
+          onClick={()=>{
+            closeModal();
+            if(onClose)onClose();
+          }
+        }
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

@@ -6,7 +6,7 @@ import { BLMessageProvider } from '../../../providers/bl-message/BLMessageProvid
 import {
   BLMessageWebsocketProvider
 } from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
-import { ModalProvider } from '../../../providers/modal/ModalOpenProvider.tsx';
+import { ModalProvider } from '../../../providers/modal/ModalProvider.tsx';
 import { SideNavBar } from '../../layout/side-nav-bar/SideNavBar.tsx';
 
 interface BLMainPageProps {

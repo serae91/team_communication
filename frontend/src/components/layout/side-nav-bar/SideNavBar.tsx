@@ -3,6 +3,7 @@ import SideNavBarButton from './side-nav-bar-button/SideNavBarButton';
 import { FaEnvelope, FaHistory, FaUserPlus } from 'react-icons/fa';
 import SideNavBarProfile from './side-nav-bar-profile/SideNavBarProfile';
 import BLSideSymbol from '../../ui/bl-side-symbol/BLSideSymbol';
+import { useModal } from '../../../providers/modal/ModalProvider.tsx';
 
 
 interface SideNavBarProps {
@@ -10,9 +11,11 @@ interface SideNavBarProps {
 }
 
 export const SideNavBar = ({}: SideNavBarProps) => {
+  const {currentModal, openModal, closeModal} = useModal()
   return(
     <div className="side-nav-bar flex-col">
       <SideNavBarProfile/>
+      <button onClick={()=>openModal('CREATE_CHAT')}>Open Create Chat Modal</button>
       <div className={ 'button-group flex-col' }>
         <SideNavBarButton badgeCount={ 3 }>
           <BLSideSymbol><FaEnvelope size={ 20 } className={'side-symbol'}/></BLSideSymbol>

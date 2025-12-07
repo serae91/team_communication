@@ -8,9 +8,9 @@ interface CreateChatModalProps {
 
 export const CreateChatModal = ({ isOpen, onClose }: CreateChatModalProps) => {
   return(
-    <BLModal isOpen={isOpen}>
+    <BLModal modalType={'CREATE_CHAT'}>
       <BLLeftMarkedCard>
-
+        Create Chat
       </BLLeftMarkedCard>
     </BLModal>)
 }

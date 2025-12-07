@@ -41,7 +41,7 @@ const ChatModal = ({ isOpen, onClose }: ChatModalProps) => {
     send({type: 'SEND_MESSAGE', chatId: activeChatId, blMessage: blMessageCreateDto})
   }
   return(
-    <BLModal isOpen={isOpen} onClose={onClose}>
+    <BLModal modalType={'JOIN_CHAT'} onClose={onClose}>
       {chats?.find(chat=>chat.id===activeChatId)?.title??'Error: Selected chat could not be found'}
       <button onClick={setNextChat}>Set next chat</button>
       <button onClick={()=>{if(activeChatId)

@@ -4,7 +4,7 @@ export interface ModalProviderProps {
   children: ReactNode;
 }
 
-type ModalType = 'CREATE_CHAT' | 'JOIN_CHAT' | null;
+export type ModalType = 'CREATE_CHAT' | 'JOIN_CHAT' | null;
 
 export type ModalContextType = {
   currentModal: ModalType;

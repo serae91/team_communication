@@ -12,7 +12,7 @@ import type {
 } from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
 import type { BLChatCreateDto } from '../../../../dtos/BLChatPlainDto.ts';
 import { CreateChatModal } from '../../../modals/create-chat-modal/CreateChatModal.tsx';
-import { useModal } from '../../../../providers/modal/ModalOpenProvider.tsx';
+import { useModal } from '../../../../providers/modal/ModalProvider.tsx';
 
 interface InboxProps {
 
