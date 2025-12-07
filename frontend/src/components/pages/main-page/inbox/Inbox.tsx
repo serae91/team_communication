@@ -30,7 +30,7 @@ function Inbox(props: InboxProps): JSX.Element {
         case 'RECEIVE_MESSAGES': setMessages(msg.blMessages); break;
         case 'RECEIVE_MESSAGE': setMessages((prev) => [...prev, msg.blMessage]); break;
         case 'RECEIVE_CHATS': setChats(msg.blChats); break;
-        case 'RECEIVE_CHAT': console.log('receive chat', msg); setChats((prev) => [...prev, msg.blChat]); break;
+        case 'RECEIVE_CHAT': setChats((prev) => [...prev, msg.blChat]); break;
       }
     };
 
@@ -83,7 +83,7 @@ function Inbox(props: InboxProps): JSX.Element {
         isOpen={currentModal === 'JOIN_CHAT'}
         onClose={closeModal}
       />
-      <CreateChatModal isOpen={currentModal === 'CREATE_CHAT'} onClose={closeModal}/>
+      <CreateChatModal onClose={closeModal}/>
       <div className={ 'title-box flex-col' }>
         <div className={ 'title' }>
           Inbox
@@ -95,23 +95,6 @@ function Inbox(props: InboxProps): JSX.Element {
       <BLHintCard hintCardType={'error'}>
         Number of messages marked as "Urgent" waiting for your response
       </BLHintCard>
-      <button
-        onClick={
-          () => {
-            const message = {
-              type:'CREATE_CHAT',
-              chatCreateDto: {
-                title: 'Perfectly tested title',
-                firstMessageText: 'Perfect First Message',
-                urgency: 'HIGH',
-                senderId: 1,
-                userIds: [1,3]
-              } as BLChatCreateDto} as WebsocketMessage;
-            send(message);
-          }
-        }
-      >{'test create chat'/*TODO remove test button*/}</button>
-
       {listChatsPlain()}
     </BLContentCard>
 

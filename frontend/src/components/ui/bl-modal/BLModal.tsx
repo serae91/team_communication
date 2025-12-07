@@ -10,6 +10,7 @@ interface ModalProps {
 }
 
 const BLModal = ({ modalType, onClose, children }: ModalProps)=> {
+  if(modalType === null) throw new Error('BLModal modalType must not be null');
   const {currentModal, openModal, closeModal} = useModal();
   return (
     <AnimatePresence>
@@ -33,7 +34,8 @@ const BLModal = ({ modalType, onClose, children }: ModalProps)=> {
             exit={{ scale: 0.8, opacity: 0 }}
           >
             <div className={'flex-1'}>
-            {children}</div>
+              {children}
+            </div>
           </motion.div>
         </motion.div>
       )}

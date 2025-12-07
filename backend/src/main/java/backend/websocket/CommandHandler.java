@@ -102,7 +102,7 @@ public class CommandHandler {
             chatRegistry.leaveAllChats(connection);
             chatRegistry.joinChat(switchChatWebSocketMessage.chatId(), connection);
             final List<BLMessageView> blMessageViews = messageService.getBLMessageViewsByChatId(switchChatWebSocketMessage.chatId());
-            final ReceiveMessagesWebSocketMessage chatMessages = new ReceiveMessagesWebSocketMessage("CHAT_MESSAGES", switchChatWebSocketMessage.chatId(), blMessageViews);
+            final ReceiveMessagesWebSocketMessage chatMessages = new ReceiveMessagesWebSocketMessage("RECEIVE_MESSAGES", switchChatWebSocketMessage.chatId(), blMessageViews);
             final String jsonString = objectMapper.writeValueAsString(chatMessages);
             log.info("Sending chat messages {} ", jsonString);
             connection.sendText(jsonString).subscribe().with(v -> {});
