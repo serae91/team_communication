@@ -3,7 +3,7 @@ import type { JSX } from 'react';
 import MessageCard from './message-card/MessageCard.tsx';
 import BLContentCard from '../../../ui/bl-content-card/BLContentCard.tsx';
 import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';
-import ChatModal from '../../../modals/ChatModal.tsx';
+import ChatModal from '../../../modals/chat-modal/ChatModal.tsx';
 import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
 import { useWebSocket } from '../../../../providers/bl-websocket/BLWebSocketProvider.tsx';
 import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
@@ -11,6 +11,8 @@ import type {
   WebsocketMessage,
 } from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
 import type { BLChatCreateDto } from '../../../../dtos/BLChatPlainDto.ts';
+import { CreateChatModal } from '../../../modals/create-chat-modal/CreateChatModal.tsx';
+import { useModal } from '../../../../providers/modal/ModalOpenProvider.tsx';
 
 interface InboxProps {
 
@@ -20,7 +22,7 @@ function Inbox(props: InboxProps): JSX.Element {
   const { connected, removeMessageHandler, addMessageHandler, send } = useWebSocket<WebsocketMessage>();
   const { chats, setChats, activeChatId, setActiveChatId } = useBLChats();
   const { messages, setMessages } = useBLMessages();
-  const [isChatOpen, setChatOpen] = useState(false);
+  const {currentModal, openModal, closeModal} = useModal()
 
   const onMessageIncoming = (msg: WebsocketMessage) => {
       console.log('received message: ', msg)
@@ -70,7 +72,7 @@ function Inbox(props: InboxProps): JSX.Element {
         sender={'test sender'} color={'red'}
         onClick={()=>{
           setActiveChatId(chat.id);
-          setChatOpen(true);
+          openModal('JOIN_CHAT');
         }}
       />
     ))};
@@ -78,9 +80,10 @@ function Inbox(props: InboxProps): JSX.Element {
   return(
     <BLContentCard className={'inbox relative'}>
       <ChatModal
-        isOpen={isChatOpen}
-        onClose={()=> setChatOpen(false)}
+        isOpen={currentModal === 'JOIN_CHAT'}
+        onClose={closeModal}
       />
+      <CreateChatModal isOpen={currentModal === 'CREATE_CHAT'} onClose={closeModal}/>
       <div className={ 'title-box flex-col' }>
         <div className={ 'title' }>
           Inbox

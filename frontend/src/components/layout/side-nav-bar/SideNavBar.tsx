@@ -1,4 +1,3 @@
-import { JSX } from 'react';
 import './SideNavBar.scss';
 import SideNavBarButton from './side-nav-bar-button/SideNavBarButton';
 import { FaEnvelope, FaHistory, FaUserPlus } from 'react-icons/fa';
@@ -10,7 +9,7 @@ interface SideNavBarProps {
 
 }
 
-function SideNavBar(props: SideNavBarProps): JSX.Element {
+export const SideNavBar = ({}: SideNavBarProps) => {
   return(
     <div className="side-nav-bar flex-col">
       <SideNavBarProfile/>
@@ -19,7 +18,7 @@ function SideNavBar(props: SideNavBarProps): JSX.Element {
           <BLSideSymbol><FaEnvelope size={ 20 } className={'side-symbol'}/></BLSideSymbol>
           Inbox
         </SideNavBarButton>
-        <SideNavBarButton badgeCount={ undefined }>
+        <SideNavBarButton badgeCount={ 1 }>
           <BLSideSymbol><FaHistory size={ 20 } className={'side-symbol'}/></BLSideSymbol>
           History
         </SideNavBarButton>
@@ -33,7 +32,7 @@ function SideNavBar(props: SideNavBarProps): JSX.Element {
         <SideNavBarButton badgeCount={ 3 }>
           <BLSideSymbol>#</BLSideSymbol> Development
         </SideNavBarButton>
-        <SideNavBarButton badgeCount={ undefined }>
+        <SideNavBarButton badgeCount={ 4 }>
           <BLSideSymbol>#</BLSideSymbol> Marketing
         </SideNavBarButton>
         <SideNavBarButton badgeCount={ 0 }>
@@ -43,5 +42,3 @@ function SideNavBar(props: SideNavBarProps): JSX.Element {
     </div>
   );
 }
-
-export default SideNavBar;

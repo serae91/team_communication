@@ -8,7 +8,7 @@ interface ModalProps {
   children?: ReactNode;
 }
 
-const BLModal: React.FC<ModalProps> = ({ isOpen, onClose, children }: ModalProps)=> {
+const BLModal = ({ isOpen, onClose, children }: ModalProps)=> {
   return (
     <AnimatePresence>
       {isOpen && (

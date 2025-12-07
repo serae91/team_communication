@@ -1,23 +1,23 @@
-import React, { useEffect } from 'react';
-import BLModal from '../ui/bl-modal/BLModal.tsx';
-import BLLeftMarkedCard from '../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
-import ChatSystem from '../system/chat-system/ChatSystem.tsx';
+import React from 'react';
+import BLModal from '../../ui/bl-modal/BLModal.tsx';
+import BLLeftMarkedCard from '../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
+import ChatSystem from '../../system/chat-system/ChatSystem.tsx';
 import './ChatModal.scss';
-import { triggerDown } from '../../services/ChatService.ts';
-import { useWebSocket } from '../../providers/bl-websocket/BLWebSocketProvider.tsx';
+import { triggerDown } from '../../../services/ChatService.ts';
+import { useWebSocket } from '../../../providers/bl-websocket/BLWebSocketProvider.tsx';
 import type {
   WebsocketMessage
-} from '../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
-import { useBLChats } from '../../providers/bl-chat/BLChatProvider.tsx';
-import { useBLMessages } from '../../providers/bl-message/BLMessageProvider.tsx';
-import type { BLMessageCreateDto } from '../../dtos/BLMessageDto.ts';
+} from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
+import { useBLChats } from '../../../providers/bl-chat/BLChatProvider.tsx';
+import { useBLMessages } from '../../../providers/bl-message/BLMessageProvider.tsx';
+import type { BLMessageCreateDto } from '../../../dtos/BLMessageDto.ts';
 
 interface ChatModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const ChatModal: React.FC<ChatModalProps> = ({ isOpen, onClose }: ChatModalProps) => {
+const ChatModal = ({ isOpen, onClose }: ChatModalProps) => {
   const { connected, removeMessageHandler, addMessageHandler, send } = useWebSocket<WebsocketMessage>();
   const { chats, setChats, activeChatId, setActiveChatId } = useBLChats();
   const { messages, setMessages } = useBLMessages();
