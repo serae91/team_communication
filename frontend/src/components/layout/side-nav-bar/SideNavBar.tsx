@@ -11,7 +11,7 @@ interface SideNavBarProps {
 }
 
 export const SideNavBar = ({}: SideNavBarProps) => {
-  const {currentModal, openModal, closeModal} = useModal()
+  const { openModal } = useModal()
   return(
     <div className="side-nav-bar flex-col">
       <SideNavBarProfile/>

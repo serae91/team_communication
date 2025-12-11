@@ -8,7 +8,9 @@ import type {
 import { useWebSocket } from '../../../providers/bl-websocket/BLWebSocketProvider.tsx';
 import ChatMessenging from '../../system/chat-system/chat-messenging/ChatMessenging.tsx';
 import { useModal } from '../../../providers/modal/ModalProvider.tsx';
-import BLMultiSelect from '../../ui/bl-multi-select/BLMultiSelect.tsx';
+import BLMultiSelect, { type GmailLabel } from '../../ui/bl-multi-select/BLMultiSelect.tsx';
+import LabelIcon from '@mui/icons-material/Label';
+import { useState } from 'react';
 
 interface CreateChatModalProps {
   onClose: () => void;
@@ -16,7 +18,8 @@ interface CreateChatModalProps {
 
 export const CreateChatModal = ({ onClose }: CreateChatModalProps) => {
   const { send } = useWebSocket();
-  const {closeModal} = useModal()
+  const {closeModal} = useModal();
+  const [selected, setSelected] = useState<string[]>([]);
   const sendCreateChatMessage = (text: string) => {
     const message = {
       type:'CREATE_CHAT',
@@ -34,8 +37,46 @@ export const CreateChatModal = ({ onClose }: CreateChatModalProps) => {
   return(
     <BLModal modalType={'CREATE_CHAT'}>
       <BLLeftMarkedCard>
-        <BLMultiSelect/>
+        <BLMultiSelect
+          labels={dummyLabels}
+          value={selected}
+          onChange={setSelected}
+          placeholder="Choose labels…"
+        />
         <ChatMessenging messages={[]} sendMessage={sendCreateChatMessage}/>
       </BLLeftMarkedCard>
     </BLModal>)
 }
+
+export const dummyLabels: GmailLabel[] = [
+  {
+    id: "1",
+    name: "Important",
+    color: "#e53935", // rot
+    icon: <LabelIcon />,
+  },
+  {
+    id: "2",
+    name: "Work",
+    color: "#1e88e5", // blau
+    icon: <LabelIcon />,
+  },
+  {
+    id: "3",
+    name: "Personal",
+    color: "#43a047", // grün
+    icon: <LabelIcon />,
+  },
+  {
+    id: "4",
+    name: "Family",
+    color: "#8e24aa", // lila
+    icon: <LabelIcon />,
+  },
+  {
+    id: "5",
+    name: "Travel",
+    color: "#fb8c00", // orange
+    icon: <LabelIcon />,
+  },
+];
