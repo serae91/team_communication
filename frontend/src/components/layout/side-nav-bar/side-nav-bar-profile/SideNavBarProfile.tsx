@@ -1,15 +1,17 @@
-import { JSX } from 'react';
 import './SideNavBarProfile.scss';
 import {
   FaHandHoldingUsd,
 } from 'react-icons/fa';
+import { useAuth } from '../../../../providers/auth/AuthProvider.tsx';
+import { Logout } from '@mui/icons-material';
 
 
 interface SideNavBarProfileProps {
 
 }
 
-function SideNavProfile(props: SideNavBarProfileProps): JSX.Element {
+export const SideNavBarProfile = ({}: SideNavBarProfileProps) => {
+  const {logout} = useAuth();
   return(
     <div className={ 'profile flex-row' }>
       <button className={ 'card' }>
@@ -22,9 +24,7 @@ function SideNavProfile(props: SideNavBarProfileProps): JSX.Element {
           <FaHandHoldingUsd size={ 20 } className={'icon'}/>
         </div>
       </button>
-      <FaHandHoldingUsd size={ 20 } className={'icon'}/>
+      <Logout onClick={logout}/>
     </div>
   );
 }
-
-export default SideNavProfile;

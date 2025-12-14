@@ -2,6 +2,7 @@ package backend.auth.web;
 
 import backend.auth.core.AuthService;
 import backend.auth.model.LoginRequest;
+import backend.auth.model.RegisterRequest;
 import backend.auth.model.UserInfo;
 import backend.entities.bl_user.BLUser;
 import backend.filter.CookieAuthFilterProtected;
@@ -39,7 +40,7 @@ public class AuthResource {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        String token = Jwt.subject(user.getUsername())
+        final String token = Jwt.subject(user.getUsername())
                 .claim("userId", user.getId())
                 //.groups(user.getRoles())
                 .groups(Set.of("user"))//TODO replace by line above
@@ -51,6 +52,25 @@ public class AuthResource {
                 .header("Set-Cookie", "token=" + token + "; HttpOnly; Path=/; SameSite=Lax")//TODO replace by line above
                 .build();
     }
+
+    @POST
+    @Path("/logout")
+    public Response logout() {
+        return Response.noContent()
+                .header("Set-Cookie", "token=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax")//TODO make secure
+                .build();
+    }
+
+    @POST
+    @Path("/register")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response register(RegisterRequest request) {
+        final BLUser newUser = authService.createUser(request.username(), request.password());
+        return Response.status(Response.Status.CREATED)
+                .entity(newUser)
+                .build();
+    }
+
 
     @GET
     @Path("/me")
