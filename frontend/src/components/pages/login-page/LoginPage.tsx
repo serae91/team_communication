@@ -46,6 +46,7 @@ export default function LoginPage() {
       <input value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" />
       <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
       <button onClick={handleLogin}>Login</button>
+      <button onClick={() => navigate("/register")}>Go to Register</button>
     </div>
   );
 }

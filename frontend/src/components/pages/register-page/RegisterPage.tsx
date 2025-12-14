@@ -45,6 +45,7 @@ export const RegisterPage = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={handleRegister}>Register</button>
+      <button onClick={() => navigate("/login")}>Go to Login</button>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
