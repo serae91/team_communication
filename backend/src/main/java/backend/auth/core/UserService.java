@@ -9,7 +9,7 @@ import jakarta.transaction.Transactional;
 public class UserService {
 
     @Inject
-    UserRepository userRepository;
+    UserRepository UserRepository;
 
     @Transactional
     public void register(final String username, final String password) {
@@ -17,17 +17,17 @@ public class UserService {
         final BLUser user = new BLUser();
         user.setUsername(username);
         user.setPasswordHash(hash);
-        userRepository.persist(user);*/
+        UserRepository.persist(user);*/
     }
 
     public boolean authenticate(final String username, final String password) {
-        //final BLUser user = userRepository.find("username", username).firstResult();
+        //final BLUser user = UserRepository.find("username", username).firstResult();
         //return user != null && BcryptUtil.matches(password, user.getPasswordHash());
         return true;
     }
 
     public BLUser getUserById(final Long userId) {
-        return userRepository.findById(userId);
+        return UserRepository.findById(userId);
     }
 }
 

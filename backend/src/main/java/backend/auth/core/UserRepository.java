@@ -6,4 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class UserRepository implements PanacheRepository<BLUser> {
+    public BLUser findByUsername(final String username) {
+        return find("username", username).singleResult();
+    }
 }
