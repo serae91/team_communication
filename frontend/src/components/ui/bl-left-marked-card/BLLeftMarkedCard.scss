@@ -3,14 +3,15 @@
 
 .left-marked-card {
   position: relative;
-  align-items: flex-start;
-  justify-content: center;
   background-color: colors.$color-hover-gray;
   border-radius: constants.$border-radius;
-  border-left-style: solid;
-  border-left-width: constants.$border-spacer-width;
-  padding-left: 13px;
-  outline: none;
+  overflow: hidden;
+
+  padding-left: calc(
+          #{constants.$border-spacer-width} + 13px
+  );
+
+  --color: #181D27;
 
   &::before {
     content: "";
@@ -18,14 +19,12 @@
     top: 0;
     left: 0;
     bottom: 0;
-    width: constants.$border-spacer-width;
-    background: var(--color);
-    border-top-left-radius: constants.$border-radius;
-    border-bottom-left-radius: constants.$border-radius;
-  }
 
-  --color: #181D27;
+    width: constants.$border-spacer-width;
+    background-color: var(--color);
+  }
 }
+
 
 .left-marked-card--black {
   --color: #181D27;

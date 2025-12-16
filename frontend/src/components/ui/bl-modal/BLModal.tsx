@@ -15,7 +15,7 @@ const BLModal = ({modalType, onClose, children}: ModalProps) => {
     <AnimatePresence>
       { currentModal === modalType && (
         <motion.div
-          className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          className="absolute inset-0 bg-black/20 flex justify-center items-center z-50"
           onClick={ () => {
             closeModal();
             if (onClose) onClose();
@@ -26,7 +26,7 @@ const BLModal = ({modalType, onClose, children}: ModalProps) => {
           exit={ {opacity: 0} }
         >
           <motion.div
-            className="bg-white rounded-2xl shadow-lg max-w-md w-full max-h-[80vh] flex flex-col"
+            className="shadow-lg max-w-md w-full max-h-[80vh] flex flex-col"
             onClick={ (e) => e.stopPropagation() }
             initial={ {scale: 0.8, opacity: 0} }
             animate={ {scale: 1, opacity: 1} }
