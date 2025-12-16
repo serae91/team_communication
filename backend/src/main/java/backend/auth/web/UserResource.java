@@ -1,7 +1,7 @@
 package backend.auth.web;
 
 import backend.auth.core.UserService;
-import backend.auth.model.TokenDTO;
+import backend.auth.model.TokenDto;
 import backend.entities.bl_user.BLUserDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
-@Path("/auth")
+@Path("/user")
 @ApplicationScoped
 public class UserResource {
     @Inject
@@ -55,7 +55,7 @@ public class UserResource {
                     .setIssuedAt(new Date(now))
                     .signWith(key, SignatureAlgorithm.HS256)
                     .compact();
-            return Response.ok(new TokenDTO(token)).build();
+            return Response.ok(new TokenDto(token)).build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }

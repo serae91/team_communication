@@ -13,6 +13,7 @@ import type {
 import type { BLChatCreateDto } from '../../../../dtos/BLChatPlainDto.ts';
 import { CreateChatModal } from '../../../modals/create-chat-modal/CreateChatModal.tsx';
 import { useModal } from '../../../../providers/modal/ModalProvider.tsx';
+import { useAuth } from '../../../../providers/auth/AuthProvider.tsx';
 
 interface InboxProps {
 
@@ -23,6 +24,7 @@ function Inbox(props: InboxProps): JSX.Element {
   const { chats, setChats, activeChatId, setActiveChatId } = useBLChats();
   const { messages, setMessages } = useBLMessages();
   const {currentModal, openModal, closeModal} = useModal()
+  const {user} = useAuth();
 
   const onMessageIncoming = (msg: WebsocketMessage) => {
       console.log('received message: ', msg)
@@ -35,9 +37,10 @@ function Inbox(props: InboxProps): JSX.Element {
     };
 
   const requestChats = () => {
+    if(user?.id)
     send({
       type: 'REQUEST_CHATS',
-      userId: 1,/*TODO replace*/
+      userId: user?.id,
     });
   }
 

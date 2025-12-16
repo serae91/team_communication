@@ -11,6 +11,7 @@ import type {
 import { useBLChats } from '../../../providers/bl-chat/BLChatProvider.tsx';
 import { useBLMessages } from '../../../providers/bl-message/BLMessageProvider.tsx';
 import type { BLMessageCreateDto } from '../../../dtos/BLMessageDto.ts';
+import { useAuth } from '../../../providers/auth/AuthProvider.tsx';
 
 interface ChatModalProps {
   isOpen: boolean;
@@ -21,6 +22,7 @@ const ChatModal = ({ isOpen, onClose }: ChatModalProps) => {
   const { connected, removeMessageHandler, addMessageHandler, send } = useWebSocket<WebsocketMessage>();
   const { chats, setChats, activeChatId, setActiveChatId } = useBLChats();
   const { messages, setMessages } = useBLMessages();
+  const { user } = useAuth();
 
   const setNextChat = () => {
     const currentChatIndex = chats.findIndex(chat=>chat.id===activeChatId);
@@ -32,11 +34,11 @@ const ChatModal = ({ isOpen, onClose }: ChatModalProps) => {
   }
 
   const sendMessage = (text: string)=>{
-    if(!activeChatId) return;
+    if(!activeChatId || !user?.id) return;
     const blMessageCreateDto = {
       chatId: activeChatId,
       text,
-      senderId:  1/*TODO replace*/
+      senderId:  user.id
     } as BLMessageCreateDto;
     send({type: 'SEND_MESSAGE', chatId: activeChatId, blMessage: blMessageCreateDto})
   }
@@ -44,8 +46,8 @@ const ChatModal = ({ isOpen, onClose }: ChatModalProps) => {
     <BLModal modalType={'JOIN_CHAT'} onClose={onClose}>
       {chats?.find(chat=>chat.id===activeChatId)?.title??'Error: Selected chat could not be found'}
       <button onClick={setNextChat}>Set next chat</button>
-      <button onClick={()=>{if(activeChatId)
-        triggerDown(activeChatId, 1/*TODO replace*/);}
+      <button onClick={()=>{if(activeChatId && user?.id)
+        triggerDown(activeChatId, user.id);}
       }>Down</button>
       <BLLeftMarkedCard className={'cursor-pointer'}>
         <ChatSystem messages={messages} sendMessage={sendMessage}/>
