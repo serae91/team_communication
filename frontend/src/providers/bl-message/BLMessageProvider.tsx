@@ -1,9 +1,8 @@
 import React, {
   createContext,
   useContext,
-  useEffect,
   useState,
-  type ReactNode, useRef, type RefObject,
+  type ReactNode,
 } from "react";
 import type { BLMessageDto } from '../../dtos/BLMessageDto.ts';
 

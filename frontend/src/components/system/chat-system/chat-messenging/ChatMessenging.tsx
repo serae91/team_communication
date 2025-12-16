@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import './ChatMessenging.scss';
 import ChatMessage from './chat-message/ChatMessage';
 import BLInput from '../../../ui/bl-input/BLInput';
@@ -14,7 +14,7 @@ interface ChatMessengingProps {
   sendMessage: (text: string)=>void
 }
 
-const ChatMessenging: React.FC<ChatMessengingProps> = ({className, messages, sendMessage}: ChatMessengingProps)=> {
+const ChatMessenging: React.FC<ChatMessengingProps> = ({ messages, sendMessage }: ChatMessengingProps)=> {
   const inputRef = useRef<HTMLInputElement>(null);
   const chatScrollRef = useRef<HTMLDivElement>(null);
 
@@ -31,11 +31,7 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({className, messages, sen
       }
   }
 
-  useEffect(() => {
-    scrollDownWhenAtBottomAndAddingNewMessage();
-  }, [messages.length]);
-
-  const scrollDownWhenAtBottomAndAddingNewMessage = ()=> {
+  const scrollDownWhenAtBottomAndAddingNewMessage = useCallback(()=> {
     const currentChatScroll = chatScrollRef.current;
     if (!currentChatScroll) return;
 
@@ -45,7 +41,11 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({className, messages, sen
     }
 
     prevLength.current = messages?.length ?? 0;
-  }
+  },[messages?.length]);
+
+  useEffect(() => {
+    scrollDownWhenAtBottomAndAddingNewMessage();
+  }, [messages.length, scrollDownWhenAtBottomAndAddingNewMessage]);
 
   const getChatMessages = ()=> {
     return messages.map(message =>

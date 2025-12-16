@@ -13,7 +13,6 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="*" element={<RootRedirect />} />
           <Route path="/login" element={<LoginPage />}/>
           <Route path="/register" element={<RegisterPage />} />
           <Route
@@ -24,6 +23,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<RootRedirect />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

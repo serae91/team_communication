@@ -5,12 +5,7 @@ import {
 import { useAuth } from '../../../../providers/auth/AuthProvider.tsx';
 import { Logout } from '@mui/icons-material';
 
-
-interface SideNavBarProfileProps {
-
-}
-
-export const SideNavBarProfile = ({}: SideNavBarProfileProps) => {
+export const SideNavBarProfile = () => {
   const {logout} = useAuth();
   return(
     <div className={ 'profile flex-row' }>

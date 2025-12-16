@@ -19,10 +19,10 @@ export type WebSocketContextType<T> = {
   removeMessageHandler: (fn: (msg: T) => void) => void;
 };
 
-const WebSocketContext = createContext<WebSocketContextType<any> | null>(null);
-
 export const createBLWebSocketProvider = <T, >()=> {
-  const BLWebSocketProvider = ({children, connectionURL}: ProviderProps) => {
+  const WebSocketContext = createContext<WebSocketContextType<T> | null>(null);
+
+  const BLMessageWebSocketProvider = ({children, connectionURL}: ProviderProps) => {
     const [connected, setConnected] = useState(false);
     const [service] = useState(() => new WebSocketService<T>(`ws://localhost:8080/${ connectionURL }`));
 
@@ -54,11 +54,12 @@ export const createBLWebSocketProvider = <T, >()=> {
 
     return <WebSocketContext.Provider value={value}>{children}</WebSocketContext.Provider>;
   };
-  return BLWebSocketProvider;
-}
 
-export const useWebSocket = <T,>() => {
-  const context = useContext(WebSocketContext) as WebSocketContextType<T>;
-  if (!context) throw new Error("useWebSocketContext must be used inside the Provider");
-  return context;
-};
+  const useWebSocket = <T,>() => {
+    const context = useContext(WebSocketContext) as WebSocketContextType<T> | null;
+    if (!context) throw new Error("useWebSocketContext must be used inside the Provider");
+    return context;
+  };
+
+  return { BLMessageWebSocketProvider, useWebSocket}
+}

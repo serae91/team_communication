@@ -1,13 +1,13 @@
 import './BLContentCard.scss';
-import type { JSX, JSXElementConstructor, ReactElement, ReactNode, ReactPortal } from 'react';
+import type { ReactNode } from 'react';
 
 
 interface BLContentCardProps {
-  children: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined,
+  children: ReactNode,
   className?: string;
 }
 
-const BLContentCard = (props: BLContentCardProps): JSX.Element => {
+const BLContentCard = (props: BLContentCardProps) => {
   return (
     <div className={`content-card flex-col ${props.className??''}`}>
       {props.children}

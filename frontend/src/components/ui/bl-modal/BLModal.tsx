@@ -11,7 +11,7 @@ interface ModalProps {
 
 const BLModal = ({ modalType, onClose, children }: ModalProps)=> {
   if(modalType === null) throw new Error('BLModal modalType must not be null');
-  const {currentModal, openModal, closeModal} = useModal();
+  const {currentModal, closeModal} = useModal();
   return (
     <AnimatePresence>
       {currentModal === modalType && (

@@ -1,7 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import type { BLChatPlainDto } from '../../dtos/BLChatPlainDto.ts';
-import { getChatListPlainByUserId } from '../../services/ChatService.ts';
-import type { BLMessageDto } from '../../dtos/BLMessageDto.ts';
 
 interface BLChatContextType {
   chats: BLChatPlainDto[];

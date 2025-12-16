@@ -1,10 +1,9 @@
 import './SideNavBarButton.scss';
 interface SideNavBarButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-
   badgeCount?: number;
 }
 
-const SideNavBarButton: React.FC<SideNavBarButtonProps> = ({ badgeCount, disabled, children }) => {
+const SideNavBarButton = ({ badgeCount, children }: SideNavBarButtonProps) => {
   return (
     <button disabled={false} className="side-nav-bar-button">
       <div className={'content'}>

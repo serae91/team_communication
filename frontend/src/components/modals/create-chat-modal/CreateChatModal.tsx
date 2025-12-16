@@ -1,16 +1,17 @@
 import BLModal from '../../ui/bl-modal/BLModal.tsx';
 import BLLeftMarkedCard from '../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
-import ChatSystem from '../../system/chat-system/ChatSystem.tsx';
 import type { BLChatCreateDto } from '../../../dtos/BLChatPlainDto.ts';
 import type {
   WebsocketMessage
 } from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
-import { useWebSocket } from '../../../providers/bl-websocket/BLWebSocketProvider.tsx';
 import ChatMessenging from '../../system/chat-system/chat-messenging/ChatMessenging.tsx';
 import { useModal } from '../../../providers/modal/ModalProvider.tsx';
 import BLMultiSelect, { type GmailLabel } from '../../ui/bl-multi-select/BLMultiSelect.tsx';
 import LabelIcon from '@mui/icons-material/Label';
 import { useState } from 'react';
+import {
+  useWebSocket
+} from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
 
 interface CreateChatModalProps {
   onClose: () => void;

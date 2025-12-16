@@ -4,7 +4,6 @@ import BLLeftMarkedCard from '../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx'
 import ChatSystem from '../../system/chat-system/ChatSystem.tsx';
 import './ChatModal.scss';
 import { triggerDown } from '../../../services/ChatService.ts';
-import { useWebSocket } from '../../../providers/bl-websocket/BLWebSocketProvider.tsx';
 import type {
   WebsocketMessage
 } from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
@@ -12,16 +11,19 @@ import { useBLChats } from '../../../providers/bl-chat/BLChatProvider.tsx';
 import { useBLMessages } from '../../../providers/bl-message/BLMessageProvider.tsx';
 import type { BLMessageCreateDto } from '../../../dtos/BLMessageDto.ts';
 import { useAuth } from '../../../providers/auth/AuthProvider.tsx';
+import {
+  useWebSocket
+} from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
 
 interface ChatModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const ChatModal = ({ isOpen, onClose }: ChatModalProps) => {
-  const { connected, removeMessageHandler, addMessageHandler, send } = useWebSocket<WebsocketMessage>();
-  const { chats, setChats, activeChatId, setActiveChatId } = useBLChats();
-  const { messages, setMessages } = useBLMessages();
+const ChatModal = ({ onClose }: ChatModalProps) => {
+  const { send } = useWebSocket<WebsocketMessage>();
+  const { chats, activeChatId, setActiveChatId } = useBLChats();
+  const { messages } = useBLMessages();
   const { user } = useAuth();
 
   const setNextChat = () => {
