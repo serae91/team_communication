@@ -9,17 +9,21 @@
     background-color: pink;
     margin-right: constants.$margin-right;
   }
+
   .right-container {
     max-width: calc(100% - 25px - 8px);
   }
+
   .sender {
     font-weight: constants.$font-weight-sub-title;
     color: colors.$color-text-2;
     margin-right: constants.$margin-right;
   }
+
   .post-time {
     color: colors.$color-text-2;
   }
+
   .message {
     color: colors.$color-text-main;
     display: flex;

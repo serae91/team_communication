@@ -40,14 +40,14 @@ export const BLMultiSelect = ({label}: BLMultiSelectProps)=> {
 import { type ReactElement } from "react";
 import {
   Box,
-  Chip,
-  MenuItem,
-  Select,
   Checkbox,
+  Chip,
   ListItemIcon,
   ListItemText,
-  useTheme,
+  MenuItem,
+  Select,
   type SelectChangeEvent,
+  useTheme,
 } from '@mui/material';
 import LabelIcon from '@mui/icons-material/Label';
 
@@ -67,11 +67,11 @@ type Props = {
 };
 
 export default function BLMultiSelect({
-                                                labels,
-                                                value,
-                                                onChange,
-                                                placeholder = "Select labels...",
-                                              }: Props) {
+                                        labels,
+                                        value,
+                                        onChange,
+                                        placeholder = "Select labels...",
+                                      }: Props) {
   const theme = useTheme();
 
   const handleChange = (e: SelectChangeEvent<typeof value>) => {
@@ -83,71 +83,71 @@ export default function BLMultiSelect({
       multiple
       displayEmpty
       fullWidth
-      value={value}
-      onChange={handleChange}
-      renderValue={(selected) => {
+      value={ value }
+      onChange={ handleChange }
+      renderValue={ (selected) => {
         if (selected.length === 0) {
           return (
-            <Box sx={{ color: theme.palette.text.disabled }}>
-              {placeholder}
+            <Box sx={ {color: theme.palette.text.disabled} }>
+              { placeholder }
             </Box>
           );
         }
 
         return (
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-            {selected.map((id) => {
+          <Box sx={ {display: "flex", flexWrap: "wrap", gap: 0.5} }>
+            { selected.map((id) => {
               const lbl = labels.find((l) => l.id === id);
               if (!lbl) return null;
 
               return (
                 <Chip
-                  key={id}
-                  label={lbl.name}
+                  key={ id }
+                  label={ lbl.name }
                   size="small"
-                  icon={lbl.icon ?? <LabelIcon />}
-                  sx={{
+                  icon={ lbl.icon ?? <LabelIcon/> }
+                  sx={ {
                     background: lbl.color,
                     color: theme.palette.getContrastText(lbl.color),
-                    "& .MuiChip-icon": { color: "inherit !important" },
-                  }}
+                    "& .MuiChip-icon": {color: "inherit !important"},
+                  } }
                 />
               );
-            })}
+            }) }
           </Box>
         );
-      }}
-      MenuProps={{
+      } }
+      MenuProps={ {
         PaperProps: {
           sx: {
             maxHeight: 300,
           },
         },
-      }}
+      } }
     >
-      {labels.map((lbl) => (
+      { labels.map((lbl) => (
         <MenuItem
-          key={lbl.id}
-          value={lbl.id}
-          sx={{
+          key={ lbl.id }
+          value={ lbl.id }
+          sx={ {
             display: "flex",
             alignItems: "center",
             gap: 2,
-          }}
+          } }
         >
-          <Checkbox checked={value.includes(lbl.id)} />
+          <Checkbox checked={ value.includes(lbl.id) }/>
 
           <ListItemIcon>
-            {lbl.icon ?? (
+            { lbl.icon ?? (
               <LabelIcon
-                sx={{ color: lbl.color }}
+                sx={ {color: lbl.color} }
               />
-            )}
+            ) }
           </ListItemIcon>
 
-          <ListItemText primary={lbl.name} />
+          <ListItemText primary={ lbl.name }/>
         </MenuItem>
-      ))}
+      )) }
     </Select>
   );
 }

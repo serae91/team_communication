@@ -17,34 +17,35 @@ interface CreateChatModalProps {
   onClose: () => void;
 }
 
-export const CreateChatModal = ({ onClose }: CreateChatModalProps) => {
-  const { send } = useWebSocket();
+export const CreateChatModal = ({onClose}: CreateChatModalProps) => {
+  const {send} = useWebSocket();
   const {closeModal} = useModal();
   const [selected, setSelected] = useState<string[]>([]);
   const sendCreateChatMessage = (text: string) => {
     const message = {
-      type:'CREATE_CHAT',
+      type: 'CREATE_CHAT',
       chatCreateDto: {
         title: 'Perfectly tested title',
         firstMessageText: text,
         urgency: 'HIGH',
         senderId: 1,
-        userIds: [1,3]
-      } as BLChatCreateDto} as WebsocketMessage;
+        userIds: [1, 3]
+      } as BLChatCreateDto
+    } as WebsocketMessage;
     send(message);
     closeModal();
-    if(onClose)onClose();
+    if (onClose) onClose();
   };
-  return(
-    <BLModal modalType={'CREATE_CHAT'}>
+  return (
+    <BLModal modalType={ 'CREATE_CHAT' }>
       <BLLeftMarkedCard>
         <BLMultiSelect
-          labels={dummyLabels}
-          value={selected}
-          onChange={setSelected}
+          labels={ dummyLabels }
+          value={ selected }
+          onChange={ setSelected }
           placeholder="Choose labels…"
         />
-        <ChatMessenging messages={[]} sendMessage={sendCreateChatMessage}/>
+        <ChatMessenging messages={ [] } sendMessage={ sendCreateChatMessage }/>
       </BLLeftMarkedCard>
     </BLModal>)
 }
@@ -54,30 +55,30 @@ export const dummyLabels: GmailLabel[] = [
     id: "1",
     name: "Important",
     color: "#e53935", // rot
-    icon: <LabelIcon />,
+    icon: <LabelIcon/>,
   },
   {
     id: "2",
     name: "Work",
     color: "#1e88e5", // blau
-    icon: <LabelIcon />,
+    icon: <LabelIcon/>,
   },
   {
     id: "3",
     name: "Personal",
     color: "#43a047", // grün
-    icon: <LabelIcon />,
+    icon: <LabelIcon/>,
   },
   {
     id: "4",
     name: "Family",
     color: "#8e24aa", // lila
-    icon: <LabelIcon />,
+    icon: <LabelIcon/>,
   },
   {
     id: "5",
     name: "Travel",
     color: "#fb8c00", // orange
-    icon: <LabelIcon />,
+    icon: <LabelIcon/>,
   },
 ];

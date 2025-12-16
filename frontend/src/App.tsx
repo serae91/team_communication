@@ -1,5 +1,5 @@
 import './App.scss'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from './components/pages/main-page/MainPage.js';
 import { AuthProvider } from './providers/auth/AuthProvider.tsx';
 import ProtectedRoute from './routes/protected-route/ProtectedRoute.tsx';
@@ -13,17 +13,17 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<LoginPage />}/>
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={ <LoginPage/> }/>
+          <Route path="/register" element={ <RegisterPage/> }/>
           <Route
             path="/mainpage"
             element={
               <ProtectedRoute>
-                <MainPage />
+                <MainPage/>
               </ProtectedRoute>
             }
           />
-          <Route path="*" element={<RootRedirect />} />
+          <Route path="*" element={ <RootRedirect/> }/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

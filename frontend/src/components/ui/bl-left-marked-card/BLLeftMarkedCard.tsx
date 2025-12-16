@@ -6,13 +6,18 @@ interface BLLeftMarkedCardProps {
   children?: ReactNode;
   className?: string;
   color?: BLLeftMarkedCardColor;
-  onClick?: ()=>void;
+  onClick?: () => void;
 }
 
-const BLLeftMarkedCard: React.FC<BLLeftMarkedCardProps> = ({children, className = '', color = 'black', onClick}: BLLeftMarkedCardProps): JSX.Element => {
+const BLLeftMarkedCard: React.FC<BLLeftMarkedCardProps> = ({
+                                                             children,
+                                                             className = '',
+                                                             color = 'black',
+                                                             onClick
+                                                           }: BLLeftMarkedCardProps): JSX.Element => {
   return (
-    <div className={ `left-marked-card flex-col left-marked-card--${color} ${className}` } onClick={onClick}>
-      {children}
+    <div className={ `left-marked-card flex-col left-marked-card--${ color } ${ className }` } onClick={ onClick }>
+      { children }
     </div>
   );
 };

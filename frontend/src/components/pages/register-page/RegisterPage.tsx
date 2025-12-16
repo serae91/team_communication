@@ -12,8 +12,8 @@ export const RegisterPage = () => {
     try {
       const res = await fetch("http://localhost:8080/auth/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({username, password}),
       });
 
       if (res.status === 201) {
@@ -35,18 +35,18 @@ export const RegisterPage = () => {
       <h1>Register</h1>
       <input
         placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={ username }
+        onChange={ (e) => setUsername(e.target.value) }
       />
       <input
         type="password"
         placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={ password }
+        onChange={ (e) => setPassword(e.target.value) }
       />
-      <button onClick={handleRegister}>Register</button>
-      <button onClick={() => navigate("/login")}>Go to Login</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <button onClick={ handleRegister }>Register</button>
+      <button onClick={ () => navigate("/login") }>Go to Login</button>
+      { error && <p style={ {color: "red"} }>{ error }</p> }
     </div>
   );
 }

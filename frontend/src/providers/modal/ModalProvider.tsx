@@ -14,17 +14,17 @@ export type ModalContextType = {
 
 const ModalContext = createContext<ModalContextType | null>(null);
 
-export const ModalProvider =  ({children}: ModalProviderProps) => {
-    const [currentModal, setCurrentModal] = useState<ModalType>(null);
-    const openModal = (modalType: ModalType) => setCurrentModal(modalType);
-    const closeModal = () => setCurrentModal(null);
-    const value: ModalContextType = { currentModal, openModal, closeModal };
+export const ModalProvider = ({children}: ModalProviderProps) => {
+  const [currentModal, setCurrentModal] = useState<ModalType>(null);
+  const openModal = (modalType: ModalType) => setCurrentModal(modalType);
+  const closeModal = () => setCurrentModal(null);
+  const value: ModalContextType = {currentModal, openModal, closeModal};
 
-    return (
-      <ModalContext.Provider value={ value }>
-        { children }
-      </ModalContext.Provider>
-    );
+  return (
+    <ModalContext.Provider value={ value }>
+      { children }
+    </ModalContext.Provider>
+  );
 }
 
 export const useModal = () => {

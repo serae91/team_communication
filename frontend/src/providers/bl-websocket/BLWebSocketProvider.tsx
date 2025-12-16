@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  type ReactNode,
-  useEffect,
-} from "react";
+import React, { createContext, type ReactNode, useContext, useEffect, useState, } from "react";
 import { WebSocketService } from "../../services/WebSocketService.ts";
 
 export interface ProviderProps {
@@ -19,7 +13,7 @@ export type WebSocketContextType<T> = {
   removeMessageHandler: (fn: (msg: T) => void) => void;
 };
 
-export const createBLWebSocketProvider = <T, >()=> {
+export const createBLWebSocketProvider = <T, >() => {
   const WebSocketContext = createContext<WebSocketContextType<T> | null>(null);
 
   const BLMessageWebSocketProvider = ({children, connectionURL}: ProviderProps) => {
@@ -52,14 +46,14 @@ export const createBLWebSocketProvider = <T, >()=> {
       removeMessageHandler,
     };
 
-    return <WebSocketContext.Provider value={value}>{children}</WebSocketContext.Provider>;
+    return <WebSocketContext.Provider value={ value }>{ children }</WebSocketContext.Provider>;
   };
 
-  const useWebSocket = <T,>() => {
+  const useWebSocket = <T, >() => {
     const context = useContext(WebSocketContext) as WebSocketContextType<T> | null;
     if (!context) throw new Error("useWebSocketContext must be used inside the Provider");
     return context;
   };
 
-  return { BLMessageWebSocketProvider, useWebSocket}
+  return {BLMessageWebSocketProvider, useWebSocket}
 }

@@ -11,8 +11,8 @@ interface BLHintCardProps {
 
 const BLHintCard = (props: BLHintCardProps) => {
   return (
-    <div className={`hint-card hint-card--${props.hintCardType} ${props.className??''}`}>
-      {props.children}
+    <div className={ `hint-card hint-card--${ props.hintCardType } ${ props.className ?? '' }` }>
+      { props.children }
     </div>
   );
 };

@@ -11,8 +11,8 @@ export type WebSocketMessageIncoming =
 
 type ReceiveMessages = { type: 'RECEIVE_MESSAGES'; chatId: number; blMessages: BLMessageDto[] };
 type ReceiveMessage = { type: 'RECEIVE_MESSAGE'; chatId: number; blMessage: BLMessageDto };
-type ReceiveChats = { type: 'RECEIVE_CHATS';  blChats: BLChatPlainDto[] };
-type ReceiveChat = { type: 'RECEIVE_CHAT';  blChat: BLChatPlainDto };
+type ReceiveChats = { type: 'RECEIVE_CHATS'; blChats: BLChatPlainDto[] };
+type ReceiveChat = { type: 'RECEIVE_CHAT'; blChat: BLChatPlainDto };
 
 type WebSocketMessageOutgoing =
   | RequestChats

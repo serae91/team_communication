@@ -8,7 +8,7 @@ interface BLInputProps {
 
 const BLInput: React.FC<BLInputProps> = ({className, inputRef}: BLInputProps) => {
   return (
-    <input className={ `bl-input ${className??''}`} ref={inputRef}/>
+    <input className={ `bl-input ${ className ?? '' }` } ref={ inputRef }/>
   );
 };
 

@@ -7,8 +7,8 @@ interface ChatSummaryProps {
 }
 
 function ChatSummary(props: ChatSummaryProps): JSX.Element {
-  return(
-    <div className={`summary ${props.className??''}`}>
+  return (
+    <div className={ `summary ${ props.className ?? '' }` }>
       Summarize:
       <ul>
         <li>
@@ -21,4 +21,5 @@ function ChatSummary(props: ChatSummaryProps): JSX.Element {
     </div>
   );
 }
+
 export default ChatSummary;

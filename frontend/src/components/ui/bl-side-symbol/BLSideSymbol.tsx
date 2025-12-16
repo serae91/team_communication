@@ -9,7 +9,7 @@ interface BLSideSymbolProps {
 const BLSideSymbol = (props: BLSideSymbolProps): JSX.Element => {
   return (
     <div className={ 'side-symbol' }>
-      {props.children}
+      { props.children }
     </div>
   );
 };

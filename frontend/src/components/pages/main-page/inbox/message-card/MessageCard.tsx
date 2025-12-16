@@ -9,17 +9,26 @@ interface MessageCardProps {
   sender: string;
   message: string;
   color: BLLeftMarkedCardColor
-  onClick:()=>void | undefined;
+  onClick: () => void | undefined;
   className?: string
 }
 
-const MessageCard: React.FC<MessageCardProps> =({title, sender, message, color, onClick, className = ''} : MessageCardProps) => {
-  return(
-    <BLLeftMarkedCard className={`message-card ${className}`} color={color} onClick={onClick}>
-      <div className={'title flex-row'}><BLSideSymbol>#</BLSideSymbol>{title}</div>
-      <div className={'message-box flex-row'}>
-        <div className={'sender'}><div className={'profile-picture'}></div>{sender}</div>
-        {message}
+const MessageCard: React.FC<MessageCardProps> = ({
+                                                   title,
+                                                   sender,
+                                                   message,
+                                                   color,
+                                                   onClick,
+                                                   className = ''
+                                                 }: MessageCardProps) => {
+  return (
+    <BLLeftMarkedCard className={ `message-card ${ className }` } color={ color } onClick={ onClick }>
+      <div className={ 'title flex-row' }><BLSideSymbol>#</BLSideSymbol>{ title }</div>
+      <div className={ 'message-box flex-row' }>
+        <div className={ 'sender' }>
+          <div className={ 'profile-picture' }></div>
+          { sender }</div>
+        { message }
       </div>
     </BLLeftMarkedCard>
   );

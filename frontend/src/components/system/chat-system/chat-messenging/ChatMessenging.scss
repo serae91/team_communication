@@ -4,7 +4,7 @@
 .chat-messenging {
   gap: 18px;
 
-  .send-button{
+  .send-button {
     outline: none;
     color: colors.$color-text-main;
     background-color: colors.$color-white;
@@ -16,9 +16,11 @@
     border-color: colors.$color-border;
     width: constants.$height-title;
   }
+
   .send-button:hover {
     background-color: colors.$color-hover-gray;
   }
+
   .send-button:active {
     background-color: colors.$color-select-gray;
   }

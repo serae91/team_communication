@@ -10,19 +10,20 @@ import {
 
 
 function MainPage() {
-  return(
-      <BLChatProvider>
-        <BLMessageProvider>
-          <BLMessageWebSocketProvider connectionURL={'blwebsocket'}>
-            <ModalProvider>
-              <div className={'main-page full-width full-height'}>
-                <SideNavBar/>
-                <Inbox/>
-              </div>
-            </ModalProvider>
-          </BLMessageWebSocketProvider>
-        </BLMessageProvider>
-      </BLChatProvider>
+  return (
+    <BLChatProvider>
+      <BLMessageProvider>
+        <BLMessageWebSocketProvider connectionURL={ 'blwebsocket' }>
+          <ModalProvider>
+            <div className={ 'main-page full-width full-height' }>
+              <SideNavBar/>
+              <Inbox/>
+            </div>
+          </ModalProvider>
+        </BLMessageWebSocketProvider>
+      </BLMessageProvider>
+    </BLChatProvider>
   );
 }
+
 export default MainPage;

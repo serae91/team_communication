@@ -9,8 +9,8 @@ interface BLContentCardProps {
 
 const BLContentCard = (props: BLContentCardProps) => {
   return (
-    <div className={`content-card flex-col ${props.className??''}`}>
-      {props.children}
+    <div className={ `content-card flex-col ${ props.className ?? '' }` }>
+      { props.children }
     </div>
   );
 };

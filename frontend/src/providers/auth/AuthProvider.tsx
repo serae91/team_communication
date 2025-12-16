@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import React, { createContext, type ReactNode, useContext, useEffect, useState } from "react";
 
 export type User = {
   id: number;
@@ -15,7 +15,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export const AuthProvider = ({children}: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -33,9 +33,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8080/auth/me", { credentials: "include" })
+    fetch("http://localhost:8080/auth/me", {credentials: "include"})
       .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        if (!res.ok) throw new Error(`HTTP ${ res.status }`);
         return res.json();
       })
       .then(data => setUser(data))
@@ -48,8 +48,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 
   return (
-    <AuthContext.Provider value={{ user, loading, setUser, logout }}>
-      {children}
+    <AuthContext.Provider value={ {user, loading, setUser, logout} }>
+      { children }
     </AuthContext.Provider>
   );
 };

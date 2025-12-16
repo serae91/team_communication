@@ -3,20 +3,20 @@ import type { BLChatPlainDto } from '../../dtos/BLChatPlainDto.ts';
 
 interface BLChatContextType {
   chats: BLChatPlainDto[];
-  setChats:  React.Dispatch<React.SetStateAction<BLChatPlainDto[]>>
+  setChats: React.Dispatch<React.SetStateAction<BLChatPlainDto[]>>
   activeChatId: number | null;
   setActiveChatId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 const BLChatContext = createContext<BLChatContextType | null>(null);
 
-export const BLChatProvider = ({ children }: { children: React.ReactNode }) => {
+export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
   const [chats, setChats] = useState<BLChatPlainDto[]>([]);
   const [activeChatId, setActiveChatId] = useState<number | null>(null);
 
   return (
-    <BLChatContext.Provider value={{ chats, setChats, activeChatId, setActiveChatId }}>
-      {children}
+    <BLChatContext.Provider value={ {chats, setChats, activeChatId, setActiveChatId} }>
+      { children }
     </BLChatContext.Provider>
   );
 };

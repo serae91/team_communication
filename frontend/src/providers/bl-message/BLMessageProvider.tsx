@@ -1,9 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  type ReactNode,
-} from "react";
+import React, { createContext, type ReactNode, useContext, useState, } from "react";
 import type { BLMessageDto } from '../../dtos/BLMessageDto.ts';
 
 export interface ProviderProps {
@@ -16,13 +11,13 @@ type BLMessageContextType = {
 };
 const BLMessageContext = createContext<BLMessageContextType | null>(null);
 
-export const BLMessageProvider = ({ children }: ProviderProps) => {
+export const BLMessageProvider = ({children}: ProviderProps) => {
   const [messages, setMessages] = useState<BLMessageDto[]>([]);
 
 
   return (
-    <BLMessageContext.Provider value={{ messages, setMessages }}>
-      {children}
+    <BLMessageContext.Provider value={ {messages, setMessages} }>
+      { children }
     </BLMessageContext.Provider>
   );
 };
