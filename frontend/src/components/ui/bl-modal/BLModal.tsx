@@ -26,7 +26,7 @@ const BLModal = ({modalType, onClose, children}: ModalProps) => {
           exit={ {opacity: 0} }
         >
           <motion.div
-            className="shadow-lg max-w-md w-full max-h-[80vh] flex flex-col"
+            className="shadow-lg w-[80%] max-h-[80vh] flex flex-col"
             onClick={ (e) => e.stopPropagation() }
             initial={ {scale: 0.8, opacity: 0} }
             animate={ {scale: 1, opacity: 1} }

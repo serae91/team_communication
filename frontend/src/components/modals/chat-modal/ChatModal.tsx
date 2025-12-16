@@ -3,7 +3,6 @@ import BLModal from '../../ui/bl-modal/BLModal.tsx';
 import BLLeftMarkedCard from '../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
 import ChatSystem from '../../system/chat-system/ChatSystem.tsx';
 import './ChatModal.scss';
-import { triggerDown } from '../../../services/ChatService.ts';
 import type {
   WebsocketMessage
 } from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
@@ -46,15 +45,15 @@ const ChatModal = ({onClose}: ChatModalProps) => {
   }
   return (
     <BLModal modalType={ 'JOIN_CHAT' } onClose={ onClose }>
-      { chats?.find(chat => chat.id === activeChatId)?.title ?? 'Error: Selected chat could not be found' }
-      <button onClick={ setNextChat }>Set next chat</button>
+      {/*<button onClick={ setNextChat }>Set next chat</button>
       <button onClick={ () => {
         if (activeChatId && user?.id)
           triggerDown(activeChatId, user.id);
       }
       }>Down
-      </button>
+      </button>*/ }
       <BLLeftMarkedCard className={ 'cursor-pointer' }>
+        { chats?.find(chat => chat.id === activeChatId)?.title ?? 'Error: Selected chat could not be found' }
         <ChatSystem messages={ messages } sendMessage={ sendMessage }/>
       </BLLeftMarkedCard>
     </BLModal>);
