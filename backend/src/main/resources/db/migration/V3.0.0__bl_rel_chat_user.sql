@@ -8,8 +8,8 @@ CREATE SEQUENCE bl_rel_chat_user_sequence
 CREATE TABLE bl_rel_chat_user
 (
     id       BIGINT PRIMARY KEY,
-    chat_id  BIGINT REFERENCES bl_chat(id),
-    user_id  BIGINT REFERENCES bl_user(id),
+    chat_id  BIGINT NOT NULL REFERENCES bl_chat(id),
+    user_id  BIGINT NOT NULL REFERENCES bl_user(id),
     downed   BOOLEAN NOT NULL DEFAULT FALSE,
     reminder TIMESTAMP WITH TIME ZONE,
     reminded BOOLEAN NOT NULL DEFAULT FALSE,

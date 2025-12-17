@@ -8,8 +8,8 @@ CREATE SEQUENCE bl_rel_message_referencing_sequence
 CREATE TABLE bl_rel_message_referencing
 (
     id                     BIGINT PRIMARY KEY,
-    referencing_message_id BIGINT REFERENCES bl_message(id),
-    referenced_message_id  BIGINT REFERENCES bl_message(id),
+    referencing_message_id BIGINT NOT NULL REFERENCES bl_message(id),
+    referenced_message_id  BIGINT NOT NULL REFERENCES bl_message(id),
 
     CONSTRAINT different_messages         CHECK (referencing_message_id <> referenced_message_id),
     CONSTRAINT unique_message_referencing UNIQUE (referencing_message_id, referenced_message_id)

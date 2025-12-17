@@ -9,7 +9,7 @@ CREATE TABLE bl_message
 (
     id         BIGINT                   PRIMARY KEY,
     text       TEXT                     NOT NULL,
-    chat_id    BIGINT                   REFERENCES bl_chat(id),
-    sender_id  BIGINT                   REFERENCES bl_user(id),
+    chat_id    BIGINT                   NOT NULL REFERENCES bl_chat(id),
+    sender_id  BIGINT                   NOT NULL REFERENCES bl_user(id),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
