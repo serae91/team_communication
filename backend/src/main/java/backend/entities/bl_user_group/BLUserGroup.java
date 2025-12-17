@@ -1,6 +1,5 @@
 package backend.entities.bl_user_group;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,7 +33,6 @@ public class BLUserGroup {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 }

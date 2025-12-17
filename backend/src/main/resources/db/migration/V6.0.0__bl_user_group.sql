@@ -9,5 +9,5 @@ CREATE TABLE bl_user_group
 (
     id         BIGINT                   PRIMARY KEY,
     name       CHARACTER VARYING(255)   NOT NULL UNIQUE,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );

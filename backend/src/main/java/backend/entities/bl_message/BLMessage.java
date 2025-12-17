@@ -2,7 +2,6 @@ package backend.entities.bl_message;
 
 import backend.entities.bl_chat.BLChat;
 import backend.entities.bl_user.BLUser;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,14 +38,13 @@ public class BLMessage {
     private String text;
 
     @ManyToOne
-    @JoinColumn(name = "chat_id")
+    @JoinColumn(name = "chat_id", nullable = false)
     private BLChat chat;
 
     @ManyToOne
-    @JoinColumn(name = "sender_id")
+    @JoinColumn(name = "sender_id", nullable = false)
     private BLUser sender;
 
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 

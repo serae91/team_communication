@@ -13,6 +13,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Entity
 @Table(name = "bl_user")
 @RegisterForReflection
@@ -33,5 +35,8 @@ public class BLUser {
 
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
+
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt;
 }
 

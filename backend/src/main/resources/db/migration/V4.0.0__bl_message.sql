@@ -11,5 +11,5 @@ CREATE TABLE bl_message
     text       TEXT                     NOT NULL,
     chat_id    BIGINT                   NOT NULL REFERENCES bl_chat(id),
     sender_id  BIGINT                   NOT NULL REFERENCES bl_user(id),
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );

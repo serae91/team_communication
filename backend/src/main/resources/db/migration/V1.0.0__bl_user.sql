@@ -10,5 +10,5 @@ CREATE TABLE bl_user
     id            BIGINT                   PRIMARY KEY,
     username      CHARACTER VARYING(255)   NOT NULL UNIQUE,
     password_hash CHARACTER VARYING(255)   NOT NULL ,
-    created_at    TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    created_at    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );

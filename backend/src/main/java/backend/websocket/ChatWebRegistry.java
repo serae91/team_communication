@@ -52,4 +52,10 @@ public class ChatWebRegistry {
             c.sendText(message).subscribe().with(v -> {});
         }
     }
+
+    public void sendToUser(final Long userId, final String message) {
+        final WebSocketConnection webSocketConnection = userIdConnections.get(userId);
+        if(Objects.nonNull(webSocketConnection))
+            webSocketConnection.sendText(message).subscribe().with(v -> {});
+    }
 }

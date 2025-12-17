@@ -51,7 +51,7 @@ public class ChatService {
                 .from(BLRelChatUser.class, "c")
                 .where("chat.id").eqExpression("OUTER(id)")
                 .where("user.id").eq(userId)
-                .where("reminder").isNotNull()
+                .where("reminderAt").isNotNull()
                 .end();
         return entityViewManager.applySetting(EntityViewSetting.create(BLChatPlainView.class), criteriaBuilder).getResultList();
     }

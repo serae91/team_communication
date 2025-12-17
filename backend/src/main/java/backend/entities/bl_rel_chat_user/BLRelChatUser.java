@@ -5,6 +5,8 @@ import backend.entities.bl_chat.BLChat;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,20 +36,21 @@ public class BLRelChatUser {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "downed")
+    @Column(name = "downed", nullable = false)
     private boolean downed;
 
-    @Column(name = "reminder")
-    private Instant reminder;
+    @Column(name = "reminder_at")
+    private Instant reminderAt;
 
-    @Column(name = "reminded")
-    private boolean reminded;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "reminder_status", nullable = false)
+    private ReminderStatus reminderStatus;
 
     @ManyToOne
-    @JoinColumn(name = "chat_id")
+    @JoinColumn(name = "chat_id", nullable = false)
     private BLChat chat;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private BLUser user;
 }

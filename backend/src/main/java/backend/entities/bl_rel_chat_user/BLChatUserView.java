@@ -18,9 +18,9 @@ public interface BLChatUserView {
     @Mapping("downed")
     boolean getDowned();
 
-    @Mapping("reminder")
-    Instant getReminder();
+    @Mapping("reminderAt")
+    Instant getReminderAt();
 
-    @Mapping("reminded")
-    boolean getReminded();
+    @Mapping("reminderStatus")
+    ReminderStatus getReminderStatus();
 }
