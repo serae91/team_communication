@@ -31,23 +31,27 @@ public class ChatService {
     }
 
     public List<BLChatPlainView> getChatListPlainByUserId(final Long userId) {
-        return getChatListPlainByUniqueProperty("id", userId);
-    }
-
-    public List<BLChatPlainView> getChatListPlainByUserName(final String userName) {
-        return getChatListPlainByUniqueProperty("username", userName);
-    }
-
-    private List<BLChatPlainView> getChatListPlainByUniqueProperty(final String uniqueUserPropertyName, final Object uniqueUserProperty) {
         final CriteriaBuilder<BLChat> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLChat.class);
-
         criteriaBuilder
-                .where("users.user." + uniqueUserPropertyName).eq(uniqueUserProperty)
+                .where("users.user.id").eq(userId)
                 .whereExists()
                 .from(BLRelChatUser.class, "c")
                 .where("chat.id").eqExpression("OUTER(id)")
-                .where("user." + uniqueUserPropertyName).eq(uniqueUserProperty)
-                //.where("downed").eq(false)
+                .where("user.id").eq(userId)
+                .end();
+        return entityViewManager.applySetting(EntityViewSetting.create(BLChatPlainView.class), criteriaBuilder).getResultList();
+    }
+
+    public List<BLChatPlainView> getChatListPlainByUserIdWithReminder(final Long userId) {
+        final CriteriaBuilder<BLChat> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLChat.class);
+
+        criteriaBuilder
+                .where("users.user.id").eq(userId)
+                .whereExists()
+                .from(BLRelChatUser.class, "c")
+                .where("chat.id").eqExpression("OUTER(id)")
+                .where("user.id").eq(userId)
+                .where("reminder").isNotNull()
                 .end();
         return entityViewManager.applySetting(EntityViewSetting.create(BLChatPlainView.class), criteriaBuilder).getResultList();
     }

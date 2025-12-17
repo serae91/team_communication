@@ -11,8 +11,10 @@ CREATE TABLE bl_rel_chat_user
     chat_id  BIGINT REFERENCES bl_chat(id),
     user_id  BIGINT REFERENCES bl_user(id),
     downed   BOOLEAN NOT NULL DEFAULT FALSE,
-    reminder TIMESTAMP,
+    reminder TIMESTAMP WITH TIME ZONE,
     reminded BOOLEAN NOT NULL DEFAULT FALSE,
 
     CONSTRAINT unique_chat_user UNIQUE (chat_id, user_id)
 );
+
+CREATE INDEX bl_rel_chat_user_reminder_index ON bl_rel_chat_user (reminder, reminded);

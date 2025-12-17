@@ -7,7 +7,7 @@ CREATE SEQUENCE bl_user_group_sequence
 
 CREATE TABLE bl_user_group
 (
-    id         BIGINT                  PRIMARY KEY,
-    name       CHARACTER VARYING(255)  NOT NULL UNIQUE,
-    created_at TIMESTAMP               DEFAULT NOW()
+    id         BIGINT                   PRIMARY KEY,
+    name       CHARACTER VARYING(255)   NOT NULL UNIQUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

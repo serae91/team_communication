@@ -17,7 +17,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.Instant;
 
 @Entity
 @Table(name = "bl_rel_chat_user")
@@ -38,7 +38,7 @@ public class BLRelChatUser {
     private boolean downed;
 
     @Column(name = "reminder")
-    private Date reminder;
+    private Instant reminder;
 
     @Column(name = "reminded")
     private boolean reminded;

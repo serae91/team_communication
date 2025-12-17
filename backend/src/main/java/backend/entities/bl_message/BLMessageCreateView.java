@@ -7,7 +7,7 @@ import com.blazebit.persistence.view.EntityView;
 import com.blazebit.persistence.view.IdMapping;
 import com.blazebit.persistence.view.Mapping;
 
-import java.util.Date;
+import java.time.Instant;
 
 @CreatableEntityView
 @EntityView(BLMessage.class)
@@ -28,6 +28,6 @@ public interface BLMessageCreateView {
     void setSender(BLUserIdView senderId);
 
     @Mapping("createdAt")
-    Date getCreatedAt();
-    void setCreatedAt(Date createdAt);
+    Instant getCreatedAt();
+    void setCreatedAt(Instant createdAt);
 }

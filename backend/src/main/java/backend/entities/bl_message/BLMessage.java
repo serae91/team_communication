@@ -18,8 +18,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.Set;
+import java.time.Instant;
 
 @Entity
 @Table(name = "bl_message")
@@ -49,7 +48,7 @@ public class BLMessage {
 
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     @Column(name = "created_at", nullable = false)
-    private Date createdAt;
+    private Instant createdAt;
 
     /*@ManyToMany(targetEntity = BLMessage.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "rel_message_referencing",

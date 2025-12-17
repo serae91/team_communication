@@ -18,7 +18,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.Set;
 
 @Entity
@@ -44,7 +44,7 @@ public class BLChat {
     private Urgency urgency;
 
     @Column(name = "created_at", nullable = false)
-    private Date createdAt;
+    private Instant createdAt;
 
     @OneToMany(mappedBy = "chat")
     private Set<BLMessage> messages;

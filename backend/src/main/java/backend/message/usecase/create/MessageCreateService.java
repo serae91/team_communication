@@ -14,7 +14,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
-import java.util.Date;
+import java.time.Instant;
 
 @Dependent
 public class MessageCreateService {
@@ -32,7 +32,7 @@ public class MessageCreateService {
     }
 
     public void createMessageFromView(final BLMessageCreateView blMessageCreateView) {
-        blMessageCreateView.setCreatedAt(new Date());
+        blMessageCreateView.setCreatedAt(Instant.now());
         entityViewManager.save(entityManager, blMessageCreateView);
     }
 
@@ -44,7 +44,7 @@ public class MessageCreateService {
                 .text(blMessageCreateDto.text())
                 .chat(blChat)
                 .sender(sender)
-                .createdAt(new Date())
+                .createdAt(Instant.now())
                 .build();
         messageRepository.persist(blMessage);
         return messageService.getBLMessageView(blMessage.getId());

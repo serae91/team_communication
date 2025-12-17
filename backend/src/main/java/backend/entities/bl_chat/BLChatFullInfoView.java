@@ -7,7 +7,7 @@ import com.blazebit.persistence.view.IdMapping;
 import com.blazebit.persistence.view.Mapping;
 import jakarta.persistence.OrderBy;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
 @EntityView(BLChat.class)
@@ -23,7 +23,7 @@ public interface BLChatFullInfoView {
     Urgency getUrgency();
 
     @Mapping("createdAt")
-    Date getCreatedAt();
+    Instant getCreatedAt();
 
     @Mapping("messages")
     @OrderBy("createdAt DESC")

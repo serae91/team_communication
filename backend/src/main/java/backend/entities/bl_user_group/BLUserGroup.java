@@ -14,10 +14,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.Instant;
 
 @Entity
-@Table(name = "chat_group")
+@Table(name = "bl_user_group")
 @RegisterForReflection
 @Data
 @NoArgsConstructor
@@ -36,5 +36,5 @@ public class BLUserGroup {
 
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     @Column(name = "created_at", nullable = false)
-    private Date createdAt;
+    private Instant createdAt;
 }

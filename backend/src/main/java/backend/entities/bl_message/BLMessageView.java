@@ -4,7 +4,7 @@ import backend.entities.bl_user.BLUserView;
 import com.blazebit.persistence.view.EntityView;
 import com.blazebit.persistence.view.IdMapping;
 
-import java.util.Date;
+import java.time.Instant;
 
 @EntityView(BLMessage.class)
 public interface BLMessageView {
@@ -14,7 +14,7 @@ public interface BLMessageView {
 
     String getText();
 
-    Date getCreatedAt();
+    Instant getCreatedAt();
 
     BLUserView getSender();
 

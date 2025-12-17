@@ -5,7 +5,7 @@ import com.blazebit.persistence.view.EntityView;
 import com.blazebit.persistence.view.IdMapping;
 import com.blazebit.persistence.view.Mapping;
 
-import java.util.Date;
+import java.time.Instant;
 
 @EntityView(BLRelChatUser.class)
 public interface BLChatUserView {
@@ -19,7 +19,7 @@ public interface BLChatUserView {
     boolean getDowned();
 
     @Mapping("reminder")
-    Date getReminder();
+    Instant getReminder();
 
     @Mapping("reminded")
     boolean getReminded();

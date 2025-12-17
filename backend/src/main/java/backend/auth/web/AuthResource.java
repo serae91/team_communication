@@ -6,7 +6,6 @@ import backend.auth.model.RegisterRequest;
 import backend.auth.model.UserInfo;
 import backend.entities.bl_user.BLUser;
 import backend.filter.CookieAuthFilterProtected;
-import io.quarkus.security.Authenticated;
 import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

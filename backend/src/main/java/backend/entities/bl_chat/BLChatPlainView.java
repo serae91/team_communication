@@ -4,7 +4,7 @@ import com.blazebit.persistence.view.EntityView;
 import com.blazebit.persistence.view.IdMapping;
 import com.blazebit.persistence.view.Mapping;
 
-import java.util.Date;
+import java.time.Instant;
 
 @EntityView(BLChat.class)
 public interface BLChatPlainView {
@@ -19,5 +19,5 @@ public interface BLChatPlainView {
     Urgency getUrgency();
 
     @Mapping("createdAt")
-    Date getCreatedAt();
+    Instant getCreatedAt();
 }

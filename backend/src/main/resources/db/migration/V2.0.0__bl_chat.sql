@@ -7,8 +7,8 @@ CREATE SEQUENCE bl_chat_sequence
 
 CREATE TABLE bl_chat
 (
-    id         BIGINT                  PRIMARY KEY,
+    id         BIGINT                   PRIMARY KEY,
     title      CHARACTER VARYING(255)   NOT NULL,
     urgency    CHARACTER VARYING(255)   NOT NULL,
-    created_at TIMESTAMP               DEFAULT NOW()
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

@@ -15,7 +15,7 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
-import java.util.Date;
+import java.time.Instant;
 
 @Dependent
 public class ChatCreateService {
@@ -36,7 +36,7 @@ public class ChatCreateService {
 
     @Transactional
     public BLChatPlainView createChatFromDto(final BLChatCreateDto blChatCreateDto) {
-        final Date createdAt = new Date();
+        final Instant createdAt = Instant.now();
         blChatCreateDto.userIds().add(blChatCreateDto.senderId());
 
         final BLChat chat = BLChat.builder()
