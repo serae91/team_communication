@@ -1,8 +1,7 @@
 package backend.chat.core;
 
 import backend.entities.bl_chat.BLChat;
-import backend.entities.bl_chat.BLChatPlainView;
-import backend.entities.bl_chat.BLChatFullInfoView;
+import backend.entities.bl_chat.BLChatView;
 import backend.entities.bl_rel_chat_user.BLRelChatUser;
 import com.blazebit.persistence.CriteriaBuilder;
 import com.blazebit.persistence.CriteriaBuilderFactory;
@@ -24,13 +23,13 @@ public class ChatService {
     @Inject
     CriteriaBuilderFactory criteriaBuilderFactory;
 
-    public BLChatPlainView getChatPlainById(final Long chatId) {
+    public BLChatView getChatPlainById(final Long chatId) {
         final CriteriaBuilder<BLChat> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLChat.class);
         criteriaBuilder.where("id").eq(chatId);
-        return entityViewManager.applySetting(EntityViewSetting.create(BLChatPlainView.class), criteriaBuilder).getSingleResult();
+        return entityViewManager.applySetting(EntityViewSetting.create(BLChatView.class), criteriaBuilder).getSingleResult();
     }
 
-    public List<BLChatPlainView> getChatListPlainByUserId(final Long userId) {
+    public List<BLChatView> getChatListByUserId(final Long userId) {
         final CriteriaBuilder<BLChat> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLChat.class);
         criteriaBuilder
                 .where("users.user.id").eq(userId)
@@ -39,10 +38,10 @@ public class ChatService {
                 .where("chat.id").eqExpression("OUTER(id)")
                 .where("user.id").eq(userId)
                 .end();
-        return entityViewManager.applySetting(EntityViewSetting.create(BLChatPlainView.class), criteriaBuilder).getResultList();
+        return entityViewManager.applySetting(EntityViewSetting.create(BLChatView.class), criteriaBuilder).getResultList();
     }
 
-    public List<BLChatPlainView> getChatListPlainByUserIdWithReminder(final Long userId) {
+    public List<BLChatView> getChatListPlainByUserIdWithReminder(final Long userId) {
         final CriteriaBuilder<BLChat> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLChat.class);
 
         criteriaBuilder
@@ -53,12 +52,6 @@ public class ChatService {
                 .where("user.id").eq(userId)
                 .where("reminderAt").isNotNull()
                 .end();
-        return entityViewManager.applySetting(EntityViewSetting.create(BLChatPlainView.class), criteriaBuilder).getResultList();
-    }
-
-    public BLChatFullInfoView getChatFullInfoById(final Long id) {
-        final CriteriaBuilder<BLChat> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLChat.class);
-        criteriaBuilder.where("id").eq(id);
-        return entityViewManager.applySetting(EntityViewSetting.create(BLChatFullInfoView.class), criteriaBuilder).getSingleResult();
+        return entityViewManager.applySetting(EntityViewSetting.create(BLChatView.class), criteriaBuilder).getResultList();
     }
 }

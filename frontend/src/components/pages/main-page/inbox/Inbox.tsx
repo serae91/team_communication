@@ -69,7 +69,7 @@ const Inbox = () => {
     onActiveChatId()
   }, [activeChatId, onActiveChatId]);
 
-  const listChatsPlain = () => {
+  const listChats = () => {
     if (!chats?.length) return <p>No messages received yet</p>
     return (chats.map(chat =>
       <MessageCard
@@ -102,7 +102,7 @@ const Inbox = () => {
       <BLHintCard hintCardType={ 'error' }>
         Number of messages marked as "Urgent" waiting for your response
       </BLHintCard>
-      { listChatsPlain() }
+      { listChats() }
     </BLContentCard>
 
   );

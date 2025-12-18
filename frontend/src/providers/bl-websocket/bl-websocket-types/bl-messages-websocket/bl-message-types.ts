@@ -1,4 +1,4 @@
-import type { BLChatCreateDto, BLChatPlainDto } from '../../../../dtos/BLChatPlainDto.ts';
+import type { BLChatCreateDto, BLChatDto } from '../../../../dtos/BLChatDto.ts';
 import type { BLMessageCreateDto, BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
 
 export type WebsocketMessage = WebSocketMessageIncoming | WebSocketMessageOutgoing;
@@ -11,8 +11,8 @@ export type WebSocketMessageIncoming =
 
 type ReceiveMessages = { type: 'RECEIVE_MESSAGES'; chatId: number; blMessages: BLMessageDto[] };
 type ReceiveMessage = { type: 'RECEIVE_MESSAGE'; chatId: number; blMessage: BLMessageDto };
-type ReceiveChats = { type: 'RECEIVE_CHATS'; blChats: BLChatPlainDto[] };
-type ReceiveChat = { type: 'RECEIVE_CHAT'; blChat: BLChatPlainDto };
+type ReceiveChats = { type: 'RECEIVE_CHATS'; blChats: BLChatDto[] };
+type ReceiveChat = { type: 'RECEIVE_CHAT'; blChat: BLChatDto };
 
 type WebSocketMessageOutgoing =
   | RequestChats

@@ -31,6 +31,7 @@ public class MessageCreateService {
         messageRepository.persist(blMessage);
     }
 
+    @Transactional
     public void createMessageFromView(final BLMessageCreateView blMessageCreateView) {
         blMessageCreateView.setCreatedAt(Instant.now());
         entityViewManager.save(entityManager, blMessageCreateView);

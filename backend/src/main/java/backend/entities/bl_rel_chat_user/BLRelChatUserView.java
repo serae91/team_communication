@@ -8,7 +8,7 @@ import com.blazebit.persistence.view.Mapping;
 import java.time.Instant;
 
 @EntityView(BLRelChatUser.class)
-public interface BLChatUserView {
+public interface BLRelChatUserView {
     @IdMapping
     public Long getId();
 

@@ -1,17 +1,14 @@
 package backend.entities.bl_chat;
 
-import backend.entities.bl_message.BLMessageView;
-import backend.entities.bl_rel_chat_user.BLChatUserView;
+import backend.entities.bl_rel_chat_user.ReminderStatus;
 import com.blazebit.persistence.view.EntityView;
 import com.blazebit.persistence.view.IdMapping;
 import com.blazebit.persistence.view.Mapping;
-import jakarta.persistence.OrderBy;
 
 import java.time.Instant;
-import java.util.List;
 
 @EntityView(BLChat.class)
-public interface BLChatFullInfoView {
+public interface BLChatView {
 
     @IdMapping
     Long getId();
@@ -25,10 +22,6 @@ public interface BLChatFullInfoView {
     @Mapping("createdAt")
     Instant getCreatedAt();
 
-    @Mapping("messages")
-    @OrderBy("createdAt DESC")
-    List<BLMessageView> getMessages();
-
-    @Mapping("users")
-    List<BLChatUserView> getUsers();
+    @Mapping("reminderStatus")
+    ReminderStatus getReminderStatus();
 }

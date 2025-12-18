@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState } from "react";
-import type { BLChatPlainDto } from '../../dtos/BLChatPlainDto.ts';
+import type { BLChatDto } from '../../dtos/BLChatDto.ts';
 
 interface BLChatContextType {
-  chats: BLChatPlainDto[];
-  setChats: React.Dispatch<React.SetStateAction<BLChatPlainDto[]>>
+  chats: BLChatDto[];
+  setChats: React.Dispatch<React.SetStateAction<BLChatDto[]>>
   activeChatId: number | null;
   setActiveChatId: React.Dispatch<React.SetStateAction<number | null>>;
 }
@@ -11,7 +11,7 @@ interface BLChatContextType {
 const BLChatContext = createContext<BLChatContextType | null>(null);
 
 export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
-  const [chats, setChats] = useState<BLChatPlainDto[]>([]);
+  const [chats, setChats] = useState<BLChatDto[]>([]);
   const [activeChatId, setActiveChatId] = useState<number | null>(null);
 
   return (

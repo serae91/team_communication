@@ -7,7 +7,6 @@ import backend.message.core.MessageService;
 import backend.message.usecase.create.MessageCreateService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -37,7 +36,6 @@ public class MessageResource {
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
     public BLMessageView createMessage(final BLMessageCreateView blMessageCreateView) {
         messageCreateService.createMessageFromView(blMessageCreateView);
         return messageService.getBLMessageView(blMessageCreateView.getId());

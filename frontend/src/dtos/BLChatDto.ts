@@ -1,8 +1,9 @@
-export interface BLChatPlainDto {
+export interface BLChatDto {
   id: number;
   title: string;
   urgency: string;
   createdAt: Date;
+  reminderStatus: string;
 }
 
 export interface BLChatCreateDto {

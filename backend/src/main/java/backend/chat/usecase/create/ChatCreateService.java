@@ -6,7 +6,7 @@ import backend.chat.core.ChatService;
 import backend.chat.core.RelChatUserRepository;
 import backend.entities.bl_chat.BLChat;
 import backend.entities.bl_chat.BLChatCreateDto;
-import backend.entities.bl_chat.BLChatPlainView;
+import backend.entities.bl_chat.BLChatView;
 import backend.entities.bl_message.BLMessage;
 import backend.entities.bl_rel_chat_user.BLRelChatUser;
 import backend.entities.bl_user.BLUser;
@@ -35,7 +35,7 @@ public class ChatCreateService {
     MessageCreateService messageCreateService;
 
     @Transactional
-    public BLChatPlainView createChatFromDto(final BLChatCreateDto blChatCreateDto) {
+    public BLChatView createChatFromDto(final BLChatCreateDto blChatCreateDto) {
         final Instant createdAt = Instant.now();
         blChatCreateDto.userIds().add(blChatCreateDto.senderId());
 
