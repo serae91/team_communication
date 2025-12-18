@@ -4,8 +4,9 @@ import backend.chat_user.usecase.update.RelChatUserUpdateService;
 import backend.entities.bl_rel_chat_user.BLRelChatUserSetReminderDto;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 
 @ApplicationScoped
 @Path("/chatuser")
@@ -14,15 +15,21 @@ public class ChatUserResource {
     @Inject
     RelChatUserUpdateService updateService;
 
-    @POST
+    @PATCH
     @Path("/setreminder")
     public void setReminder(final BLRelChatUserSetReminderDto setReminderDto) {
         updateService.setReminder(setReminderDto);
     }
 
-    @POST
+    @PATCH
     @Path("/triggerdown")
-    public void triggerDown(final Long chatId, Long userId) {
-        updateService.triggerDown(chatId, userId);
+    public void triggerDown(final Long chatId) {
+        updateService.triggerDown(chatId);
+    }
+
+    @PATCH
+    @Path("/setreminderseen/{chatId}")
+    public void setReminderSeen(@PathParam("chatId") final Long chatId) {
+        updateService.setReminderSeen(chatId);
     }
 }

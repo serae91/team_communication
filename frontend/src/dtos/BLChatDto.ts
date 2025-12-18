@@ -1,9 +1,12 @@
+import type { ReminderStatusEnum } from '../enums/ReminderStatusEnum.ts';
+
 export interface BLChatDto {
   id: number;
   title: string;
   urgency: string;
   createdAt: Date;
-  reminderStatus: string;
+  reminderAt: Date;
+  reminderStatus: ReminderStatusEnum;
 }
 
 export interface BLChatCreateDto {

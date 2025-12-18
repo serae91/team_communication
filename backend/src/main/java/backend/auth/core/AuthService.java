@@ -1,6 +1,7 @@
 package backend.auth.core;
 
 import backend.entities.bl_user.BLUser;
+import backend.user.core.UserRepository;
 import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -52,9 +53,9 @@ public class AuthService {
         }
 
         final BLUser user = BLUser.builder()
-        .username(username)
-        .passwordHash(BcryptUtil.bcryptHash(password))
-        .build();
+                .username(username)
+                .passwordHash(BcryptUtil.bcryptHash(password))
+                .build();
 
         userRepository.persist(user);
 

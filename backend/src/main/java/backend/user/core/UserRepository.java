@@ -1,4 +1,4 @@
-package backend.auth.core;
+package backend.user.core;
 
 import backend.entities.bl_user.BLUser;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;

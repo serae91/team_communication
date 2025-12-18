@@ -31,7 +31,7 @@ public class AuthResource {
 
     @POST
     @Path("/login")
-    public Response login(LoginRequest request) {
+    public Response login(final LoginRequest request) {
 
         final BLUser user = authService.authenticate(request.username(), request.password());
 

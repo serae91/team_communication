@@ -1,9 +1,13 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { BLChatDto } from '../../dtos/BLChatDto.ts';
+import type { WebsocketMessage } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
+import { useWebSocket } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
 
 interface BLChatContextType {
   chats: BLChatDto[];
-  setChats: React.Dispatch<React.SetStateAction<BLChatDto[]>>
+  setChats: React.Dispatch<React.SetStateAction<BLChatDto[]>>;
+  chatsWithReminder: BLChatDto[];
+  chatsWithoutReminder: BLChatDto[];
   activeChatId: number | null;
   setActiveChatId: React.Dispatch<React.SetStateAction<number | null>>;
 }
@@ -13,9 +17,41 @@ const BLChatContext = createContext<BLChatContextType | null>(null);
 export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
   const [chats, setChats] = useState<BLChatDto[]>([]);
   const [activeChatId, setActiveChatId] = useState<number | null>(null);
+  const {removeMessageHandler, addMessageHandler} = useWebSocket<WebsocketMessage>();
+
+
+  const chatsWithReminder = useMemo(
+    () => chats.filter(chat => chat.reminderStatus === 'SCHEDULED' || chat.reminderStatus === 'TRIGGERED'),
+    [chats]
+  );
+
+  const chatsWithoutReminder = useMemo(
+    () => chats.filter(chat => chat.reminderStatus === 'NONE'),
+    [chats]
+  );
+
+  useEffect(() => {
+    const handler = (msg: WebsocketMessage) => {
+      switch (msg.type) {
+        case 'RECEIVE_REMINDER':
+          setChats(prev =>
+            prev.map(chat =>
+              msg.chatIds.includes(chat.id)
+                ? {...chat, reminderStatus: 'TRIGGERED'} as BLChatDto
+                : chat
+            )
+          );
+          break;
+      }
+    };
+
+    addMessageHandler(handler);
+    return () => removeMessageHandler(handler);
+  }, [addMessageHandler, removeMessageHandler]);
 
   return (
-    <BLChatContext.Provider value={ {chats, setChats, activeChatId, setActiveChatId} }>
+    <BLChatContext.Provider
+      value={ {chats, setChats, chatsWithReminder, chatsWithoutReminder, activeChatId, setActiveChatId} }>
       { children }
     </BLChatContext.Provider>
   );

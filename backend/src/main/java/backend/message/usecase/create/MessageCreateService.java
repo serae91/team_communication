@@ -1,5 +1,7 @@
 package backend.message.usecase.create;
 
+import backend.auth.core.CurrentUser;
+import backend.chat_user.usecase.update.RelChatUserUpdateService;
 import backend.entities.bl_chat.BLChat;
 import backend.entities.bl_message.BLMessage;
 import backend.entities.bl_message.BLMessageCreateDto;
@@ -26,6 +28,10 @@ public class MessageCreateService {
     MessageRepository messageRepository;
     @Inject
     MessageService messageService;
+    @Inject
+    RelChatUserUpdateService chatUserUpdateService;
+    @Inject
+    CurrentUser currentUser;
 
     public void persist(final BLMessage blMessage) {
         messageRepository.persist(blMessage);
@@ -38,16 +44,17 @@ public class MessageCreateService {
     }
 
     @Transactional
-    public BLMessageView createMessageFromDto(final BLMessageCreateDto blMessageCreateDto) {
-        final BLChat blChat = BLChat.builder().id(blMessageCreateDto.chatId()).build();
-        final BLUser sender = BLUser.builder().id(blMessageCreateDto.senderId()).build();
-        final BLMessage blMessage = BLMessage.builder()
-                .text(blMessageCreateDto.text())
-                .chat(blChat)
+    public BLMessageView createMessageFromDto(final BLMessageCreateDto messageCreateDto) {
+        final BLChat chat = BLChat.builder().id(messageCreateDto.chatId()).build();
+        final BLUser sender = BLUser.builder().id(currentUser.getUserId()).build();
+        final BLMessage message = BLMessage.builder()
+                .text(messageCreateDto.text())
+                .chat(chat)
                 .sender(sender)
                 .createdAt(Instant.now())
                 .build();
-        messageRepository.persist(blMessage);
-        return messageService.getBLMessageView(blMessage.getId());
+        messageRepository.persist(message);
+        chatUserUpdateService.unDownForAllUsers(chat.getId());
+        return messageService.getBLMessageView(message.getId());
     }
 }

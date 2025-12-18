@@ -7,12 +7,14 @@ export type WebSocketMessageIncoming =
   | ReceiveMessages
   | ReceiveMessage
   | ReceiveChats
-  | ReceiveChat;
+  | ReceiveChat
+  | ReceiveReminder;
 
 type ReceiveMessages = { type: 'RECEIVE_MESSAGES'; chatId: number; blMessages: BLMessageDto[] };
 type ReceiveMessage = { type: 'RECEIVE_MESSAGE'; chatId: number; blMessage: BLMessageDto };
 type ReceiveChats = { type: 'RECEIVE_CHATS'; blChats: BLChatDto[] };
 type ReceiveChat = { type: 'RECEIVE_CHAT'; blChat: BLChatDto };
+type ReceiveReminder = { type: 'RECEIVE_REMINDER'; chatIds: number[] };
 
 type WebSocketMessageOutgoing =
   | RequestChats

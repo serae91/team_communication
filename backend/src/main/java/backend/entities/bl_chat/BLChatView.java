@@ -1,6 +1,5 @@
 package backend.entities.bl_chat;
 
-import backend.entities.bl_rel_chat_user.ReminderStatus;
 import com.blazebit.persistence.view.EntityView;
 import com.blazebit.persistence.view.IdMapping;
 import com.blazebit.persistence.view.Mapping;
@@ -21,7 +20,4 @@ public interface BLChatView {
 
     @Mapping("createdAt")
     Instant getCreatedAt();
-
-    @Mapping("reminderStatus")
-    ReminderStatus getReminderStatus();
 }

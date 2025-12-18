@@ -23,18 +23,6 @@ public class MessageService {
     @Inject
     EntityViewManager entityViewManager;
 
-    public List<BLMessage> listAll() {
-        return messageRepository.listAll();
-    }
-
-    public List<BLMessage> listForSenderIdAndReceiverId(final Long senderId, final Long receiverId) {
-        return messageRepository.listForSenderIdAndReceiverId(senderId, receiverId);
-    }
-
-    public List<BLMessage> listForSenderIdAndGroupChatId(final Long senderId, final Long groupChatId) {
-        return messageRepository.listForSenderIdAndGroupChatId(senderId, groupChatId);
-    }
-
     public BLMessageView getBLMessageView(final Long messageId) {
         final CriteriaBuilder<BLMessage> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLMessage.class);
         criteriaBuilder.where("id").eq(messageId);
