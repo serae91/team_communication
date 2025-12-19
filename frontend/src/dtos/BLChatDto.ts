@@ -12,7 +12,6 @@ export interface BLChatDto {
 export interface BLChatCreateDto {
   title: string;
   urgency: string;
-  senderId: number;
   firstMessageText: string;
   userIds: number[];
 }

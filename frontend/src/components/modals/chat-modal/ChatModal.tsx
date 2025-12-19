@@ -39,7 +39,6 @@ const ChatModal = ({onClose}: ChatModalProps) => {
     const blMessageCreateDto = {
       chatId: activeChatId,
       text,
-      senderId: user.id
     } as BLMessageCreateDto;
     send({type: 'SEND_MESSAGE', chatId: activeChatId, blMessage: blMessageCreateDto})
   }
@@ -48,7 +47,7 @@ const ChatModal = ({onClose}: ChatModalProps) => {
       {/*<button onClick={ setNextChat }>Set next chat</button>
       <button onClick={ () => {
         if (activeChatId && user?.id)
-          triggerDown(activeChatId, user.id);
+          triggerDown(activeChatId);
       }
       }>Down
       </button>*/ }

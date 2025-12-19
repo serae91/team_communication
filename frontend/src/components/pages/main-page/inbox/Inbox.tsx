@@ -1,4 +1,3 @@
-import { useCallback, useEffect } from 'react';
 import MessageCard from './message-card/MessageCard.tsx';
 import BLContentCard from '../../../ui/bl-content-card/BLContentCard.tsx';
 import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';
@@ -15,24 +14,18 @@ import {
   useWebSocket
 } from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
 
-const Inbox = () => {
+export const Inbox = () => {
   const {connected, removeMessageHandler, addMessageHandler, send} = useWebSocket<WebsocketMessage>();
   const {chats, setChats, activeChatId, setActiveChatId} = useBLChats();
   const {setMessages} = useBLMessages();
   const {currentModal, openModal, closeModal} = useModal()
   const {user} = useAuth();
 
-  const onMessageIncoming = useCallback((msg: WebsocketMessage) => {
+  /*const onMessageIncoming = useCallback((msg: WebsocketMessage) => {
     console.log('received message: ', msg)
     switch (msg.type) {
-      case 'RECEIVE_MESSAGES':
-        setMessages(msg.blMessages);
-        break;
       case 'RECEIVE_MESSAGE':
         setMessages((prev) => [...prev, msg.blMessage]);
-        break;
-      case 'RECEIVE_CHATS':
-        setChats(msg.blChats);
         break;
       case 'RECEIVE_CHAT':
         setChats((prev) => [...prev, msg.blChat]);
@@ -44,7 +37,6 @@ const Inbox = () => {
     if (user?.id)
       send({
         type: 'REQUEST_CHATS',
-        userId: user?.id,
       });
   }, [send, user?.id]);
 
@@ -59,7 +51,7 @@ const Inbox = () => {
   useEffect(() => {
     if (!connected) return;
     addMessageHandler(onMessageIncoming);
-    requestChats();
+    //requestChats();
     return () => {
       removeMessageHandler(onMessageIncoming)
     };
@@ -67,7 +59,7 @@ const Inbox = () => {
 
   useEffect(() => {
     onActiveChatId()
-  }, [activeChatId, onActiveChatId]);
+  }, [activeChatId, onActiveChatId]);*/
 
   const listChats = () => {
     if (!chats?.length) return <p>No messages received yet</p>
@@ -107,5 +99,3 @@ const Inbox = () => {
 
   );
 }
-
-export default Inbox;

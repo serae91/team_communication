@@ -6,10 +6,14 @@ import backend.message.core.MessageService;
 import backend.message.usecase.create.MessageCreateService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+
+import java.util.List;
 
 @Path("/message")
 @ApplicationScoped
@@ -20,6 +24,13 @@ public class MessageResource {
 
     @Inject
     MessageCreateService messageCreateService;
+
+    @GET
+    @Path("/list/{chatId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<BLMessageView> getForChatId(@PathParam("chatId") final Long chatId) {
+        return messageService.getForChatId(chatId);
+    }
 
     @POST
     @Path("/create")

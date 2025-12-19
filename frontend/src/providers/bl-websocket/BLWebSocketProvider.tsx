@@ -18,7 +18,9 @@ export const createBLWebSocketProvider = <T, >() => {
 
   const BLMessageWebSocketProvider = ({children, connectionURL}: ProviderProps) => {
     const [connected, setConnected] = useState(false);
-    const [service] = useState(() => new WebSocketService<T>(`ws://localhost:8080/${ connectionURL }`));
+    const token = localStorage.getItem("authToken");
+    console.log('authToken', token);
+    const [service] = useState(() => new WebSocketService<T>(`ws://localhost:8080/${ connectionURL }?token=${ token }`));
 
     useEffect(() => {
       service.connect();

@@ -16,7 +16,7 @@ public class ChatUserResource {
     RelChatUserUpdateService updateService;
 
     @PATCH
-    @Path("/setreminder")
+    @Path("/reminder")
     public void setReminder(final BLRelChatUserSetReminderDto setReminderDto) {
         updateService.setReminder(setReminderDto);
     }
@@ -28,7 +28,7 @@ public class ChatUserResource {
     }
 
     @PATCH
-    @Path("/setreminderseen/{chatId}")
+    @Path("/reminder/seen/{chatId}")
     public void setReminderSeen(@PathParam("chatId") final Long chatId) {
         updateService.setReminderSeen(chatId);
     }

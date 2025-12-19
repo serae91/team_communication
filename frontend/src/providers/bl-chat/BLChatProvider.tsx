@@ -2,6 +2,8 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from "
 import type { BLChatDto } from '../../dtos/BLChatDto.ts';
 import type { WebsocketMessage } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
 import { useWebSocket } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
+import { useAuth } from '../auth/AuthProvider.tsx';
+import { getChats } from '../../services/ChatService.ts';
 
 interface BLChatContextType {
   chats: BLChatDto[];
@@ -18,6 +20,7 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
   const [chats, setChats] = useState<BLChatDto[]>([]);
   const [activeChatId, setActiveChatId] = useState<number | null>(null);
   const {removeMessageHandler, addMessageHandler} = useWebSocket<WebsocketMessage>();
+  const {user} = useAuth();
 
 
   const chatsWithReminder = useMemo(
@@ -31,6 +34,10 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
   );
 
   useEffect(() => {
+    getChats().then(chats => setChats(chats));
+  }, [user]);
+
+  useEffect(() => {
     const handler = (msg: WebsocketMessage) => {
       switch (msg.type) {
         case 'RECEIVE_REMINDER':
@@ -41,6 +48,9 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
                 : chat
             )
           );
+          break;
+        case 'RECEIVE_CHAT':
+          setChats((prev) => [...prev, msg.blChat]);
           break;
       }
     };

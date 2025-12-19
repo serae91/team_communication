@@ -29,7 +29,7 @@ public class MessageService {
         return entityViewManager.applySetting(EntityViewSetting.create(BLMessageView.class), criteriaBuilder).getSingleResult();
     }
 
-    public List<BLMessageView> getBLMessageViewsByChatId(final Long chatId) {
+    public List<BLMessageView> getForChatId(final Long chatId) {
         final CriteriaBuilder<BLMessage> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLMessage.class);
         criteriaBuilder.where("chat.id").eq(chatId).orderByAsc("createdAt");
         return entityViewManager.applySetting(EntityViewSetting.create(BLMessageView.class), criteriaBuilder).getResultList();

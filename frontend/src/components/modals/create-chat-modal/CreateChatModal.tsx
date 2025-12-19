@@ -28,7 +28,6 @@ export const CreateChatModal = ({onClose}: CreateChatModalProps) => {
         title: 'Perfectly tested title',
         firstMessageText: text,
         urgency: 'HIGH',
-        senderId: 1,
         userIds: [1, 3]
       } as BLChatCreateDto
     } as WebsocketMessage;

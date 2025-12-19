@@ -1,4 +1,4 @@
-import Inbox from './inbox/Inbox.tsx';
+import { Inbox } from './inbox/Inbox.tsx';
 import './MainPage.scss';
 import { BLChatProvider } from '../../../providers/bl-chat/BLChatProvider.tsx';
 import { BLMessageProvider } from '../../../providers/bl-message/BLMessageProvider.tsx';

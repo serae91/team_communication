@@ -4,15 +4,15 @@ import type { BLMessageCreateDto, BLMessageDto } from '../../../../dtos/BLMessag
 export type WebsocketMessage = WebSocketMessageIncoming | WebSocketMessageOutgoing;
 
 export type WebSocketMessageIncoming =
-  | ReceiveMessages
+//  | ReceiveMessages
   | ReceiveMessage
-  | ReceiveChats
+//  | ReceiveChats
   | ReceiveChat
   | ReceiveReminder;
 
-type ReceiveMessages = { type: 'RECEIVE_MESSAGES'; chatId: number; blMessages: BLMessageDto[] };
+//type ReceiveMessages = { type: 'RECEIVE_MESSAGES'; chatId: number; blMessages: BLMessageDto[] };
 type ReceiveMessage = { type: 'RECEIVE_MESSAGE'; chatId: number; blMessage: BLMessageDto };
-type ReceiveChats = { type: 'RECEIVE_CHATS'; blChats: BLChatDto[] };
+//type ReceiveChats = { type: 'RECEIVE_CHATS'; blChats: BLChatDto[] };
 type ReceiveChat = { type: 'RECEIVE_CHAT'; blChat: BLChatDto };
 type ReceiveReminder = { type: 'RECEIVE_REMINDER'; chatIds: number[] };
 
@@ -22,7 +22,7 @@ type WebSocketMessageOutgoing =
   | SendMessage
   | SwitchChat;
 
-type RequestChats = { type: 'REQUEST_CHATS'; userId: number; }
+type RequestChats = { type: 'REQUEST_CHATS'; }
 type CreateChat = { type: 'CREATE_CHAT'; chatCreateDto: BLChatCreateDto; }
 type SendMessage = { type: 'SEND_MESSAGE'; chatId: number; blMessage: BLMessageCreateDto }
 type SwitchChat = { type: 'SWITCH_CHAT'; chatId: number; }

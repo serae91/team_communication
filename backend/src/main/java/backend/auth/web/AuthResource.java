@@ -20,6 +20,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
+import java.util.Map;
 import java.util.Set;
 
 @Path("/auth")
@@ -46,7 +47,7 @@ public class AuthResource {
                 .expiresIn(3600)
                 .sign();
 
-        return Response.noContent()
+        return Response.ok(Map.of("token", token))
                 //.header("Set-Cookie", "token=" + token + "; HttpOnly; Path=/; SameSite=None; Secure")
                 .header("Set-Cookie", "token=" + token + "; HttpOnly; Path=/; SameSite=Lax")//TODO replace by line above
                 .build();
