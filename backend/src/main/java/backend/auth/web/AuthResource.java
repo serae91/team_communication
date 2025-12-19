@@ -64,7 +64,7 @@ public class AuthResource {
     @POST
     @Path("/register")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response register(RegisterRequest request) {
+    public Response register(final RegisterRequest request) {
         final BLUser newUser = authService.createUser(request.username(), request.password());
         return Response.status(Response.Status.CREATED)
                 .entity(newUser)
@@ -76,7 +76,7 @@ public class AuthResource {
     @Path("/me")
     @CookieAuthFilterProtected
     @Produces(MediaType.APPLICATION_JSON)
-    public UserInfo me(@Context SecurityContext ctx) {
+    public UserInfo me(@Context final SecurityContext ctx) {
 
         if (!(ctx.getUserPrincipal() instanceof JsonWebToken jwt)) {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);

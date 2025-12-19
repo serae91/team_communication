@@ -18,7 +18,7 @@ public class BLWebSocketService {
     ChatWebRegistry chatWebRegistry;
 
     public void sendReminder(final Long userId, final Set<Long> chatIds) {
-        try{
+        try {
             final ReceiveReminderWebSocketMessage receiveReminderWebSocketMessage = new ReceiveReminderWebSocketMessage("RECEIVE_REMINDER", chatIds);
             final String jsonString = objectMapper.writeValueAsString(receiveReminderWebSocketMessage);
             chatWebRegistry.sendToUser(userId, jsonString);

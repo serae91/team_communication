@@ -52,7 +52,8 @@
         <puppycrawl.checkstyle-plugin.version>11.1.0</puppycrawl.checkstyle-plugin.version>
 
         <!-- plugin configuration -->
-        <checkstyle-plugin.config.path>checkstyle.xml</checkstyle-plugin.config.path>
+        <checkstyle-plugin.config.path>${project.basedir}/config/checkstyle/checkstyle.xml
+        </checkstyle-plugin.config.path>
         <checkstyle-plugin.output-file.path>${project.build.directory}/checkstyle-result.xml
         </checkstyle-plugin.output-file.path>
     </properties>

@@ -6,7 +6,7 @@ import com.blazebit.persistence.view.IdMapping;
 @EntityView(BLUser.class)
 public interface BLUserIdView {
     @IdMapping
-    public Long getId();
+    Long getId();
 
     void setId(Long id);
 }

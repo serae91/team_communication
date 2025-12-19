@@ -14,7 +14,7 @@ public class GeminiRequest {
     @JsonProperty("contents")
     public List<Content> contents;
 
-    public GeminiRequest(String text) {
+    public GeminiRequest(final String text) {
         this.contents = List.of(new Content(text));
     }
 
@@ -29,7 +29,7 @@ public class GeminiRequest {
         @JsonProperty("parts")
         public List<Part> parts;
 
-        public Content(String text) {
+        public Content(final String text) {
             this.parts = List.of(new Part(text));
         }
     }
@@ -42,7 +42,7 @@ public class GeminiRequest {
         @JsonProperty("text")
         public String text;
 
-        public Part(String text) {
+        public Part(final String text) {
             this.text = text;
         }
     }

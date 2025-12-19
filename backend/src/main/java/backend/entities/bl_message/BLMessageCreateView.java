@@ -17,17 +17,21 @@ public interface BLMessageCreateView {
 
     @Mapping("text")
     String getText();
+
     void setText(String text);
 
     @Mapping("chat")
     BLChatIdView getChat();
+
     void setChat(BLChatIdView chatId);
 
     @Mapping("sender")
     BLUserIdView getSender();
+
     void setSender(BLUserIdView senderId);
 
     @Mapping("createdAt")
     Instant getCreatedAt();
+
     void setCreatedAt(Instant createdAt);
 }

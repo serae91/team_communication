@@ -8,10 +8,10 @@ import jakarta.inject.Inject;
 public class UserService {
 
     @Inject
-    UserRepository UserRepository;
+    UserRepository userRepository;
 
     public BLUser getUserById(final Long userId) {
-        return UserRepository.findById(userId);
+        return userRepository.findById(userId);
     }
 }
 

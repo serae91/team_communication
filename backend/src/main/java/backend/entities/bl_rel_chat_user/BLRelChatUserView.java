@@ -10,7 +10,7 @@ import java.time.Instant;
 @EntityView(BLRelChatUser.class)
 public interface BLRelChatUserView {
     @IdMapping
-    public Long getId();
+    Long getId();
 
     @Mapping("user")
     BLUser getUser();

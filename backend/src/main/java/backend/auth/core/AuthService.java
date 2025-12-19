@@ -13,12 +13,11 @@ import java.util.regex.Pattern;
 
 @ApplicationScoped
 public class AuthService {
+    private static final Pattern STRONG_PASSWORD =
+            Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$");
 
     @Inject
     UserRepository userRepository;
-
-    private static final Pattern STRONG_PASSWORD =
-            Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).{8,}$");
 
     public BLUser authenticate(final String username, final String password) {
         final BLUser user = userRepository.findByUsername(username);
@@ -35,7 +34,7 @@ public class AuthService {
     }
 
     @Transactional
-    public BLUser createUser(String username, String password) {
+    public BLUser createUser(final String username, final String password) {
 
         if (username == null || username.isBlank()) {
             throw new WebApplicationException("Username required", 400);

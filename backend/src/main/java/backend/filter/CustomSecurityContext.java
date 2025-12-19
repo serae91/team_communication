@@ -1,14 +1,15 @@
 package backend.filter;
 
 import jakarta.ws.rs.core.SecurityContext;
-import java.security.Principal;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+
+import java.security.Principal;
 
 public class CustomSecurityContext implements SecurityContext {
 
     private final JsonWebToken jwt;
 
-    public CustomSecurityContext(JsonWebToken jwt) {
+    public CustomSecurityContext(final JsonWebToken jwt) {
         this.jwt = jwt;
     }
 
@@ -18,7 +19,7 @@ public class CustomSecurityContext implements SecurityContext {
     }
 
     @Override
-    public boolean isUserInRole(String role) {
+    public boolean isUserInRole(final String role) {
         return jwt.getGroups() != null && jwt.getGroups().contains(role);
     }
 

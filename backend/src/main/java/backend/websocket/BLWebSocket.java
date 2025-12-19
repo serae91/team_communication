@@ -11,6 +11,7 @@ import io.quarkus.websockets.next.PathParam;
 import io.quarkus.websockets.next.WebSocket;
 import io.quarkus.websockets.next.WebSocketConnection;
 import io.smallrye.jwt.auth.principal.JWTParser;
+import io.smallrye.jwt.auth.principal.ParseException;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +53,7 @@ public class BLWebSocket {
                 return;
             }
             chatWebRegistry.register(userId, connection);
-        } catch (Exception e) {
+        } catch (final ParseException parseException) {
             connection.close().subscribe().with(v -> {
             });
         }
