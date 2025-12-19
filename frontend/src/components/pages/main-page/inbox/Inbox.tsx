@@ -40,14 +40,6 @@ export const Inbox = () => {
       });
   }, [send, user?.id]);
 
-  const onActiveChatId = useCallback((): void => {
-    if (!activeChatId) return;
-    send({
-      type: 'SWITCH_CHAT',
-      chatId: activeChatId,
-    });
-  }, [send, activeChatId]);
-
   useEffect(() => {
     if (!connected) return;
     addMessageHandler(onMessageIncoming);

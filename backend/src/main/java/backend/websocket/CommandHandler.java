@@ -39,33 +39,20 @@ public class CommandHandler {
     private void handleCreateChat(final CreateChatWebSocketMessage createChatWebSocketMessage, final WebSocketConnection connection) {
         final BLChatView chatView = chatCreateService.createChatFromDto(createChatWebSocketMessage.chatCreateDto());
         final ReceiveChatWebSocketMessage receiveChatWebSocketMessage = new ReceiveChatWebSocketMessage("RECEIVE_CHAT", chatView);
-        //chatRegistry.addChat(chatView.getId(), createChatWebSocketMessage.chatCreateDto().userIds());
-        //chatRegistry.sendToChat(chatView.getId(), receiveChatWebSocketMessage);
         createChatWebSocketMessage.chatCreateDto().userIds().forEach(userId -> {
             chatRegistry.sendToUser(userId, receiveChatWebSocketMessage);
         });
     }
 
     private void handleSendMessage(final SendMessageWebSocketMessage sendMessageWebSocketMessage, final WebSocketConnection connection) {
-        final BLMessageView blMessageView = messageCreateService.createMessageFromDto(sendMessageWebSocketMessage.blMessage());
+        final BLMessageView blMessageView = messageCreateService.createMessageFromDto(sendMessageWebSocketMessage.blMessage(), chatRegistry.getUserIdByConnection(connection));
         final ReceiveMessageWebSocketMessage chatMessage = new ReceiveMessageWebSocketMessage("RECEIVE_MESSAGE", sendMessageWebSocketMessage.chatId(), blMessageView);
         chatRegistry.sendToChat(sendMessageWebSocketMessage.chatId(), chatMessage);
     }
 
     private void handleSwitchChat(final SwitchChatWebSocketMessage switchChatWebSocketMessage, final WebSocketConnection connection) {
         log.info("Switching chat");
-        //chatRegistry.joinChat(switchChatWebSocketMessage.chatId(), securityService.getUserId());
-        /*try {
-            chatRegistry.joinChat(switchChatWebSocketMessage.chatId(), connection);
-            final List<BLMessageView> blMessageViews = messageService.getForChatId(switchChatWebSocketMessage.chatId());
-            final ReceiveMessagesWebSocketMessage chatMessages = new ReceiveMessagesWebSocketMessage("RECEIVE_MESSAGES", switchChatWebSocketMessage.chatId(), blMessageViews);
-            final String jsonString = objectMapper.writeValueAsString(chatMessages);
-            log.info("Sending chat messages {} ", jsonString);
-            connection.sendText(jsonString).subscribe().with(v -> {
-            });
-        } catch (JsonProcessingException jpe) {
-            jpe.printStackTrace();
-        }*/
+        chatRegistry.joinChat(connection, switchChatWebSocketMessage.chatId());
     }
 
     private void handleTypingStart(final OutgoingWebSocketMessage outgoingWebsocketMessage, final WebSocketConnection connection) {

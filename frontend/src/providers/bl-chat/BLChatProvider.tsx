@@ -23,7 +23,7 @@ const BLChatContext = createContext<BLChatContextType | null>(null);
 export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
   const [chats, setChats] = useState<BLChatDto[]>([]);
   const [activeChatId, setActiveChatId] = useState<number | null>(null);
-  const {removeMessageHandler, addMessageHandler} = useWebSocket<WebsocketMessage>();
+  const {removeMessageHandler, addMessageHandler, send} = useWebSocket();
   const {user} = useAuth();
 
 
@@ -40,6 +40,14 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
   useEffect(() => {
     getChats().then(chats => setChats(chats));
   }, [user]);
+
+  useEffect(() => {
+    if (!activeChatId) return;
+    send({
+      type: 'SWITCH_CHAT',
+      chatId: activeChatId,
+    });
+  }, [activeChatId, send]);
 
   useEffect(() => {
     const handler = (msg: WebsocketMessage) => {

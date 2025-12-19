@@ -1,5 +1,6 @@
 package backend.chat_user.web;
 
+import backend.auth.core.CurrentUser;
 import backend.chat_user.usecase.update.RelChatUserUpdateService;
 import backend.entities.bl_rel_chat_user.BLRelChatUserSetReminderDto;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -14,22 +15,24 @@ public class ChatUserResource {
 
     @Inject
     RelChatUserUpdateService updateService;
+    @Inject
+    CurrentUser currentUser;
 
     @PATCH
     @Path("/reminder")
     public void setReminder(final BLRelChatUserSetReminderDto setReminderDto) {
-        updateService.setReminder(setReminderDto);
+        updateService.setReminder(setReminderDto, currentUser.getUserId());
     }
 
     @PATCH
     @Path("/triggerdown")
     public void triggerDown(final Long chatId) {
-        updateService.triggerDown(chatId);
+        updateService.triggerDown(chatId, currentUser.getUserId());
     }
 
     @PATCH
     @Path("/reminder/seen/{chatId}")
     public void setReminderSeen(@PathParam("chatId") final Long chatId) {
-        updateService.setReminderSeen(chatId);
+        updateService.setReminderSeen(chatId, currentUser.getUserId());
     }
 }

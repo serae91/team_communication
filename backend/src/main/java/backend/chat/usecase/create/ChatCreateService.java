@@ -1,6 +1,5 @@
 package backend.chat.usecase.create;
 
-import backend.auth.core.CurrentUser;
 import backend.chat.core.ChatRepository;
 import backend.chat.core.ChatService;
 import backend.chat.core.RelChatUserRepository;
@@ -30,19 +29,17 @@ public class ChatCreateService {
     RelChatUserRepository relChatUserRepository;
     @Inject
     MessageCreateService messageCreateService;
-    @Inject
-    CurrentUser currentUser;
 
     @Transactional
-    public BLChatView createChatFromDto(final BLChatCreateDto chatCreateDto) {
+    public BLChatView createChatFromDto(final BLChatCreateDto chatCreateDto, final Long senderId) {
         final Instant createdAt = Instant.now();
-        chatCreateDto.userIds().add(currentUser.getUserId());
+        chatCreateDto.userIds().add(senderId);
 
         final BLChat chat = BLChat.builder()
                 .title(chatCreateDto.title())
                 .urgency(chatCreateDto.urgency())
                 .createdAt(createdAt)
-                .lastMessageUserId(currentUser.getUserId())
+                .lastMessageUserId(senderId)
                 .build();
         chatRepository.persist(chat);
         chatCreateDto.userIds().forEach(id -> {
@@ -50,7 +47,7 @@ public class ChatCreateService {
             final BLRelChatUser relChatUser = BLRelChatUser.builder().user(user).chat(chat).build();
             relChatUserRepository.persist(relChatUser);
         });
-        final BLUser sender = BLUser.builder().id(currentUser.getUserId()).build();
+        final BLUser sender = BLUser.builder().id(senderId).build();
         final BLMessage firstMessage = BLMessage.builder()
                 .sender(sender)
                 .chat(chat)

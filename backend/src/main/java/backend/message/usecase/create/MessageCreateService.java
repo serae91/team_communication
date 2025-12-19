@@ -1,6 +1,5 @@
 package backend.message.usecase.create;
 
-import backend.auth.core.CurrentUser;
 import backend.chat_user.usecase.update.RelChatUserUpdateService;
 import backend.entities.bl_chat.BLChat;
 import backend.entities.bl_message.BLMessage;
@@ -30,8 +29,6 @@ public class MessageCreateService {
     MessageService messageService;
     @Inject
     RelChatUserUpdateService chatUserUpdateService;
-    @Inject
-    CurrentUser currentUser;
 
     public void persist(final BLMessage blMessage) {
         messageRepository.persist(blMessage);
@@ -44,9 +41,9 @@ public class MessageCreateService {
     }
 
     @Transactional
-    public BLMessageView createMessageFromDto(final BLMessageCreateDto messageCreateDto) {
+    public BLMessageView createMessageFromDto(final BLMessageCreateDto messageCreateDto, final Long userId) {
         final BLChat chat = BLChat.builder().id(messageCreateDto.chatId()).build();
-        final BLUser sender = BLUser.builder().id(currentUser.getUserId()).build();
+        final BLUser sender = BLUser.builder().id(userId).build();
         final BLMessage message = BLMessage.builder()
                 .text(messageCreateDto.text())
                 .chat(chat)

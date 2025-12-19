@@ -59,14 +59,15 @@ public class BLWebSocket {
             } else if (userIdClaim instanceof String s) {
                 userId = Long.valueOf(s);
             } else {
-                // ungültiger Token, Connection schließen
-                connection.close();
+                connection.close().subscribe().with(v -> {
+                });
                 return;
             }
 
             chatWebRegistry.register(userId, connection);
         } catch (Exception e) {
-            connection.close();
+            connection.close().subscribe().with(v -> {
+            });
         }
     }
 
