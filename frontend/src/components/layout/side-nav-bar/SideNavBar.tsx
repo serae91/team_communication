@@ -3,7 +3,7 @@ import SideNavBarButton from './side-nav-bar-button/SideNavBarButton';
 import { FaEnvelope, FaHistory, FaUserPlus } from 'react-icons/fa';
 import BLSideSymbol from '../../ui/bl-side-symbol/BLSideSymbol';
 import { useModal } from '../../../providers/modal/ModalProvider.tsx';
-import { SideNavBarProfile } from './side-nav-bar-profile/SideNavBarProfile.tsx';
+import SideNavBarProfile from './side-nav-bar-profile/SideNavBarProfile.tsx';
 
 const SideNavBar = () => {
   const {openModal} = useModal()

@@ -4,8 +4,8 @@ import MainPage from './components/pages/main-page/MainPage.js';
 import { AuthProvider } from './providers/auth/AuthProvider.tsx';
 import ProtectedRoute from './routes/protected-route/ProtectedRoute.tsx';
 import LoginPage from './components/pages/login-page/LoginPage.tsx';
-import { RootRedirect } from './routes/root-redirect/RootRedirect.tsx';
-import { RegisterPage } from './components/pages/register-page/RegisterPage.tsx';
+import RootRedirect from './routes/root-redirect/RootRedirect.tsx';
+import RegisterPage from './components/pages/register-page/RegisterPage.tsx';
 
 function App() {
 

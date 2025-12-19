@@ -7,7 +7,7 @@ interface ChatMessageProps {
   message: string;
 }
 
-export const ChatMessage = (props: ChatMessageProps) => {
+const ChatMessage = (props: ChatMessageProps) => {
   return (
     <div className={ 'chat-message flex-row' }>
       <div className={ 'profile-picture' }/>

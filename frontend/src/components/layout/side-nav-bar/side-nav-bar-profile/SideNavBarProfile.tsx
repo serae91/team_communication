@@ -3,7 +3,7 @@ import { FaHandHoldingUsd, } from 'react-icons/fa';
 import { useAuth } from '../../../../providers/auth/AuthProvider.tsx';
 import { Logout } from '@mui/icons-material';
 
-export const SideNavBarProfile = () => {
+const SideNavBarProfile = () => {
   const {logout} = useAuth();
   return (
     <div className={ 'profile flex-row' }>
@@ -21,3 +21,5 @@ export const SideNavBarProfile = () => {
     </div>
   );
 }
+
+export default SideNavBarProfile;
