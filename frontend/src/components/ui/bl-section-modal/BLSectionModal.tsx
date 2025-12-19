@@ -6,7 +6,7 @@ interface BLSectionModalProps {
   children: React.ReactNode;
 }
 
-const BLSectionModal: React.FC<BLSectionModalProps> = ({isOpen, onClose, children}) => {
+const BLSectionModal = ({isOpen, onClose, children}: BLSectionModalProps) => {
   if (!isOpen) return null;
 
   return (

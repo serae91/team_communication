@@ -37,7 +37,7 @@ public class CommandHandler {
     }
 
     private void handleCreateChat(final CreateChatWebSocketMessage createChatWebSocketMessage, final WebSocketConnection connection) {
-        final BLChatView chatView = chatCreateService.createChatFromDto(createChatWebSocketMessage.chatCreateDto());
+        final BLChatView chatView = chatCreateService.createChatFromDto(createChatWebSocketMessage.chatCreateDto(), chatRegistry.getUserIdByConnection(connection));
         final ReceiveChatWebSocketMessage receiveChatWebSocketMessage = new ReceiveChatWebSocketMessage("RECEIVE_CHAT", chatView);
         createChatWebSocketMessage.chatCreateDto().userIds().forEach(userId -> {
             chatRegistry.sendToUser(userId, receiveChatWebSocketMessage);

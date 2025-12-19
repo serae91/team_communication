@@ -66,12 +66,12 @@ type Props = {
   placeholder?: string;
 };
 
-export default function BLMultiSelect({
-                                        labels,
-                                        value,
-                                        onChange,
-                                        placeholder = "Select labels...",
-                                      }: Props) {
+const BLMultiSelect = ({
+                         labels,
+                         value,
+                         onChange,
+                         placeholder = "Select labels...",
+                       }: Props) => {
   const theme = useTheme();
 
   const handleChange = (e: SelectChangeEvent<typeof value>) => {
@@ -151,4 +151,6 @@ export default function BLMultiSelect({
     </Select>
   );
 }
+
+export default BLMultiSelect;
 

@@ -12,7 +12,7 @@ interface ChatMessengingProps {
   sendMessage: (text: string) => void
 }
 
-const ChatMessenging: React.FC<ChatMessengingProps> = ({messages, sendMessage}: ChatMessengingProps) => {
+const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const chatScrollRef = useRef<HTMLDivElement>(null);
 
@@ -70,4 +70,5 @@ const ChatMessenging: React.FC<ChatMessengingProps> = ({messages, sendMessage}: 
     </>
   );
 }
+
 export default ChatMessenging;

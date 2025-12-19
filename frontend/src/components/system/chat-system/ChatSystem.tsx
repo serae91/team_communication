@@ -9,7 +9,7 @@ interface ChatSystemProps {
   sendMessage: (text: string) => void;
 }
 
-const ChatSystem: React.FC<ChatSystemProps> = ({messages, sendMessage}: ChatSystemProps) => {
+const ChatSystem = ({messages, sendMessage}: ChatSystemProps) => {
   return (
     <div className={ 'flex flex-col h-[80vh]' }>
       <ChatSummary className={ 'mb-4' }/>
@@ -17,4 +17,5 @@ const ChatSystem: React.FC<ChatSystemProps> = ({messages, sendMessage}: ChatSyst
     </div>
   );
 }
+
 export default ChatSystem;

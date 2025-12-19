@@ -6,7 +6,7 @@ interface BLInputProps {
   inputRef?: RefObject<HTMLInputElement | null>;
 }
 
-const BLInput: React.FC<BLInputProps> = ({className, inputRef}: BLInputProps) => {
+const BLInput = ({className, inputRef}: BLInputProps) => {
   return (
     <input className={ `bl-input ${ className ?? '' }` } ref={ inputRef }/>
   );

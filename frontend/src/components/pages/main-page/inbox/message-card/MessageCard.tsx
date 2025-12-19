@@ -13,14 +13,14 @@ interface MessageCardProps {
   className?: string
 }
 
-const MessageCard: React.FC<MessageCardProps> = ({
-                                                   title,
-                                                   sender,
-                                                   message,
-                                                   color,
-                                                   onClick,
-                                                   className = ''
-                                                 }: MessageCardProps) => {
+const MessageCard = ({
+                       title,
+                       sender,
+                       message,
+                       color,
+                       onClick,
+                       className = ''
+                     }: MessageCardProps) => {
   return (
     <BLLeftMarkedCard className={ `message-card ${ className }` } color={ color } onClick={ onClick }>
       <div className={ 'title flex-row' }><BLSideSymbol>#</BLSideSymbol>{ title }</div>

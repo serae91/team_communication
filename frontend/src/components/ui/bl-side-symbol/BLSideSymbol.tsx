@@ -1,15 +1,15 @@
 import './BLSideSymbol.scss';
-import { JSX } from 'react';
+import React from 'react';
 
 
 interface BLSideSymbolProps {
-  children
+  children: React.ReactNode
 }
 
-const BLSideSymbol = (props: BLSideSymbolProps): JSX.Element => {
+const BLSideSymbol = ({children}: BLSideSymbolProps) => {
   return (
     <div className={ 'side-symbol' }>
-      { props.children }
+      { children }
     </div>
   );
 };

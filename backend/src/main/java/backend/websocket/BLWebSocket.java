@@ -35,40 +35,40 @@ public class BLWebSocket {
 
 
     @OnOpen
-    void onOpen(WebSocketConnection connection, @PathParam("token") String token) {
+    void onOpen(final WebSocketConnection connection, @PathParam("token") final String token) {
         if (token == null || token.isBlank()) {
             connection.close();
             return;
         }
 
         try {
-            // URL-decode, falls PathParam
-            String decodedToken = URLDecoder.decode(token, StandardCharsets.UTF_8);
-
-            // Parse JWT
-            JsonWebToken jwt = jwtParser.parse(decodedToken);
-
-            // Claim auslesen
-            Object userIdClaim = jwt.getClaim("userId");
-            Long userId = null;
-
-            if (userIdClaim instanceof jakarta.json.JsonNumber jsonNum) {
-                userId = jsonNum.longValue();
-            } else if (userIdClaim instanceof Number n) {
-                userId = n.longValue();
-            } else if (userIdClaim instanceof String s) {
-                userId = Long.valueOf(s);
-            } else {
+            final String decodedToken = URLDecoder.decode(token, StandardCharsets.UTF_8);
+            final JsonWebToken jwt = jwtParser.parse(decodedToken);
+            final Object userIdClaim = jwt.getClaim("userId");
+            final Long userId = getUserId(userIdClaim);
+            if (userId == null) {
                 connection.close().subscribe().with(v -> {
                 });
                 return;
             }
-
             chatWebRegistry.register(userId, connection);
         } catch (Exception e) {
             connection.close().subscribe().with(v -> {
             });
         }
+    }
+
+    private Long getUserId(final Object userIdClaim) {
+        if (userIdClaim instanceof jakarta.json.JsonNumber jsonNum) {
+            return jsonNum.longValue();
+        }
+        if (userIdClaim instanceof Number n) {
+            return n.longValue();
+        }
+        if (userIdClaim instanceof String s) {
+            return Long.valueOf(s);
+        }
+        return null;
     }
 
 

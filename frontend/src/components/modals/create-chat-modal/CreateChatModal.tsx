@@ -17,7 +17,7 @@ interface CreateChatModalProps {
   onClose: () => void;
 }
 
-export const CreateChatModal = ({onClose}: CreateChatModalProps) => {
+const CreateChatModal = ({onClose}: CreateChatModalProps) => {
   const {send} = useWebSocket();
   const {closeModal} = useModal();
   const [selected, setSelected] = useState<string[]>([]);
@@ -48,6 +48,8 @@ export const CreateChatModal = ({onClose}: CreateChatModalProps) => {
       </BLLeftMarkedCard>
     </BLModal>)
 }
+
+export default CreateChatModal;
 
 export const dummyLabels: GmailLabel[] = [
   {

@@ -3,55 +3,12 @@ import BLContentCard from '../../../ui/bl-content-card/BLContentCard.tsx';
 import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';
 import ChatModal from '../../../modals/chat-modal/ChatModal.tsx';
 import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
-import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
-import type {
-  WebsocketMessage,
-} from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
-import { CreateChatModal } from '../../../modals/create-chat-modal/CreateChatModal.tsx';
+import CreateChatModal from '../../../modals/create-chat-modal/CreateChatModal.tsx';
 import { useModal } from '../../../../providers/modal/ModalProvider.tsx';
-import { useAuth } from '../../../../providers/auth/AuthProvider.tsx';
-import {
-  useWebSocket
-} from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
 
-export const Inbox = () => {
-  const {connected, removeMessageHandler, addMessageHandler, send} = useWebSocket<WebsocketMessage>();
-  const {chats, setChats, activeChatId, setActiveChatId} = useBLChats();
-  const {setMessages} = useBLMessages();
+const Inbox = () => {
+  const {chats, setActiveChatId} = useBLChats();
   const {currentModal, openModal, closeModal} = useModal()
-  const {user} = useAuth();
-
-  /*const onMessageIncoming = useCallback((msg: WebsocketMessage) => {
-    console.log('received message: ', msg)
-    switch (msg.type) {
-      case 'RECEIVE_MESSAGE':
-        setMessages((prev) => [...prev, msg.blMessage]);
-        break;
-      case 'RECEIVE_CHAT':
-        setChats((prev) => [...prev, msg.blChat]);
-        break;
-    }
-  }, [setChats, setMessages]);
-
-  const requestChats = useCallback(() => {
-    if (user?.id)
-      send({
-        type: 'REQUEST_CHATS',
-      });
-  }, [send, user?.id]);
-
-  useEffect(() => {
-    if (!connected) return;
-    addMessageHandler(onMessageIncoming);
-    //requestChats();
-    return () => {
-      removeMessageHandler(onMessageIncoming)
-    };
-  }, [addMessageHandler, connected, onMessageIncoming, removeMessageHandler, requestChats]);
-
-  useEffect(() => {
-    onActiveChatId()
-  }, [activeChatId, onActiveChatId]);*/
 
   const listChats = () => {
     if (!chats?.length) return <p>No messages received yet</p>
@@ -91,3 +48,5 @@ export const Inbox = () => {
 
   );
 }
+
+export default Inbox;

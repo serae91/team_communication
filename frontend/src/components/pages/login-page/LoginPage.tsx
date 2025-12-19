@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from '../../../providers/auth/AuthProvider.tsx';
 
-export default function LoginPage() {
+const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const {setUser} = useAuth();
@@ -56,3 +56,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+export default LoginPage;

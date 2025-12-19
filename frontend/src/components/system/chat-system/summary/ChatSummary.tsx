@@ -1,4 +1,3 @@
-import type { JSX } from 'react';
 import './ChatSummary.scss';
 
 
@@ -6,7 +5,7 @@ interface ChatSummaryProps {
   className?: string;
 }
 
-function ChatSummary(props: ChatSummaryProps): JSX.Element {
+const ChatSummary = (props: ChatSummaryProps) => {
   return (
     <div className={ `summary ${ props.className ?? '' }` }>
       Summarize:

@@ -6,7 +6,7 @@ interface BLButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: BLButtonSize;
 }
 
-const BLButton: React.FC<BLButtonProps> = ({size = 'm', disabled, children}) => {
+const BLButton = ({size = 'm', disabled, children}: BLButtonProps) => {
   return (
     <button disabled={ disabled }
             className={
