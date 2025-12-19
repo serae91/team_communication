@@ -4,6 +4,9 @@ import type { WebsocketMessage } from '../bl-websocket/bl-websocket-types/bl-mes
 import { useWebSocket } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
 import { useAuth } from '../auth/AuthProvider.tsx';
 import { getChats } from '../../services/ChatService.ts';
+import { setReminder } from '../../services/ChatUserService.ts';
+import type { SetReminderDto } from '../../dtos/BLChatUserDto.ts';
+import { ReminderStatusEnum } from '../../enums/ReminderStatusEnum.ts';
 
 interface BLChatContextType {
   chats: BLChatDto[];
@@ -12,6 +15,7 @@ interface BLChatContextType {
   chatsWithoutReminder: BLChatDto[];
   activeChatId: number | null;
   setActiveChatId: React.Dispatch<React.SetStateAction<number | null>>;
+  remind: () => void;
 }
 
 const BLChatContext = createContext<BLChatContextType | null>(null);
@@ -59,9 +63,22 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
     return () => removeMessageHandler(handler);
   }, [addMessageHandler, removeMessageHandler]);
 
+  const remind = () => {
+    const currentChat = chats.find(chat => chat.id === activeChatId);
+    if (!currentChat) return;
+    const now = new Date();
+    const inFiveMinutes = new Date(now.getTime() + 30 * 1000);
+    setReminder({chatId: activeChatId, reminderAt: inFiveMinutes} as SetReminderDto).then(v => {
+      setChats(prev => prev.map(chat => {
+        if (chat.id !== activeChatId) return chat;
+        return {...chat, reminderAt: inFiveMinutes, reminderStatus: ReminderStatusEnum.SCHEDULED} as BLChatDto
+      }))
+    })
+  }
+
   return (
     <BLChatContext.Provider
-      value={ {chats, setChats, chatsWithReminder, chatsWithoutReminder, activeChatId, setActiveChatId} }>
+      value={ {chats, setChats, chatsWithReminder, chatsWithoutReminder, activeChatId, setActiveChatId, remind} }>
       { children }
     </BLChatContext.Provider>
   );

@@ -25,6 +25,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         method: "POST",
         credentials: "include"
       });
+      localStorage.removeItem("authToken");
     } catch (err) {
       console.error("Logout failed:", err);
     } finally {

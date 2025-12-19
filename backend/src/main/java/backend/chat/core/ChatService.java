@@ -12,8 +12,6 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Dependent
 public class ChatService {
@@ -57,9 +55,5 @@ public class ChatService {
                 .where("reminderAt").isNotNull()
                 .end();
         return entityViewManager.applySetting(EntityViewSetting.create(BLChatView.class), criteriaBuilder).getResultList();
-    }
-
-    public Set<Long> getChatIdsByUserId(final Long userId) {
-        return chatRepository.getChatsForUserId(userId).stream().map(BLChat::getId).collect(Collectors.toSet());
     }
 }

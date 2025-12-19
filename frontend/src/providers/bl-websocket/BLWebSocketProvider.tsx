@@ -18,28 +18,49 @@ export const createBLWebSocketProvider = <T, >() => {
 
   const BLMessageWebSocketProvider = ({children, connectionURL}: ProviderProps) => {
     const [connected, setConnected] = useState(false);
-    const token = localStorage.getItem("authToken");
-    console.log('authToken', token);
-    const [service] = useState(() => new WebSocketService<T>(`ws://localhost:8080/${ connectionURL }?token=${ token }`));
+    const [service, setService] = useState<WebSocketService<T> | null>(null);
 
     useEffect(() => {
-      service.connect();
+      const authToken = localStorage.getItem("authToken");
+      if (!authToken) {
+        console.warn("No authToken yet, not connecting WS");
+        return;
+      }
+      const token = encodeURIComponent(authToken);
+      if (!token) {
+        console.warn("No token yet, not connecting WS");
+        return;
+      }
 
-      const handleOpen = () => setConnected(true);
-      const handleClose = () => setConnected(false);
+      const ws = new WebSocketService<T>(
+        `ws://localhost:8080/${ connectionURL }/${ token }`
+      );
 
-      service.onOpen(handleOpen);
-      service.onClose(handleClose);
+      ws.onOpen(() => setConnected(true));
+      ws.onClose(() => setConnected(false));
+
+      ws.connect();
+      setService(ws);
 
       return () => {
-        service.removeOnOpen(handleOpen);
-        service.removeOnClose(handleClose);
+        ws.close(); // 🔥 WICHTIG
+        setService(null);
+        setConnected(false);
       };
-    }, [service]);
+    }, [connectionURL /* + token, wenn aus AuthProvider */]);
 
-    const addMessageHandler = (fn: (msg: T) => void) => service.onMessage(fn);
-    const removeMessageHandler = (fn: (msg: T) => void) => service.removeMessageHandler(fn);
-    const send = (msg: T) => service.send(msg);
+    const addMessageHandler = (fn: (msg: T) => void) => {
+      service?.onMessage(fn);
+    };
+
+    const removeMessageHandler = (fn: (msg: T) => void) => {
+      service?.removeMessageHandler(fn);
+    };
+
+    const send = (msg: T) => {
+      if (!service || !connected) return;
+      service.send(msg);
+    };
 
     const value: WebSocketContextType<T> = {
       connected,
@@ -48,14 +69,20 @@ export const createBLWebSocketProvider = <T, >() => {
       removeMessageHandler,
     };
 
-    return <WebSocketContext.Provider value={ value }>{ children }</WebSocketContext.Provider>;
+    return (
+      <WebSocketContext.Provider value={ value }>
+        { children }
+      </WebSocketContext.Provider>
+    );
   };
 
-  const useWebSocket = <T, >() => {
-    const context = useContext(WebSocketContext) as WebSocketContextType<T> | null;
-    if (!context) throw new Error("useWebSocketContext must be used inside the Provider");
+  const useWebSocket = () => {
+    const context = useContext(WebSocketContext);
+    if (!context) {
+      throw new Error("useWebSocket must be used inside BLMessageWebSocketProvider");
+    }
     return context;
   };
 
-  return {BLMessageWebSocketProvider, useWebSocket}
-}
+  return {BLMessageWebSocketProvider, useWebSocket};
+};

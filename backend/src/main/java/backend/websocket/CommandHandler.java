@@ -1,12 +1,8 @@
 package backend.websocket;
 
-import backend.auth.core.CurrentUser;
-import backend.auth.core.SecurityService;
-import backend.chat.core.ChatService;
 import backend.chat.usecase.create.ChatCreateService;
 import backend.entities.bl_chat.BLChatView;
 import backend.entities.bl_message.BLMessageView;
-import backend.message.core.MessageService;
 import backend.message.usecase.create.MessageCreateService;
 import backend.websocket.model.incoming.ReceiveChatWebSocketMessage;
 import backend.websocket.model.incoming.ReceiveMessageWebSocketMessage;
@@ -26,20 +22,9 @@ public class CommandHandler {
     @Inject
     ChatWebRegistry chatRegistry;
     @Inject
-    ChatService chatService;
-    @Inject
     ChatCreateService chatCreateService;
     @Inject
-    MessageService messageService;
-    @Inject
     MessageCreateService messageCreateService;
-
-    @Inject
-    ChatWebRegistry chatWebRegistry;
-    @Inject
-    CurrentUser currentUser;
-    @Inject
-    SecurityService securityService;
 
     public void handleCommand(final OutgoingWebSocketMessage outgoingWebsocketMessage, final WebSocketConnection connection) {
         switch (outgoingWebsocketMessage) {
@@ -69,7 +54,7 @@ public class CommandHandler {
 
     private void handleSwitchChat(final SwitchChatWebSocketMessage switchChatWebSocketMessage, final WebSocketConnection connection) {
         log.info("Switching chat");
-        chatRegistry.joinChat(switchChatWebSocketMessage.chatId(), securityService.getUserId());
+        //chatRegistry.joinChat(switchChatWebSocketMessage.chatId(), securityService.getUserId());
         /*try {
             chatRegistry.joinChat(switchChatWebSocketMessage.chatId(), connection);
             final List<BLMessageView> blMessageViews = messageService.getForChatId(switchChatWebSocketMessage.chatId());

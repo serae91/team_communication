@@ -1,57 +1,75 @@
 package backend.websocket;
 
-import backend.auth.core.SecurityService;
-import backend.chat.core.ChatService;
 import backend.websocket.model.outgoing.OutgoingWebSocketMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.quarkus.security.identity.SecurityIdentity;
 import io.quarkus.websockets.next.OnClose;
 import io.quarkus.websockets.next.OnError;
 import io.quarkus.websockets.next.OnOpen;
 import io.quarkus.websockets.next.OnTextMessage;
+import io.quarkus.websockets.next.PathParam;
 import io.quarkus.websockets.next.WebSocket;
 import io.quarkus.websockets.next.WebSocketConnection;
+import io.smallrye.jwt.auth.principal.JWTParser;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.jwt.JsonWebToken;
+
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 @Singleton
 @Slf4j
-@WebSocket(path = "/blwebsocket")
+@WebSocket(path = "/blwebsocket/{token}")
 public class BLWebSocket {
     @Inject
     ObjectMapper objectMapper;
     @Inject
     CommandHandler commandHandler;
-    @Inject
-    SecurityService securityService;
-    @Inject
-    SecurityIdentity identity;
 
     @Inject
     ChatWebRegistry chatWebRegistry;
     @Inject
-    ChatService chatService;
+    JWTParser jwtParser;
+
 
     @OnOpen
-    void onOpen(final WebSocketConnection connection) {
-        log.info("Client connected: {}", connection.id());
-        
-        if (identity.isAnonymous()) {
-            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+    void onOpen(WebSocketConnection connection, @PathParam("token") String token) {
+        if (token == null || token.isBlank()) {
+            connection.close();
+            return;
         }
 
-        Long userId = identity.getAttribute("userId");
-        log.info("WS connected userId=" + userId);
+        try {
+            // URL-decode, falls PathParam
+            String decodedToken = URLDecoder.decode(token, StandardCharsets.UTF_8);
 
-        chatWebRegistry.register(userId, connection);
+            // Parse JWT
+            JsonWebToken jwt = jwtParser.parse(decodedToken);
 
-        chatService.getChatIdsByUserId(userId)
-                .forEach(chatId -> chatWebRegistry.joinChat(chatId, userId));
+            // Claim auslesen
+            Object userIdClaim = jwt.getClaim("userId");
+            Long userId = null;
+
+            if (userIdClaim instanceof jakarta.json.JsonNumber jsonNum) {
+                userId = jsonNum.longValue();
+            } else if (userIdClaim instanceof Number n) {
+                userId = n.longValue();
+            } else if (userIdClaim instanceof String s) {
+                userId = Long.valueOf(s);
+            } else {
+                // ungültiger Token, Connection schließen
+                connection.close();
+                return;
+            }
+
+            chatWebRegistry.register(userId, connection);
+        } catch (Exception e) {
+            connection.close();
+        }
     }
+
 
     @OnClose
     void onClose(final WebSocketConnection connection) {

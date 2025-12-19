@@ -3,16 +3,8 @@ import BLModal from '../../ui/bl-modal/BLModal.tsx';
 import BLLeftMarkedCard from '../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
 import ChatSystem from '../../system/chat-system/ChatSystem.tsx';
 import './ChatModal.scss';
-import type {
-  WebsocketMessage
-} from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
 import { useBLChats } from '../../../providers/bl-chat/BLChatProvider.tsx';
 import { useBLMessages } from '../../../providers/bl-message/BLMessageProvider.tsx';
-import type { BLMessageCreateDto } from '../../../dtos/BLMessageDto.ts';
-import { useAuth } from '../../../providers/auth/AuthProvider.tsx';
-import {
-  useWebSocket
-} from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
 
 interface ChatModalProps {
   isOpen: boolean;
@@ -20,10 +12,8 @@ interface ChatModalProps {
 }
 
 const ChatModal = ({onClose}: ChatModalProps) => {
-  const {send} = useWebSocket<WebsocketMessage>();
-  const {chats, activeChatId, setActiveChatId} = useBLChats();
-  const {messages} = useBLMessages();
-  const {user} = useAuth();
+  const {chats, activeChatId, setActiveChatId, remind} = useBLChats();
+  const {messages, sendMessage} = useBLMessages();
 
   const setNextChat = () => {
     const currentChatIndex = chats.findIndex(chat => chat.id === activeChatId);
@@ -34,14 +24,6 @@ const ChatModal = ({onClose}: ChatModalProps) => {
     setActiveChatId(nextId);
   }
 
-  const sendMessage = (text: string) => {
-    if (!activeChatId || !user?.id) return;
-    const blMessageCreateDto = {
-      chatId: activeChatId,
-      text,
-    } as BLMessageCreateDto;
-    send({type: 'SEND_MESSAGE', chatId: activeChatId, blMessage: blMessageCreateDto})
-  }
   return (
     <BLModal modalType={ 'JOIN_CHAT' } onClose={ onClose }>
       {/*<button onClick={ setNextChat }>Set next chat</button>
@@ -51,6 +33,7 @@ const ChatModal = ({onClose}: ChatModalProps) => {
       }
       }>Down
       </button>*/ }
+      <button onClick={ remind }>Set Reminder</button>
       <BLLeftMarkedCard className={ 'cursor-pointer' }>
         { chats?.find(chat => chat.id === activeChatId)?.title ?? 'Error: Selected chat could not be found' }
         <ChatSystem messages={ messages } sendMessage={ sendMessage }/>
