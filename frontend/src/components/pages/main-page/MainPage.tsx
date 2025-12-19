@@ -3,7 +3,7 @@ import './MainPage.scss';
 import { BLChatProvider } from '../../../providers/bl-chat/BLChatProvider.tsx';
 import { BLMessageProvider } from '../../../providers/bl-message/BLMessageProvider.tsx';
 import { ModalProvider } from '../../../providers/modal/ModalProvider.tsx';
-import { SideNavBar } from '../../layout/side-nav-bar/SideNavBar.tsx';
+import SideNavBar from '../../layout/side-nav-bar/SideNavBar.tsx';
 import {
   BLMessageWebSocketProvider
 } from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';

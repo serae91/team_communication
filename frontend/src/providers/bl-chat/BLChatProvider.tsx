@@ -16,6 +16,7 @@ interface BLChatContextType {
   activeChatId: number | null;
   setActiveChatId: React.Dispatch<React.SetStateAction<number | null>>;
   remind: () => void;
+  setNextChat: () => void;
 }
 
 const BLChatContext = createContext<BLChatContextType | null>(null);
@@ -36,6 +37,15 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
     () => chats.filter(chat => chat.reminderStatus === 'NONE'),
     [chats]
   );
+
+  const setNextChat = () => {
+    const currentChatIndex = chats.findIndex(chat => chat.id === activeChatId);
+    if (currentChatIndex === -1) return;
+    const nextChatIndex = (currentChatIndex < chats.length - 1) ? currentChatIndex + 1 : 0;
+    const nextId = chats[nextChatIndex]?.id;
+    if (!nextId) return;
+    setActiveChatId(nextId);
+  }
 
   useEffect(() => {
     getChats().then(chats => setChats(chats));
@@ -86,7 +96,16 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
 
   return (
     <BLChatContext.Provider
-      value={ {chats, setChats, chatsWithReminder, chatsWithoutReminder, activeChatId, setActiveChatId, remind} }>
+      value={ {
+        chats,
+        setChats,
+        chatsWithReminder,
+        chatsWithoutReminder,
+        activeChatId,
+        setActiveChatId,
+        remind,
+        setNextChat
+      } }>
       { children }
     </BLChatContext.Provider>
   );

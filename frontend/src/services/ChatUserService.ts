@@ -11,6 +11,6 @@ export async function setReminderSeen(chatId: number) {
   return (await api.patch(`${ path }/reminder/seen/${ chatId }`)).data;
 }
 
-export async function triggerDown(chatId: number, userId: number) {
-  return (await api.patch(`${ path }/triggerdown/${ chatId }/${ userId }`)).data;
+export async function triggerDown(chatId: number) {
+  return (await api.patch(`${ path }/triggerdown/${ chatId }`)).data;
 }

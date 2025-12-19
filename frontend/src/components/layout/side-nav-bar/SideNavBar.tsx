@@ -5,7 +5,7 @@ import BLSideSymbol from '../../ui/bl-side-symbol/BLSideSymbol';
 import { useModal } from '../../../providers/modal/ModalProvider.tsx';
 import { SideNavBarProfile } from './side-nav-bar-profile/SideNavBarProfile.tsx';
 
-export const SideNavBar = () => {
+const SideNavBar = () => {
   const {openModal} = useModal()
   return (
     <div className="side-nav-bar flex-col">
@@ -40,3 +40,5 @@ export const SideNavBar = () => {
     </div>
   );
 }
+
+export default SideNavBar;

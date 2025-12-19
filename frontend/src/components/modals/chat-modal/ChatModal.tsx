@@ -5,6 +5,7 @@ import ChatSystem from '../../system/chat-system/ChatSystem.tsx';
 import './ChatModal.scss';
 import { useBLChats } from '../../../providers/bl-chat/BLChatProvider.tsx';
 import { useBLMessages } from '../../../providers/bl-message/BLMessageProvider.tsx';
+import { triggerDown } from '../../../services/ChatUserService.ts';
 
 interface ChatModalProps {
   isOpen: boolean;
@@ -12,27 +13,18 @@ interface ChatModalProps {
 }
 
 const ChatModal = ({onClose}: ChatModalProps) => {
-  const {chats, activeChatId, setActiveChatId, remind} = useBLChats();
+  const {chats, activeChatId, remind, setNextChat} = useBLChats();
   const {messages, sendMessage} = useBLMessages();
-
-  const setNextChat = () => {
-    const currentChatIndex = chats.findIndex(chat => chat.id === activeChatId);
-    if (currentChatIndex === -1) return;
-    const nextChatIndex = (currentChatIndex < chats.length - 1) ? currentChatIndex + 1 : 0;
-    const nextId = chats[nextChatIndex]?.id;
-    if (!nextId) return;
-    setActiveChatId(nextId);
-  }
 
   return (
     <BLModal modalType={ 'JOIN_CHAT' } onClose={ onClose }>
-      {/*<button onClick={ setNextChat }>Set next chat</button>
+      <button onClick={ setNextChat }>Set next chat</button>
       <button onClick={ () => {
-        if (activeChatId && user?.id)
+        if (activeChatId)
           triggerDown(activeChatId);
       }
       }>Down
-      </button>*/ }
+      </button>
       <button onClick={ remind }>Set Reminder</button>
       <BLLeftMarkedCard className={ 'cursor-pointer' }>
         { chats?.find(chat => chat.id === activeChatId)?.title ?? 'Error: Selected chat could not be found' }
