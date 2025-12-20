@@ -39,10 +39,12 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
   );
 
   const setNextChat = () => {
+    console.log('set next chat');
     const currentChatIndex = chats.findIndex(chat => chat.id === activeChatId);
     if (currentChatIndex === -1) return;
     const nextChatIndex = (currentChatIndex < chats.length - 1) ? currentChatIndex + 1 : 0;
     const nextId = chats[nextChatIndex]?.id;
+    console.log('nextId', nextId);
     if (!nextId) return;
     setActiveChatId(nextId);
   }
@@ -61,6 +63,7 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const handler = (msg: WebsocketMessage) => {
+      console.log(msg);
       switch (msg.type) {
         case 'RECEIVE_REMINDER':
           setChats(prev =>

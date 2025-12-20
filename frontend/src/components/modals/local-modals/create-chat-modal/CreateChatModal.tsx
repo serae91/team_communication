@@ -1,25 +1,23 @@
-import BLModal from '../../ui/bl-modal/BLModal.tsx';
-import BLLeftMarkedCard from '../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
-import type { BLChatCreateDto } from '../../../dtos/BLChatDto.ts';
+import BLModal from '../../../ui/bl-modal/BLModal.tsx';
+import BLLeftMarkedCard from '../../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
+import type { BLChatCreateDto } from '../../../../dtos/BLChatDto.ts';
 import type {
   WebsocketMessage
-} from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
-import ChatMessenging from '../../system/chat-system/chat-messenging/ChatMessenging.tsx';
-import { useModal } from '../../../providers/modal/ModalProvider.tsx';
-import BLMultiSelect, { type GmailLabel } from '../../ui/bl-multi-select/BLMultiSelect.tsx';
+} from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
+import ChatMessenging from '../../../system/chat-system/chat-messenging/ChatMessenging.tsx';
+import { useModal } from '../../../../providers/modal/ModalProvider.tsx';
+import BLMultiSelect, { type GmailLabel } from '../../../ui/bl-multi-select/BLMultiSelect.tsx';
 import LabelIcon from '@mui/icons-material/Label';
 import { useState } from 'react';
 import {
   useWebSocket
-} from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
+} from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
+import { LocalModalTypeEnum } from '../../../../enums/LocalModalTypeEnum.ts';
 
-interface CreateChatModalProps {
-  onClose: () => void;
-}
 
-const CreateChatModal = ({onClose}: CreateChatModalProps) => {
+const CreateChatModal = () => {
   const {send} = useWebSocket();
-  const {closeModal} = useModal();
+  const {closeGlobalModal} = useModal();
   const [selected, setSelected] = useState<string[]>([]);
   const sendCreateChatMessage = (text: string) => {
     const message = {
@@ -32,11 +30,10 @@ const CreateChatModal = ({onClose}: CreateChatModalProps) => {
       } as BLChatCreateDto
     } as WebsocketMessage;
     send(message);
-    closeModal();
-    if (onClose) onClose();
+    closeGlobalModal();
   };
   return (
-    <BLModal modalType={ 'CREATE_CHAT' }>
+    <BLModal modalType={ LocalModalTypeEnum.CREATE_CHAT }>
       <BLLeftMarkedCard>
         <BLMultiSelect
           labels={ dummyLabels }

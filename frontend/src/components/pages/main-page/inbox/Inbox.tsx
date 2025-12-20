@@ -1,14 +1,16 @@
 import MessageCard from './message-card/MessageCard.tsx';
 import BLContentCard from '../../../ui/bl-content-card/BLContentCard.tsx';
 import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';
-import ChatModal from '../../../modals/chat-modal/ChatModal.tsx';
 import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
-import CreateChatModal from '../../../modals/create-chat-modal/CreateChatModal.tsx';
 import { useModal } from '../../../../providers/modal/ModalProvider.tsx';
+import { LocalModalTypeEnum } from '../../../../enums/LocalModalTypeEnum.ts';
+import ChatModalRenderer from '../../../modals/local-modals/chat-modal/chat-modal-renderer/ChatModalRenderer.tsx';
+import CreateChatModalRenderer
+  from '../../../modals/local-modals/create-chat-modal/create-chat-modal-renderer/CreateChatModalRenderer.tsx';
 
 const Inbox = () => {
   const {chats, setActiveChatId} = useBLChats();
-  const {currentModal, openModal, closeModal} = useModal()
+  const {openLocalModal} = useModal()
 
   const listChats = () => {
     if (!chats?.length) return <p>No messages received yet</p>
@@ -19,7 +21,7 @@ const Inbox = () => {
         sender={ 'test sender' } color={ 'red' }
         onClick={ () => {
           setActiveChatId(chat.id);
-          openModal('JOIN_CHAT');
+          openLocalModal({type: LocalModalTypeEnum.JOIN_CHAT});
         } }
       />
     ))
@@ -27,11 +29,8 @@ const Inbox = () => {
 
   return (
     <BLContentCard className={ 'inbox relative' }>
-      <ChatModal
-        isOpen={ currentModal === 'JOIN_CHAT' }
-        onClose={ closeModal }
-      />
-      <CreateChatModal onClose={ closeModal }/>
+      <ChatModalRenderer/>
+      <CreateChatModalRenderer/>
       <div className={ 'title-box flex-col' }>
         <div className={ 'title' }>
           Inbox

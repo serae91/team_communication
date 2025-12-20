@@ -25,8 +25,8 @@ public class ChatUserResource {
     }
 
     @PATCH
-    @Path("/triggerdown")
-    public void triggerDown(final Long chatId) {
+    @Path("/triggerdown/{chatId}")
+    public void triggerDown(@PathParam("chatId") final Long chatId) {
         updateService.triggerDown(chatId, currentUser.getUserId());
     }
 

@@ -4,13 +4,14 @@ import { FaEnvelope, FaHistory, FaUserPlus } from 'react-icons/fa';
 import BLSideSymbol from '../../ui/bl-side-symbol/BLSideSymbol';
 import { useModal } from '../../../providers/modal/ModalProvider.tsx';
 import SideNavBarProfile from './side-nav-bar-profile/SideNavBarProfile.tsx';
+import { LocalModalTypeEnum } from '../../../enums/LocalModalTypeEnum.ts';
 
 const SideNavBar = () => {
-  const {openModal} = useModal()
+  const {openLocalModal} = useModal()
   return (
     <div className="side-nav-bar flex-col">
       <SideNavBarProfile/>
-      <button onClick={ () => openModal('CREATE_CHAT') }>Open Create Chat Modal</button>
+      <button onClick={ () => openLocalModal({type: LocalModalTypeEnum.CREATE_CHAT}) }>Open Create Chat Modal</button>
       <div className={ 'button-group flex-col' }>
         <SideNavBarButton badgeCount={ 3 }>
           <BLSideSymbol><FaEnvelope size={ 20 } className={ 'side-symbol' }/></BLSideSymbol>

@@ -1,23 +1,19 @@
 import React from 'react';
-import BLModal from '../../ui/bl-modal/BLModal.tsx';
-import BLLeftMarkedCard from '../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
-import ChatSystem from '../../system/chat-system/ChatSystem.tsx';
+import BLModal from '../../../ui/bl-modal/BLModal.tsx';
+import BLLeftMarkedCard from '../../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
+import ChatSystem from '../../../system/chat-system/ChatSystem.tsx';
 import './ChatModal.scss';
-import { useBLChats } from '../../../providers/bl-chat/BLChatProvider.tsx';
-import { useBLMessages } from '../../../providers/bl-message/BLMessageProvider.tsx';
-import { triggerDown } from '../../../services/ChatUserService.ts';
+import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
+import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
+import { triggerDown } from '../../../../services/ChatUserService.ts';
+import { LocalModalTypeEnum } from '../../../../enums/LocalModalTypeEnum.ts';
 
-interface ChatModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const ChatModal = ({onClose}: ChatModalProps) => {
+const ChatModal = () => {
   const {chats, activeChatId, remind, setNextChat} = useBLChats();
   const {messages, sendMessage} = useBLMessages();
 
   return (
-    <BLModal modalType={ 'JOIN_CHAT' } onClose={ onClose }>
+    <BLModal modalType={ LocalModalTypeEnum.JOIN_CHAT }>
       <button onClick={ setNextChat }>Set next chat</button>
       <button onClick={ () => {
         if (activeChatId)
