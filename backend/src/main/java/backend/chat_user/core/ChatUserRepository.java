@@ -12,7 +12,7 @@ import java.util.List;
 public class ChatUserRepository implements PanacheRepository<BLRelChatUser> {
 
     public BLRelChatUser findBy(final Long chatId, final Long userId) {
-        return find("chat.id = ?1 and user.id = ?2", userId, chatId).singleResult();
+        return find("chat.id = ?1 and user.id = ?2", chatId, userId).singleResult();
     }
 
     public List<BLRelChatUser> findBy(final Long chatId) {
