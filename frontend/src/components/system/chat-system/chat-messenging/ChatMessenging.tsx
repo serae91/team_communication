@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react';
 import './ChatMessenging.scss';
 import ChatMessage from './chat-message/ChatMessage';
-import BLInput from '../../../ui/bl-input/BLInput';
-import { FaArrowRight } from 'react-icons/fa';
 import type { BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
+import ChatInput from './chat-input/ChatInput.tsx';
 
 
 interface ChatMessengingProps {
@@ -58,7 +57,8 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
            className={ 'flex-1 overflow-y-auto p-4 bg-white rounded-2xl shadow-inner border border-gray-200' }>
         { getChatMessages() }
       </div>
-      <div className={ 'flex-row sticky bottom-0' }>
+      <ChatInput onSend={ sendMessage }/>
+      {/*<div className={ 'flex-row sticky bottom-0' }>
         <BLInput className={ 'full-width' } inputRef={ inputRef }/>
         <button className={ 'send-button' } onClick={ () => {
           if (inputRef.current?.value)
@@ -66,7 +66,7 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
         } }>
           <FaArrowRight/>
         </button>
-      </div>
+      </div>*/ }
     </>
   );
 }
