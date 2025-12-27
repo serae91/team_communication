@@ -1,4 +1,4 @@
-import React, { createContext, type ReactNode, useContext, useEffect, useState, } from "react";
+import React, { createContext, type ReactNode, useContext, useEffect, useState, } from 'react';
 import type { BLMessageCreateDto, BLMessageDto } from '../../dtos/BLMessageDto.ts';
 import type { WebsocketMessage } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
 import { useWebSocket } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
@@ -48,9 +48,9 @@ export const BLMessageProvider = ({children}: ProviderProps) => {
       text: text,
     } as BLMessageCreateDto;
     const message = {type: 'SEND_MESSAGE', chatId: activeChatId, blMessage: blMessageCreateDto} as WebsocketMessage;
-    console.log('send message', message)
-    send(message)
-  }
+    console.log('send message', message);
+    send(message);
+  };
 
   return (
     <BLMessageContext.Provider value={ {messages, setMessages, sendMessage} }>
@@ -61,6 +61,6 @@ export const BLMessageProvider = ({children}: ProviderProps) => {
 
 export const useBLMessages = () => {
   const context = useContext(BLMessageContext);
-  if (!context) throw new Error("useWebSocketContext must be used inside the Provider");
+  if (!context) throw new Error('useWebSocketContext must be used inside the Provider');
   return context;
 };

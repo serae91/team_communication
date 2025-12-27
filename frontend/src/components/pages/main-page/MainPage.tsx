@@ -24,6 +24,6 @@ const MainPage = () => {
       </BLChatProvider>
     </BLMessageWebSocketProvider>
   );
-}
+};
 
 export default MainPage;

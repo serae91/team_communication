@@ -1,0 +1,13 @@
+.chat-editor {
+  min-height: 48px;
+  max-height: 200px;
+  overflow-y: auto;
+  outline: none;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 14px;
+  text-align: left;
+}
+
+.chat-editor p {
+  margin: 0;
+}

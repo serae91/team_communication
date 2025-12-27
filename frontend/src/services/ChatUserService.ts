@@ -1,7 +1,7 @@
 import api from './api';
 import type { SetReminderDto } from '../dtos/BLChatUserDto.ts';
 
-const path = '/chatuser'
+const path = '/chatuser';
 
 export async function setReminder(setReminderDto: SetReminderDto) {
   return (await api.patch(`${ path }/reminder`, setReminderDto)).data;

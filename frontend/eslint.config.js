@@ -3,8 +3,8 @@ import tseslint from "typescript-eslint";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import jsxA11y from "eslint-plugin-jsx-a11y";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
+import {fileURLToPath} from "url";
+import {dirname} from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -38,7 +38,8 @@ export default [
             "react/prop-types": "off",
 
             "react-hooks/rules-of-hooks": "error",
-            "react-hooks/exhaustive-deps": "warn"
+            "react-hooks/exhaustive-deps": "warn",
+            quotes: ['error', 'single']
         },
 
         settings: {

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type { BLChatDto } from '../../dtos/BLChatDto.ts';
 import type { WebsocketMessage } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
 import { useWebSocket } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
@@ -47,7 +47,7 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
     console.log('nextId', nextId);
     if (!nextId) return;
     setActiveChatId(nextId);
-  }
+  };
 
   useEffect(() => {
     getChats().then(chats => setChats(chats));
@@ -92,10 +92,10 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
     setReminder({chatId: activeChatId, reminderAt: inFiveMinutes} as SetReminderDto).then(v => {
       setChats(prev => prev.map(chat => {
         if (chat.id !== activeChatId) return chat;
-        return {...chat, reminderAt: inFiveMinutes, reminderStatus: ReminderStatusEnum.SCHEDULED} as BLChatDto
-      }))
-    })
-  }
+        return {...chat, reminderAt: inFiveMinutes, reminderStatus: ReminderStatusEnum.SCHEDULED} as BLChatDto;
+      }));
+    });
+  };
 
   return (
     <BLChatContext.Provider
@@ -117,7 +117,7 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
 export const useBLChats = () => {
   const context = useContext(BLChatContext);
   if (!context) {
-    throw new Error("useBLChats must be used inside <BLChatProvider>");
+    throw new Error('useBLChats must be used inside <BLChatProvider>');
   }
   return context;
 };

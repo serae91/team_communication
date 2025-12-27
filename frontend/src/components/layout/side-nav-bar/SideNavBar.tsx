@@ -7,7 +7,7 @@ import SideNavBarProfile from './side-nav-bar-profile/SideNavBarProfile.tsx';
 import { LocalModalTypeEnum } from '../../../enums/LocalModalTypeEnum.ts';
 
 const SideNavBar = () => {
-  const {openLocalModal} = useModal()
+  const {openLocalModal} = useModal();
   return (
     <div className="side-nav-bar flex-col">
       <SideNavBarProfile/>
@@ -40,6 +40,6 @@ const SideNavBar = () => {
       </div>
     </div>
   );
-}
+};
 
 export default SideNavBar;

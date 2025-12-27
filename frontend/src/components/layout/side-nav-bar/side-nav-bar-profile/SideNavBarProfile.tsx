@@ -4,14 +4,14 @@ import { useAuth } from '../../../../providers/auth/AuthProvider.tsx';
 import { Logout } from '@mui/icons-material';
 
 const SideNavBarProfile = () => {
-  const {logout} = useAuth();
+  const {user, logout} = useAuth();
   return (
     <div className={ 'profile flex-row' }>
       <button className={ 'card' }>
         <div className={ 'picture' }></div>
         <div className={ 'envelope' }>
           <div className={ 'description' }>
-            <div className={ 'name' }>Olivia Rhye</div>
+            <div className={ 'name' }>{ user?.username ?? 'Name not found' }</div>
             <div className={ 'e-mail' }>olivia@beamline.com</div>
           </div>
           <FaHandHoldingUsd size={ 20 } className={ 'icon' }/>
@@ -20,6 +20,6 @@ const SideNavBarProfile = () => {
       <Logout onClick={ logout }/>
     </div>
   );
-}
+};
 
 export default SideNavBarProfile;

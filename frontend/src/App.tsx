@@ -1,5 +1,5 @@
-import './App.scss'
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import './App.scss';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from './components/pages/main-page/MainPage.js';
 import { AuthProvider } from './providers/auth/AuthProvider.tsx';
 import ProtectedRoute from './routes/protected-route/ProtectedRoute.tsx';
@@ -27,7 +27,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;

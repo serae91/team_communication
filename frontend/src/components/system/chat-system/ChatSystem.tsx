@@ -16,6 +16,6 @@ const ChatSystem = ({messages, sendMessage}: ChatSystemProps) => {
       <ChatMessenging messages={ messages } sendMessage={ sendMessage }/>
     </div>
   );
-}
+};
 
 export default ChatSystem;

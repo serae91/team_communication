@@ -19,6 +19,6 @@ const ChatSummary = (props: ChatSummaryProps) => {
       </ul>
     </div>
   );
-}
+};
 
 export default ChatSummary;

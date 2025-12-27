@@ -3,7 +3,7 @@ import { LocalModalTypeEnum } from '../../../../../enums/LocalModalTypeEnum.ts';
 import ChatModal from '../ChatModal.tsx';
 
 const ChatModalRenderer = () => {
-  const {localModalState} = useModal()
+  const {localModalState} = useModal();
 
   const topModalState = localModalState.at(-1);
 
@@ -13,5 +13,5 @@ const ChatModalRenderer = () => {
     default:
       return null;
   }
-}
+};
 export default ChatModalRenderer;

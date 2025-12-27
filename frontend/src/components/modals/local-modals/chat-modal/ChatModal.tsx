@@ -27,6 +27,6 @@ const ChatModal = () => {
         <ChatSystem messages={ messages } sendMessage={ sendMessage }/>
       </BLLeftMarkedCard>
     </BLModal>);
-}
+};
 
 export default ChatModal;

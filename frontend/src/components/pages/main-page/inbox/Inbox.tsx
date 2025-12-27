@@ -10,10 +10,10 @@ import CreateChatModalRenderer
 
 const Inbox = () => {
   const {chats, setActiveChatId} = useBLChats();
-  const {openLocalModal} = useModal()
+  const {openLocalModal} = useModal();
 
   const listChats = () => {
-    if (!chats?.length) return <p>No messages received yet</p>
+    if (!chats?.length) return <p>No messages received yet</p>;
     return (chats.map(chat =>
       <MessageCard
         key={ chat.id.toString() }
@@ -24,7 +24,7 @@ const Inbox = () => {
           openLocalModal({type: LocalModalTypeEnum.JOIN_CHAT});
         } }
       />
-    ))
+    ));
   };
 
   return (
@@ -46,6 +46,6 @@ const Inbox = () => {
     </BLContentCard>
 
   );
-}
+};
 
 export default Inbox;

@@ -1,5 +1,5 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { type ReactNode } from "react";
+import { AnimatePresence, motion } from 'framer-motion';
+import { type ReactNode } from 'react';
 import { useModal } from '../../../providers/modal/ModalProvider.tsx';
 import type { LocalModalTypeEnum } from '../../../enums/LocalModalTypeEnum.ts';
 
@@ -39,6 +39,6 @@ const BLModal = ({modalType, children}: ModalProps) => {
       </motion.div>
     </AnimatePresence>
   );
-}
+};
 
 export default BLModal;

@@ -8,9 +8,9 @@ interface MessageCardProps {
   title: string;
   sender: string;
   message: string;
-  color: BLLeftMarkedCardColor
+  color: BLLeftMarkedCardColor;
   onClick: () => void | undefined;
-  className?: string
+  className?: string;
 }
 
 const MessageCard = ({
@@ -32,6 +32,6 @@ const MessageCard = ({
       </div>
     </BLLeftMarkedCard>
   );
-}
+};
 
 export default MessageCard;

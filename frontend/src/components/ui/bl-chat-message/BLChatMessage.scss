@@ -1,0 +1,19 @@
+.bl-chat-message {
+  font-family: Inter, Arial, sans-serif;
+  font-size: 14px;
+  color: #222;
+}
+
+.bl-chat-message .ProseMirror {
+  white-space: pre-wrap;
+  color: inherit;
+  text-align: left
+}
+
+.bl-chat-message p {
+  margin: 0;
+}
+
+.bl-chat-message ul {
+  padding-left: 16px;
+}

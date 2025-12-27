@@ -34,7 +34,7 @@ export class WebSocketService<T> {
     this.socket = new WebSocket(this.url);
 
     this.socket.onopen = () => {
-      console.log("[WS] Connected:", this.url);
+      console.log('[WS] Connected:', this.url);
 
       this.openHandlers.forEach(h => h());
 
@@ -50,12 +50,12 @@ export class WebSocketService<T> {
         const data = JSON.parse(event.data) as T;
         this.messageHandlers.forEach(h => h(data));
       } catch (err) {
-        console.error("[WS] Invalid message:", event.data, err);
+        console.error('[WS] Invalid message:', event.data, err);
       }
     };
 
     this.socket.onclose = () => {
-      console.log("[WS] Disconnected:", this.url);
+      console.log('[WS] Disconnected:', this.url);
       this.closeHandlers.forEach(h => h());
       this.socket = null;
 
@@ -65,7 +65,7 @@ export class WebSocketService<T> {
     };
 
     this.socket.onerror = (err) => {
-      console.error("[WS] Error", err);
+      console.error('[WS] Error', err);
     };
   }
 
@@ -81,7 +81,7 @@ export class WebSocketService<T> {
     if (this.isConnected()) {
       this.socket!.send(JSON.stringify(message));
     } else {
-      console.warn("[WS] Not connected, queueing message");
+      console.warn('[WS] Not connected, queueing message');
       this.sendQueue.push(message);
     }
   }

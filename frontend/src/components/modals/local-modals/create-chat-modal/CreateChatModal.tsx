@@ -43,40 +43,40 @@ const CreateChatModal = () => {
         />
         <ChatMessenging messages={ [] } sendMessage={ sendCreateChatMessage }/>
       </BLLeftMarkedCard>
-    </BLModal>)
-}
+    </BLModal>);
+};
 
 export default CreateChatModal;
 
 export const dummyLabels: GmailLabel[] = [
   {
-    id: "1",
-    name: "Important",
-    color: "#e53935", // rot
+    id: '1',
+    name: 'Important',
+    color: '#e53935', // rot
     icon: <LabelIcon/>,
   },
   {
-    id: "2",
-    name: "Work",
-    color: "#1e88e5", // blau
+    id: '2',
+    name: 'Work',
+    color: '#1e88e5', // blau
     icon: <LabelIcon/>,
   },
   {
-    id: "3",
-    name: "Personal",
-    color: "#43a047", // grün
+    id: '3',
+    name: 'Personal',
+    color: '#43a047', // grün
     icon: <LabelIcon/>,
   },
   {
-    id: "4",
-    name: "Family",
-    color: "#8e24aa", // lila
+    id: '4',
+    name: 'Family',
+    color: '#8e24aa', // lila
     icon: <LabelIcon/>,
   },
   {
-    id: "5",
-    name: "Travel",
-    color: "#fb8c00", // orange
+    id: '5',
+    name: 'Travel',
+    color: '#fb8c00', // orange
     icon: <LabelIcon/>,
   },
 ];
