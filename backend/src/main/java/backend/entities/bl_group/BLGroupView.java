@@ -1,12 +1,12 @@
-package backend.entities.bl_user_group;
+package backend.entities.bl_group;
 
 import com.blazebit.persistence.view.EntityView;
 import com.blazebit.persistence.view.IdMapping;
 
 import java.time.Instant;
 
-@EntityView(BLUserGroup.class)
-public interface BLUserGroupView {
+@EntityView(BLGroup.class)
+public interface BLGroupView {
 
     @IdMapping
     Long getId();

@@ -1,4 +1,4 @@
-package backend.entities.bl_user_group;
+package backend.entities.bl_group;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
@@ -16,17 +16,17 @@ import lombok.NoArgsConstructor;
 import java.time.Instant;
 
 @Entity
-@Table(name = "bl_user_group")
+@Table(name = "bl_group")
 @RegisterForReflection
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BLUserGroup {
+public class BLGroup {
 
     @Id
-    @GeneratedValue(generator = "bl_user_group_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "bl_user_group_sequence", sequenceName = "bl_user_group_sequence", allocationSize = 1)
+    @GeneratedValue(generator = "bl_group_sequence", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "bl_group_sequence", sequenceName = "bl_group_sequence", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
