@@ -22,7 +22,7 @@ const ChatInput = ({onSend}: ChatInputProps) => {
       TextStyle,
       FontFamily,
       Placeholder.configure({
-        placeholder: 'Type message …',
+        placeholder: 'Type message …',/*TODO replace hardcoded string*/
       }),
     ],
     editorProps: {
