@@ -1,15 +1,15 @@
 import './ChatInput.scss';
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { TextStyle } from "@tiptap/extension-text-style";
-import FontFamily from "@tiptap/extension-font-family";
-import Placeholder from "@tiptap/extension-placeholder";
+import { EditorContent, useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { TextStyle } from '@tiptap/extension-text-style';
+import FontFamily from '@tiptap/extension-font-family';
+import Placeholder from '@tiptap/extension-placeholder';
 
-import { Box, IconButton, MenuItem, Paper, Select, Toolbar, } from "@mui/material";
+import { Box, IconButton, MenuItem, Paper, Select, Toolbar, } from '@mui/material';
 
-import FormatBoldIcon from "@mui/icons-material/FormatBold";
-import FormatItalicIcon from "@mui/icons-material/FormatItalic";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import FormatBoldIcon from '@mui/icons-material/FormatBold';
+import FormatItalicIcon from '@mui/icons-material/FormatItalic';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
 type ChatInputProps = {
   onSend: (html: string) => void;
@@ -22,16 +22,16 @@ const ChatInput = ({onSend}: ChatInputProps) => {
       TextStyle,
       FontFamily,
       Placeholder.configure({
-        placeholder: "Nachricht schreiben …",
+        placeholder: 'Type message …',
       }),
     ],
     editorProps: {
       handleKeyDown(_, event) {
-        if (event.key === "Enter" && !event.shiftKey) {
+        if (event.key === 'Enter' && !event.shiftKey) {
           event.preventDefault();
 
-          const html = editor?.getHTML() ?? "";
-          if (html !== "<p></p>") {
+          const html = editor?.getHTML() ?? '';
+          if (html !== '<p></p>') {
             onSend(html);
             editor?.commands.clearContent();
           }
@@ -40,7 +40,7 @@ const ChatInput = ({onSend}: ChatInputProps) => {
         return false;
       },
       attributes: {
-        class: "chat-editor",
+        class: 'chat-editor',
       },
     },
   });
@@ -53,7 +53,7 @@ const ChatInput = ({onSend}: ChatInputProps) => {
       <Toolbar variant="dense">
         <Select
           size="small"
-          value={ editor.getAttributes("textStyle").fontFamily || "Inter" }
+          value={ editor.getAttributes('textStyle').fontFamily || 'Inter' }
           onChange={ (e) =>
             editor.chain().focus().setFontFamily(e.target.value).run()
           }
@@ -65,21 +65,22 @@ const ChatInput = ({onSend}: ChatInputProps) => {
         </Select>
 
         <IconButton
-          color={ editor.isActive("bold") ? "primary" : "default" }
+
+          color={ editor.isActive('bold') ? 'primary' : 'default' }
           onClick={ () => editor.chain().focus().toggleBold().run() }
         >
           <FormatBoldIcon/>
         </IconButton>
 
         <IconButton
-          color={ editor.isActive("italic") ? "primary" : "default" }
+          color={ editor.isActive('italic') ? 'primary' : 'default' }
           onClick={ () => editor.chain().focus().toggleItalic().run() }
         >
           <FormatItalicIcon/>
         </IconButton>
 
         <IconButton
-          color={ editor.isActive("bulletList") ? "primary" : "default" }
+          color={ editor.isActive('bulletList') ? 'primary' : 'default' }
           onClick={ () =>
             editor.chain().focus().toggleBulletList().run()
           }
@@ -94,6 +95,6 @@ const ChatInput = ({onSend}: ChatInputProps) => {
       </Box>
     </Paper>
   );
-}
+};
 
 export default ChatInput;

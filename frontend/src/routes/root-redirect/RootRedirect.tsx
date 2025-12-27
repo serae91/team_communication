@@ -7,6 +7,6 @@ const RootRedirect = () => {
   if (loading) return <div>Loading...</div>;
 
   return user ? <Navigate to="/mainpage" replace/> : <Navigate to="/login" replace/>;
-}
+};
 
 export default RootRedirect;

@@ -8,7 +8,7 @@ import ChatInput from './chat-input/ChatInput.tsx';
 interface ChatMessengingProps {
   className?: string;
   messages: BLMessageDto[];
-  sendMessage: (text: string) => void
+  sendMessage: (text: string) => void;
 }
 
 const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
@@ -26,7 +26,7 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
     if (currentChatScroll) {
       currentChatScroll.scrollTop = currentChatScroll.scrollHeight;
     }
-  }
+  };
 
   const scrollDownWhenAtBottomAndAddingNewMessage = useCallback(() => {
     const currentChatScroll = chatScrollRef.current;
@@ -34,7 +34,7 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
 
     const isAtBottom = currentChatScroll.scrollHeight - currentChatScroll.scrollTop - currentChatScroll.clientHeight < 50;
     if (isAtBottom && (messages?.length ?? 0 > prevLength.current)) {
-      currentChatScroll.scrollTo({top: currentChatScroll.scrollHeight, behavior: "smooth"});
+      currentChatScroll.scrollTo({top: currentChatScroll.scrollHeight, behavior: 'smooth'});
     }
 
     prevLength.current = messages?.length ?? 0;
@@ -48,8 +48,8 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
     return messages.map(message =>
       <ChatMessage sender={ message.sender.username } postTime={ message.createdAt } message={ message.text }
                    key={ message.id }/>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -69,6 +69,6 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
       </div>*/ }
     </>
   );
-}
+};
 
 export default ChatMessenging;

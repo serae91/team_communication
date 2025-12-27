@@ -20,6 +20,6 @@ const SideNavBarProfile = () => {
       <Logout onClick={ logout }/>
     </div>
   );
-}
+};
 
 export default SideNavBarProfile;

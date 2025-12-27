@@ -15,6 +15,6 @@ const BLHintCard = (props: BLHintCardProps) => {
       { props.children }
     </div>
   );
-}
+};
 
 export default BLHintCard;

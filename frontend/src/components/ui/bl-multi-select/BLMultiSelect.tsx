@@ -37,7 +37,7 @@ export const BLMultiSelect = ({label}: BLMultiSelectProps)=> {
   );
 }*/
 
-import { type ReactElement } from "react";
+import { type ReactElement } from 'react';
 import {
   Box,
   Checkbox,
@@ -70,7 +70,7 @@ const BLMultiSelect = ({
                          labels,
                          value,
                          onChange,
-                         placeholder = "Select labels...",
+                         placeholder = 'Select labels...',
                        }: Props) => {
   const theme = useTheme();
 
@@ -95,7 +95,7 @@ const BLMultiSelect = ({
         }
 
         return (
-          <Box sx={ {display: "flex", flexWrap: "wrap", gap: 0.5} }>
+          <Box sx={ {display: 'flex', flexWrap: 'wrap', gap: 0.5} }>
             { selected.map((id) => {
               const lbl = labels.find((l) => l.id === id);
               if (!lbl) return null;
@@ -109,7 +109,7 @@ const BLMultiSelect = ({
                   sx={ {
                     background: lbl.color,
                     color: theme.palette.getContrastText(lbl.color),
-                    "& .MuiChip-icon": {color: "inherit !important"},
+                    '& .MuiChip-icon': {color: 'inherit !important'},
                   } }
                 />
               );
@@ -130,8 +130,8 @@ const BLMultiSelect = ({
           key={ lbl.id }
           value={ lbl.id }
           sx={ {
-            display: "flex",
-            alignItems: "center",
+            display: 'flex',
+            alignItems: 'center',
             gap: 2,
           } }
         >
@@ -150,7 +150,7 @@ const BLMultiSelect = ({
       )) }
     </Select>
   );
-}
+};
 
 export default BLMultiSelect;
 

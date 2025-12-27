@@ -1,5 +1,5 @@
-import React, { createContext, type ReactNode, useContext, useEffect, useState, } from "react";
-import { WebSocketService } from "../../services/WebSocketService.ts";
+import React, { createContext, type ReactNode, useContext, useEffect, useState, } from 'react';
+import { WebSocketService } from '../../services/WebSocketService.ts';
 
 export interface ProviderProps {
   children: ReactNode;
@@ -21,14 +21,14 @@ export const createBLWebSocketProvider = <T, >() => {
     const [service, setService] = useState<WebSocketService<T> | null>(null);
 
     useEffect(() => {
-      const authToken = localStorage.getItem("authToken");
+      const authToken = localStorage.getItem('authToken');
       if (!authToken) {
-        console.warn("No authToken yet, not connecting WS");
+        console.warn('No authToken yet, not connecting WS');
         return;
       }
       const token = encodeURIComponent(authToken);
       if (!token) {
-        console.warn("No token yet, not connecting WS");
+        console.warn('No token yet, not connecting WS');
         return;
       }
 
@@ -79,7 +79,7 @@ export const createBLWebSocketProvider = <T, >() => {
   const useWebSocket = () => {
     const context = useContext(WebSocketContext);
     if (!context) {
-      throw new Error("useWebSocket must be used inside BLMessageWebSocketProvider");
+      throw new Error('useWebSocket must be used inside BLMessageWebSocketProvider');
     }
     return context;
   };

@@ -21,6 +21,6 @@ const ChatMessage = (props: ChatMessageProps) => {
       </div>
     </div>
   );
-}
+};
 
 export default ChatMessage;

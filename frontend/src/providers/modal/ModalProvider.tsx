@@ -52,7 +52,7 @@ export const ModalProvider = ({children}: ModalProviderProps) => {
       <GlobalModalRenderer/>
     </ModalContext.Provider>
   );
-}
+};
 
 export const useModal = () => {
   const context = useContext(ModalContext);

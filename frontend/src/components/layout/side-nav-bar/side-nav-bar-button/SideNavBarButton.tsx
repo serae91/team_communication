@@ -14,5 +14,5 @@ const SideNavBarButton = ({badgeCount, children}: SideNavBarButtonProps) => {
         }
       </div>
     </button>);
-}
+};
 export default SideNavBarButton;

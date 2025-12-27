@@ -3,7 +3,7 @@ import React from 'react';
 
 
 interface BLSideSymbolProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const BLSideSymbol = ({children}: BLSideSymbolProps) => {
