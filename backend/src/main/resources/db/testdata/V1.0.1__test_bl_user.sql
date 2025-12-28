@@ -1,4 +1,16 @@
 INSERT INTO bl_user
-VALUES (nextval('bl_user_sequence'), 'test', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
-       (nextval('bl_user_sequence'), 'test2', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
-       (nextval('bl_user_sequence'), 'test3', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW());
+VALUES (nextval('bl_user_sequence'), 'user', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user2', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user3', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user4', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user5', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user6', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user7', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user8', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user9', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user10', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user11', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user12', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user13', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user14', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
+       (nextval('bl_user_sequence'), 'user15', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW());

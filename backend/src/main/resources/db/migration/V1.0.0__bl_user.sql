@@ -8,7 +8,7 @@ CREATE SEQUENCE bl_user_sequence
 CREATE TABLE bl_user
 (
     id            BIGINT                   PRIMARY KEY,
-    username      CHARACTER VARYING(255)   NOT NULL UNIQUE,
-    password_hash CHARACTER VARYING(255)   NOT NULL ,
+    username      VARCHAR(255)             NOT NULL UNIQUE,
+    password_hash VARCHAR(255)             NOT NULL ,
     created_at    TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );

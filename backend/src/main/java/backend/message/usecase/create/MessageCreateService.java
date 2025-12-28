@@ -1,6 +1,6 @@
 package backend.message.usecase.create;
 
-import backend.chat_user.usecase.update.RelChatUserUpdateService;
+import backend.attr_chat_user.usecase.update.AttrChatUserUpdateService;
 import backend.entities.bl_chat.BLChat;
 import backend.entities.bl_message.BLMessage;
 import backend.entities.bl_message.BLMessageCreateDto;
@@ -28,7 +28,7 @@ public class MessageCreateService {
     @Inject
     MessageService messageService;
     @Inject
-    RelChatUserUpdateService chatUserUpdateService;
+    AttrChatUserUpdateService attrChatUserUpdateService;
 
     public void persist(final BLMessage blMessage) {
         messageRepository.persist(blMessage);
@@ -51,7 +51,7 @@ public class MessageCreateService {
                 .createdAt(Instant.now())
                 .build();
         messageRepository.persist(message);
-        chatUserUpdateService.unDownForAllUsers(chat.getId());
+        attrChatUserUpdateService.setUndoneForAllUsers(chat.getId());
         return messageService.getBLMessageView(message.getId());
     }
 }

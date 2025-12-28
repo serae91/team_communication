@@ -5,8 +5,6 @@ import com.blazebit.persistence.view.EntityView;
 import com.blazebit.persistence.view.IdMapping;
 import com.blazebit.persistence.view.Mapping;
 
-import java.time.Instant;
-
 @EntityView(BLRelChatUser.class)
 public interface BLRelChatUserView {
     @IdMapping
@@ -14,13 +12,4 @@ public interface BLRelChatUserView {
 
     @Mapping("user")
     BLUser getUser();
-
-    @Mapping("downed")
-    boolean getDowned();
-
-    @Mapping("reminderAt")
-    Instant getReminderAt();
-
-    @Mapping("reminderStatus")
-    ReminderStatus getReminderStatus();
 }

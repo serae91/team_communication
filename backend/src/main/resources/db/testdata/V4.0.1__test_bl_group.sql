@@ -1,10 +1,10 @@
 INSERT INTO bl_group
 VALUES (nextval('bl_group_sequence'),
-        '1st user group',
+        'group',
         NOW()),
        (nextval('bl_group_sequence'),
-        '2nd user group',
+        'group2',
         NOW()),
        (nextval('bl_group_sequence'),
-        '3rd user group',
+        'group3',
         NOW());

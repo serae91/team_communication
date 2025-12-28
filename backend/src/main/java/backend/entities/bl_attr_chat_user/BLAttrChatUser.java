@@ -1,10 +1,12 @@
-package backend.entities.bl_rel_chat_user;
+package backend.entities.bl_attr_chat_user;
 
 import backend.entities.bl_chat.BLChat;
 import backend.entities.bl_user.BLUser;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,20 +19,32 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @Entity
-@Table(name = "bl_rel_chat_user")
+@Table(name = "bl_attr_chat_user")
 @RegisterForReflection
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BLRelChatUser {
+public class BLAttrChatUser {
 
     @Id
-    @GeneratedValue(generator = "bl_rel_chat_user_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "bl_rel_chat_user_sequence", sequenceName = "bl_rel_chat_user_sequence", allocationSize = 1)
+    @GeneratedValue(generator = "bl_attr_chat_user_sequence", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "bl_attr_chat_user_sequence", sequenceName = "bl_attr_chat_user_sequence", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @Column(name = "done", nullable = false)
+    private boolean done;
+
+    @Column(name = "reminder_at")
+    private Instant reminderAt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "reminder_status", nullable = false)
+    private ReminderStatus reminderStatus;
 
     @ManyToOne
     @JoinColumn(name = "chat_id", nullable = false)
@@ -40,3 +54,4 @@ public class BLRelChatUser {
     @JoinColumn(name = "user_id", nullable = false)
     private BLUser user;
 }
+

@@ -8,6 +8,6 @@ CREATE SEQUENCE bl_group_sequence
 CREATE TABLE bl_group
 (
     id         BIGINT                   PRIMARY KEY,
-    name       CHARACTER VARYING(255)   NOT NULL UNIQUE,
+    name       VARCHAR(255)             NOT NULL UNIQUE,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );
