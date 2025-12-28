@@ -58,4 +58,7 @@ public class BLChat {
 
     @Column(name = "last_message_user_id", nullable = false)
     private Long lastMessageUserId;
+
+    @Column(name = "last_message_at", nullable = false)
+    private Instant lastMessageAt;
 }
