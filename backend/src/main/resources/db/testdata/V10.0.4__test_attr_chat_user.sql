@@ -1,0 +1,35 @@
+INSERT INTO bl_rel_chat_user_attr
+VALUES (nextval('bl_rel_chat_user_attr_sequence'),
+        (SELECT id FROM bl_chat WHERE title = 'chat'),
+        (SELECT id FROM bl_user WHERE username = 'user'),
+        false,
+        null,
+        'NONE'),
+
+       (nextval('bl_rel_chat_user_attr_sequence'),
+        (SELECT id FROM bl_chat WHERE title = 'chat'),
+        (SELECT id FROM bl_user WHERE username = 'user2'),
+        true,
+        null,
+        'NONE'),
+
+       (nextval('bl_rel_chat_user_attr_sequence'),
+        (SELECT id FROM bl_chat WHERE title = 'chat2'),
+        (SELECT id FROM bl_user WHERE username = 'user2'),
+        true,
+        null,
+        'NONE'),
+
+       (nextval('bl_rel_chat_user_attr_sequence'),
+        (SELECT id FROM bl_chat WHERE title = 'chat2'),
+        (SELECT id FROM bl_user WHERE username = 'user3'),
+        true,
+        null,
+        'NONE'),
+
+       (nextval('bl_rel_chat_user_attr_sequence'),
+        (SELECT id FROM bl_chat WHERE title = 'chat2'),
+        (SELECT id FROM bl_user WHERE username = 'user15'),
+        true,
+        null,
+        'NONE');

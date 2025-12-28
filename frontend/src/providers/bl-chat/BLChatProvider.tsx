@@ -1,18 +1,17 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import type { BLChatDto } from '../../dtos/BLChatDto.ts';
+import type { ChatUserAttrView } from '../../dtos/ChatUserAttrView.ts';
 import type { WebsocketMessage } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
 import { useWebSocket } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
 import { useAuth } from '../auth/AuthProvider.tsx';
-import { getChats } from '../../services/ChatService.ts';
-import { setReminder } from '../../services/ChatUserService.ts';
-import type { SetReminderDto } from '../../dtos/BLChatUserDto.ts';
+import { getChatUserViews, setReminder } from '../../services/RelChatUserAttrService.ts';
+import type { BLRelChatUserAttrSetReminderDto } from '../../dtos/BLRelChatUserAttrDto.ts';
 import { ReminderStatusEnum } from '../../enums/ReminderStatusEnum.ts';
 
 interface BLChatContextType {
-  chats: BLChatDto[];
-  setChats: React.Dispatch<React.SetStateAction<BLChatDto[]>>;
-  chatsWithReminder: BLChatDto[];
-  chatsWithoutReminder: BLChatDto[];
+  chats: ChatUserAttrView[];
+  setChats: React.Dispatch<React.SetStateAction<ChatUserAttrView[]>>;
+  chatsWithReminder: ChatUserAttrView[];
+  chatsWithoutReminder: ChatUserAttrView[];
   activeChatId: number | null;
   setActiveChatId: React.Dispatch<React.SetStateAction<number | null>>;
   remind: () => void;
@@ -22,7 +21,7 @@ interface BLChatContextType {
 const BLChatContext = createContext<BLChatContextType | null>(null);
 
 export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
-  const [chats, setChats] = useState<BLChatDto[]>([]);
+  const [chats, setChats] = useState<ChatUserAttrView[]>([]);
   const [activeChatId, setActiveChatId] = useState<number | null>(null);
   const {removeMessageHandler, addMessageHandler, send} = useWebSocket();
   const {user} = useAuth();
@@ -39,18 +38,16 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
   );
 
   const setNextChat = () => {
-    console.log('set next chat');
     const currentChatIndex = chats.findIndex(chat => chat.id === activeChatId);
     if (currentChatIndex === -1) return;
     const nextChatIndex = (currentChatIndex < chats.length - 1) ? currentChatIndex + 1 : 0;
     const nextId = chats[nextChatIndex]?.id;
-    console.log('nextId', nextId);
     if (!nextId) return;
     setActiveChatId(nextId);
   };
 
   useEffect(() => {
-    getChats().then(chats => setChats(chats));
+    getChatUserViews().then(chats => setChats(chats));
   }, [user]);
 
   useEffect(() => {
@@ -69,7 +66,7 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
           setChats(prev =>
             prev.map(chat =>
               msg.chatIds.includes(chat.id)
-                ? {...chat, reminderStatus: 'TRIGGERED'} as BLChatDto
+                ? {...chat, reminderStatus: 'TRIGGERED'} as ChatUserAttrView
                 : chat
             )
           );
@@ -89,10 +86,10 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
     if (!currentChat) return;
     const now = new Date();
     const inFiveMinutes = new Date(now.getTime() + 30 * 1000);
-    setReminder({chatId: activeChatId, reminderAt: inFiveMinutes} as SetReminderDto).then(v => {
+    setReminder({chatId: activeChatId, reminderAt: inFiveMinutes} as BLRelChatUserAttrSetReminderDto).then(v => {
       setChats(prev => prev.map(chat => {
         if (chat.id !== activeChatId) return chat;
-        return {...chat, reminderAt: inFiveMinutes, reminderStatus: ReminderStatusEnum.SCHEDULED} as BLChatDto;
+        return {...chat, reminderAt: inFiveMinutes, reminderStatus: ReminderStatusEnum.SCHEDULED} as ChatUserAttrView;
       }));
     });
   };

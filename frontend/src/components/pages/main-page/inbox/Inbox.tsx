@@ -16,11 +16,11 @@ const Inbox = () => {
     if (!chats?.length) return <p>No messages received yet</p>;
     return (chats.map(chat =>
       <MessageCard
-        key={ chat.id.toString() }
+        key={ chat.chatId.toString() }
         title={ chat.title } message={ 'test message' }
         sender={ 'test sender' } color={ 'red' }
         onClick={ () => {
-          setActiveChatId(chat.id);
+          setActiveChatId(chat.chatId);
           openLocalModal({type: LocalModalTypeEnum.JOIN_CHAT});
         } }
       />

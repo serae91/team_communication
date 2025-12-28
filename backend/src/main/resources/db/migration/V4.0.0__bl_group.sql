@@ -1,0 +1,13 @@
+CREATE SEQUENCE bl_group_sequence
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+CREATE TABLE bl_group
+(
+    id         BIGINT                   PRIMARY KEY,
+    name       VARCHAR(255)             NOT NULL UNIQUE,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+);

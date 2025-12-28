@@ -1,9 +1,9 @@
 package backend.websocket;
 
-import backend.chat.usecase.create.ChatCreateService;
-import backend.entities.bl_chat.BLChatView;
-import backend.entities.bl_message.BLMessageView;
-import backend.message.usecase.create.MessageCreateService;
+import backend.bl_api.chat.usecase.create.ChatCreateService;
+import backend.bl_entities.bl_chat.BLChatView;
+import backend.bl_entities.bl_message.BLMessageView;
+import backend.bl_api.message.usecase.create.MessageCreateService;
 import backend.websocket.model.incoming.ReceiveChatWebSocketMessage;
 import backend.websocket.model.incoming.ReceiveMessageWebSocketMessage;
 import backend.websocket.model.outgoing.CreateChatWebSocketMessage;
