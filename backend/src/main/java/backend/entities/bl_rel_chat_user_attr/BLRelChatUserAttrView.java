@@ -1,4 +1,4 @@
-package backend.entities.bl_attr_chat_user;
+package backend.entities.bl_rel_chat_user_attr;
 
 import backend.entities.bl_user.BLUser;
 import com.blazebit.persistence.view.EntityView;
@@ -7,8 +7,8 @@ import com.blazebit.persistence.view.Mapping;
 
 import java.time.Instant;
 
-@EntityView(BLAttrChatUser.class)
-public interface BLAttrChatUserView {
+@EntityView(BLRelChatUserAttr.class)
+public interface BLRelChatUserAttrView {
     @IdMapping
     Long getId();
 

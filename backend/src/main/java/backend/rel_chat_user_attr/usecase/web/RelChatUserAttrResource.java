@@ -1,8 +1,7 @@
-package backend.attr_chat_user.usecase.web;
+package backend.rel_chat_user_attr.usecase.web;
 
-import backend.attr_chat_user.usecase.update.AttrChatUserUpdateService;
 import backend.auth.core.CurrentUser;
-import backend.entities.bl_attr_chat_user.BLAttrChatUserSetReminderDto;
+import backend.rel_chat_user_attr.usecase.update.RelChatUserAttrUpdateService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.PATCH;
@@ -10,18 +9,18 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 
 @ApplicationScoped
-@Path("/attrchatuser")
-public class AttrChatUserResource {
+@Path("/relchatuserattr")
+public class RelChatUserAttrResource {
 
     @Inject
-    AttrChatUserUpdateService updateService;
+    RelChatUserAttrUpdateService updateService;
 
     @Inject
     CurrentUser currentUser;
 
     @PATCH
     @Path("/reminder")
-    public void setReminder(final BLAttrChatUserSetReminderDto setReminderDto) {
+    public void setReminder(final backend.entities.bl_rel_chat_user_attr.BLRelChatUserAttrSetReminderDto setReminderDto) {
         updateService.setReminder(setReminderDto, currentUser.getUserId());
     }
 

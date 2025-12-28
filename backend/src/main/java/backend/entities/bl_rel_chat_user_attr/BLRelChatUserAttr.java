@@ -1,4 +1,4 @@
-package backend.entities.bl_attr_chat_user;
+package backend.entities.bl_rel_chat_user_attr;
 
 import backend.entities.bl_chat.BLChat;
 import backend.entities.bl_user.BLUser;
@@ -22,17 +22,17 @@ import lombok.NoArgsConstructor;
 import java.time.Instant;
 
 @Entity
-@Table(name = "bl_attr_chat_user")
+@Table(name = "bl_rel_chat_user_attr")
 @RegisterForReflection
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BLAttrChatUser {
+public class BLRelChatUserAttr {
 
     @Id
-    @GeneratedValue(generator = "bl_attr_chat_user_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "bl_attr_chat_user_sequence", sequenceName = "bl_attr_chat_user_sequence", allocationSize = 1)
+    @GeneratedValue(generator = "bl_rel_chat_user_attr_sequence", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "bl_rel_chat_user_attr_sequence", sequenceName = "bl_rel_chat_user_attr_sequence", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 

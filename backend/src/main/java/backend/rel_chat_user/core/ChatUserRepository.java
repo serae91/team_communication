@@ -1,7 +1,7 @@
-package backend.attr_chat_user.usecase.core;
+package backend.rel_chat_user.core;
 
-import backend.entities.bl_attr_chat_user.BLAttrChatUser;
-import backend.entities.bl_attr_chat_user.ReminderStatus;
+import backend.entities.bl_rel_chat_user.BLRelChatUser;
+import backend.entities.bl_rel_chat_user_attr.ReminderStatus;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -9,17 +9,17 @@ import java.time.Instant;
 import java.util.List;
 
 @ApplicationScoped
-public class AttrChatUserRepository implements PanacheRepository<BLAttrChatUser> {
+public class ChatUserRepository implements PanacheRepository<BLRelChatUser> {
 
-    public BLAttrChatUser findBy(final Long chatId, final Long userId) {
+    public BLRelChatUser findBy(final Long chatId, final Long userId) {
         return find("chat.id = ?1 and user.id = ?2", chatId, userId).singleResult();
     }
 
-    public List<BLAttrChatUser> findBy(final Long chatId) {
+    public List<BLRelChatUser> findBy(final Long chatId) {
         return find("chat.id", chatId).list();
     }
 
-    public List<BLAttrChatUser> findDueReminders(final Instant now, final int limit) {
+    public List<BLRelChatUser> findDueReminders(final Instant now, final int limit) {
         return find("reminderStatus = ?1 and reminderAt <= ?2 order by reminderAt",
                 ReminderStatus.SCHEDULED, now)
                 .page(0, limit)

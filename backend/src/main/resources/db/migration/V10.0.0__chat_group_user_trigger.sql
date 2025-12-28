@@ -79,6 +79,6 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER trg_ensure_user_is_chat_member
-    BEFORE INSERT OR UPDATE ON bl_attr_chat_user
+    BEFORE INSERT OR UPDATE ON bl_rel_chat_user_attr
     FOR EACH ROW
     EXECUTE FUNCTION ensure_user_is_chat_member();

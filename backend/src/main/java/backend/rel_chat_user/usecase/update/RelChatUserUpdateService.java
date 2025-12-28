@@ -1,6 +1,6 @@
-package backend.chat_user.usecase.update;
+package backend.rel_chat_user.usecase.update;
 
-import backend.chat_user.core.ChatUserRepository;
+import backend.rel_chat_user.core.ChatUserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 

@@ -1,9 +1,7 @@
-package backend.attr_chat_user.usecase.update;
+package backend.rel_chat_user_attr.usecase.update;
 
-import backend.attr_chat_user.usecase.core.AttrChatUserRepository;
-import backend.entities.bl_attr_chat_user.BLAttrChatUser;
-import backend.entities.bl_attr_chat_user.BLAttrChatUserSetReminderDto;
-import backend.entities.bl_attr_chat_user.ReminderStatus;
+import backend.entities.bl_rel_chat_user_attr.ReminderStatus;
+import backend.rel_chat_user_attr.usecase.core.RelChatUserAttrRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -11,14 +9,14 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
-public class AttrChatUserUpdateService {
+public class RelChatUserAttrUpdateService {
 
     @Inject
-    AttrChatUserRepository repository;
+    RelChatUserAttrRepository repository;
 
     @Transactional
-    public void setReminder(final BLAttrChatUserSetReminderDto setReminderDto, final Long userId) {
-        final BLAttrChatUser attrChatUser = repository.findBy(setReminderDto.chatId(), userId);
+    public void setReminder(final backend.entities.bl_rel_chat_user_attr.BLRelChatUserAttrSetReminderDto setReminderDto, final Long userId) {
+        final backend.entities.bl_rel_chat_user_attr.BLRelChatUserAttr attrChatUser = repository.findBy(setReminderDto.chatId(), userId);
         attrChatUser.setReminderAt(setReminderDto.reminderAt());
         attrChatUser.setReminderStatus(ReminderStatus.SCHEDULED);
         repository.persist(attrChatUser);
@@ -26,14 +24,14 @@ public class AttrChatUserUpdateService {
 
     @Transactional
     public void triggerDone(final Long chatId, final Long userId) {
-        final BLAttrChatUser attrChatUser = repository.findBy(chatId, userId);
+        final backend.entities.bl_rel_chat_user_attr.BLRelChatUserAttr attrChatUser = repository.findBy(chatId, userId);
         attrChatUser.setDone(!attrChatUser.isDone());
         repository.persist(attrChatUser);
     }
 
     @Transactional
     public void setUndoneForAllUsers(final Long chatId) {
-        final List<BLAttrChatUser> attrChatUsers = repository.findBy(chatId);
+        final List<backend.entities.bl_rel_chat_user_attr.BLRelChatUserAttr> attrChatUsers = repository.findBy(chatId);
         attrChatUsers.forEach(bLRelChatUser -> {
             bLRelChatUser.setDone(false);
         });
@@ -42,7 +40,7 @@ public class AttrChatUserUpdateService {
 
     @Transactional
     public void setReminderSeen(final Long chatId, final Long userId) {
-        final BLAttrChatUser attrChatUser = repository.findBy(chatId, userId);
+        final backend.entities.bl_rel_chat_user_attr.BLRelChatUserAttr attrChatUser = repository.findBy(chatId, userId);
         attrChatUser.setReminderStatus(ReminderStatus.SEEN);
         repository.persist(attrChatUser);
     }

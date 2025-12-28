@@ -1,4 +1,4 @@
-package backend.entities.bl_attr_chat_user;
+package backend.entities.bl_rel_chat_user_attr;
 
 public enum ReminderStatus {
     NONE,

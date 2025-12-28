@@ -1,8 +1,7 @@
 package backend.websocket;
 
-import backend.attr_chat_user.usecase.core.AttrChatUserRepository;
-import backend.entities.bl_attr_chat_user.BLAttrChatUser;
-import backend.entities.bl_attr_chat_user.ReminderStatus;
+import backend.entities.bl_rel_chat_user_attr.ReminderStatus;
+import backend.rel_chat_user_attr.usecase.core.RelChatUserAttrRepository;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -20,7 +19,7 @@ public class ChatReminderScheduler {
     private static final int BATCH_SIZE = 100;
 
     @Inject
-    AttrChatUserRepository attrChatUserRepository;
+    RelChatUserAttrRepository relChatUserAttrRepository;
 
     @Inject
     BLWebSocketService webSocketService;
@@ -29,7 +28,7 @@ public class ChatReminderScheduler {
     @Scheduled(every = "10s")
     void processDueReminders() {
         final Instant now = Instant.now();
-        final List<BLAttrChatUser> dueReminders = attrChatUserRepository.findDueReminders(now, BATCH_SIZE);
+        final List<backend.entities.bl_rel_chat_user_attr.BLRelChatUserAttr> dueReminders = relChatUserAttrRepository.findDueReminders(now, BATCH_SIZE);
         if (dueReminders.isEmpty()) {
             return;
         }
@@ -47,6 +46,6 @@ public class ChatReminderScheduler {
         dueReminders.forEach(reminder ->
                 reminder.setReminderStatus(ReminderStatus.TRIGGERED)
         );
-        attrChatUserRepository.persist(dueReminders);
+        relChatUserAttrRepository.persist(dueReminders);
     }
 }
