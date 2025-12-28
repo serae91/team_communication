@@ -1,7 +1,7 @@
 package backend.websocket;
 
-import backend.entities.bl_rel_chat_user_attr.ReminderStatus;
-import backend.rel_chat_user_attr.usecase.core.RelChatUserAttrRepository;
+import backend.bl_entities.bl_rel_chat_user_attr.ReminderStatus;
+import backend.bl_api.rel_chat_user_attr.usecase.core.RelChatUserAttrRepository;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -28,7 +28,7 @@ public class ChatReminderScheduler {
     @Scheduled(every = "10s")
     void processDueReminders() {
         final Instant now = Instant.now();
-        final List<backend.entities.bl_rel_chat_user_attr.BLRelChatUserAttr> dueReminders = relChatUserAttrRepository.findDueReminders(now, BATCH_SIZE);
+        final List<backend.bl_entities.bl_rel_chat_user_attr.BLRelChatUserAttr> dueReminders = relChatUserAttrRepository.findDueReminders(now, BATCH_SIZE);
         if (dueReminders.isEmpty()) {
             return;
         }

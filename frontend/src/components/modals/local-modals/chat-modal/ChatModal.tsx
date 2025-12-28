@@ -5,7 +5,7 @@ import ChatSystem from '../../../system/chat-system/ChatSystem.tsx';
 import './ChatModal.scss';
 import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
 import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
-import { triggerDown } from '../../../../services/ChatUserService.ts';
+import { triggerDown } from '../../../../services/RelChatUserAttrService.ts';
 import { LocalModalTypeEnum } from '../../../../enums/LocalModalTypeEnum.ts';
 
 const ChatModal = () => {

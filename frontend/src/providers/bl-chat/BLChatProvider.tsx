@@ -4,8 +4,8 @@ import type { WebsocketMessage } from '../bl-websocket/bl-websocket-types/bl-mes
 import { useWebSocket } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
 import { useAuth } from '../auth/AuthProvider.tsx';
 import { getChats } from '../../services/ChatService.ts';
-import { setReminder } from '../../services/ChatUserService.ts';
-import type { SetReminderDto } from '../../dtos/BLChatUserDto.ts';
+import { setReminder } from '../../services/RelChatUserAttrService.ts';
+import type { BLRelChatUserAttrSetReminderDto } from '../../dtos/BLRelChatUserAttrDto.ts';
 import { ReminderStatusEnum } from '../../enums/ReminderStatusEnum.ts';
 
 interface BLChatContextType {
@@ -89,7 +89,7 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
     if (!currentChat) return;
     const now = new Date();
     const inFiveMinutes = new Date(now.getTime() + 30 * 1000);
-    setReminder({chatId: activeChatId, reminderAt: inFiveMinutes} as SetReminderDto).then(v => {
+    setReminder({chatId: activeChatId, reminderAt: inFiveMinutes} as BLRelChatUserAttrSetReminderDto).then(v => {
       setChats(prev => prev.map(chat => {
         if (chat.id !== activeChatId) return chat;
         return {...chat, reminderAt: inFiveMinutes, reminderStatus: ReminderStatusEnum.SCHEDULED} as BLChatDto;
