@@ -9,6 +9,7 @@ SELECT
 
     u.id                AS user_id,
 
+    COALESCE(cua.id, null)                AS chat_user_attr_id,
     COALESCE(cua.done, false)             AS done,
     COALESCE(cua.reminder_at, null)       AS reminder_at,
     COALESCE(cua.reminder_status, 'NONE') AS reminder_status

@@ -5,7 +5,7 @@ import ChatSystem from '../../../system/chat-system/ChatSystem.tsx';
 import './ChatModal.scss';
 import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
 import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
-import { triggerDown } from '../../../../services/RelChatUserAttrService.ts';
+import { triggerDone } from '../../../../services/RelChatUserAttrService.ts';
 import { LocalModalTypeEnum } from '../../../../enums/LocalModalTypeEnum.ts';
 
 const ChatModal = () => {
@@ -17,7 +17,7 @@ const ChatModal = () => {
       <button onClick={ setNextChat }>Set next chat</button>
       <button onClick={ () => {
         if (activeChatId)
-          triggerDown(activeChatId);
+          triggerDone(activeChatId);
       }
       }>Down
       </button>
