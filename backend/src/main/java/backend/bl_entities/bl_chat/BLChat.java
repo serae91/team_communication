@@ -1,6 +1,7 @@
 package backend.bl_entities.bl_chat;
 
 import backend.bl_entities.bl_message.BLMessage;
+import backend.bl_entities.bl_rel_chat_group.BLRelChatGroup;
 import backend.bl_entities.bl_rel_chat_user.BLRelChatUser;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
@@ -50,7 +51,10 @@ public class BLChat {
     private Set<BLMessage> messages;
 
     @OneToMany(mappedBy = "chat")
-    private Set<BLRelChatUser> users;
+    private Set<BLRelChatUser> relUsers;
+
+    @OneToMany(mappedBy = "chat")
+    private Set<BLRelChatGroup> relGroups;
 
     @Column(name = "last_message_user_id", nullable = false)
     private Long lastMessageUserId;

@@ -1,7 +1,7 @@
-package backend.bl_entities.bl_message;
+package backend.bl_entities.bl_rel_chat_group;
 
 import backend.bl_entities.bl_chat.BLChat;
-import backend.bl_entities.bl_user.BLUser;
+import backend.bl_entities.bl_group.BLGroup;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,34 +17,25 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
-
 @Entity
-@Table(name = "bl_message")
+@Table(name = "bl_rel_chat_group")
 @RegisterForReflection
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BLMessage {
-
+public class BLRelChatGroup {
     @Id
-    @GeneratedValue(generator = "bl_message_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "bl_message_sequence", sequenceName = "bl_message_sequence", allocationSize = 1)
+    @GeneratedValue(generator = "bl_rel_chat_group_sequence", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "bl_rel_chat_group_sequence", sequenceName = "bl_rel_chat_group_sequence", allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
-
-    @Column(name = "text", nullable = false)
-    private String text;
 
     @ManyToOne
     @JoinColumn(name = "chat_id", nullable = false)
     private BLChat chat;
 
     @ManyToOne
-    @JoinColumn(name = "sender_id", nullable = false)
-    private BLUser sender;
-
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
+    @JoinColumn(name = "group_id", nullable = false)
+    private BLGroup group;
 }
