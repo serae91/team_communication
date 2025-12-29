@@ -10,6 +10,9 @@ CREATE TABLE bl_rel_chat_user
     id              BIGINT PRIMARY KEY,
     chat_id         BIGINT NOT NULL REFERENCES bl_chat(id),
     user_id         BIGINT NOT NULL REFERENCES bl_user(id),
+    workspace_id    BIGINT NOT NULL,
 
-    CONSTRAINT unique_chat_user UNIQUE (chat_id, user_id)
+    CONSTRAINT unique_chat_user UNIQUE (chat_id, user_id),
+    FOREIGN KEY (chat_id, workspace_id) REFERENCES bl_chat (id, workspace_id),
+    FOREIGN KEY (user_id, workspace_id) REFERENCES bl_user (id, workspace_id)
 );
