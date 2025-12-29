@@ -23,7 +23,7 @@ const ChatModal = () => {
       </button>
       <button onClick={ remind }>Set Reminder</button>
       <BLLeftMarkedCard className={ 'cursor-pointer' }>
-        { chats?.find(chat => chat.id === activeChatId)?.title ?? 'Error: Selected chat could not be found' }
+        { chats?.find(chat => chat.chatId === activeChatId)?.title ?? 'Error: Selected chat could not be found' }
         <ChatSystem messages={ messages } sendMessage={ sendMessage }/>
       </BLLeftMarkedCard>
     </BLModal>);

@@ -54,7 +54,7 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
   return (
     <>
       <div ref={ chatScrollRef }
-           className={ 'flex-1 overflow-y-auto p-4 bg-white rounded-2xl shadow-inner border border-gray-200' }>
+           className={ 'flex-1 overflow-y-auto' }>
         { getChatMessages() }
       </div>
       <ChatInput onSend={ sendMessage }/>

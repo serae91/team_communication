@@ -16,7 +16,6 @@ const BLChatMessage = ({html}: { html: string }) => {
   }, [editor, html]);
 
   if (!editor) return null;
-  console.log('editor exists', html);
   return (
     <div className="bl-chat-message">
       <EditorContent editor={ editor }/>
