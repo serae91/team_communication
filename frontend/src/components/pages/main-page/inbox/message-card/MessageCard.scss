@@ -3,7 +3,12 @@
 
 .message-card {
   height: constants.$height-message-card;
-  gap: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 13px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .title {
     color: colors.$color-text-2;
@@ -17,7 +22,6 @@
     font-weight: constants.$font-weight-sub-title;
 
     .sender {
-
       .profile-picture {
         border-radius: 50%;
         width: 16px;

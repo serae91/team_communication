@@ -10,7 +10,6 @@ interface MessageCardProps {
   message: string;
   color: BLLeftMarkedCardColor;
   onClick: () => void | undefined;
-  className?: string;
 }
 
 const MessageCard = ({
@@ -19,16 +18,18 @@ const MessageCard = ({
                        message,
                        color,
                        onClick,
-                       className = ''
                      }: MessageCardProps) => {
   return (
-    <BLLeftMarkedCard className={ `message-card ${ className }` } color={ color } onClick={ onClick }>
-      <div className={ 'title flex-row' }><BLSideSymbol>#</BLSideSymbol>{ title }</div>
-      <div className={ 'message-box flex-row' }>
-        <div className={ 'sender' }>
-          <div className={ 'profile-picture' }></div>
-          { sender }</div>
-        { message }
+    <BLLeftMarkedCard color={ color } onClick={ onClick }>
+      <div className={ 'message-card' }>
+        <div className={ 'title flex-row' }><BLSideSymbol>#</BLSideSymbol>{ title }</div>
+        <div className={ 'message-box flex-row' }>
+          <div className={ 'sender' }>
+            <div className={ 'profile-picture' }></div>
+            { sender }
+          </div>
+          { message }
+        </div>
       </div>
     </BLLeftMarkedCard>
   );

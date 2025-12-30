@@ -1,3 +1,4 @@
+import './Inbox.scss';
 import MessageCard from './message-card/MessageCard.tsx';
 import BLContentCard from '../../../ui/bl-content-card/BLContentCard.tsx';
 import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';

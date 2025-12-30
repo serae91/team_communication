@@ -7,10 +7,6 @@
   border-radius: constants.$border-radius;
   overflow: hidden;
 
-  padding-left: calc(
-          #{constants.$border-spacer-width} + 13px
-  );
-
   --color: #181D27;
 
   &::before {
