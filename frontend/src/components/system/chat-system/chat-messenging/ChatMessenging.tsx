@@ -44,7 +44,7 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
     scrollDownWhenAtBottomAndAddingNewMessage();
   }, [messages.length, scrollDownWhenAtBottomAndAddingNewMessage]);
 
-  const getChatMessages = () => {
+  const renderChatMessages = () => {
     return messages.map(message =>
       <ChatMessage sender={ message.sender.username } postTime={ message.createdAt } message={ message.text }
                    key={ message.id }/>
@@ -54,8 +54,8 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
   return (
     <>
       <div ref={ chatScrollRef }
-           className={ 'flex-1 overflow-y-auto' }>
-        { getChatMessages() }
+           className={ 'flex-1 overflow-y-auto chat-messenging' }>
+        { renderChatMessages() }
       </div>
       <ChatInput onSend={ sendMessage }/>
       {/*<div className={ 'flex-row sticky bottom-0' }>

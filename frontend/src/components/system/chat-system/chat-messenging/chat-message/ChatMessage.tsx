@@ -9,6 +9,22 @@ interface ChatMessageProps {
 }
 
 const ChatMessage = ({sender, postTime, message}: ChatMessageProps) => {
+  const parseInstant = (instant: string): Date => {
+    return new Date(
+      instant.replace(
+        /\.(\d{3})\d+Z$/,
+        '.$1Z'
+      )
+    );
+  };
+  
+  const time = (date: Date) => {
+    return new Intl.DateTimeFormat('de-DE', {
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(parseInstant(date.toString()));
+  };
+
   return (
     <div className={ 'chat-message flex-row' }>
       <div className={ 'profile-picture' }/>
@@ -16,7 +32,7 @@ const ChatMessage = ({sender, postTime, message}: ChatMessageProps) => {
         <div className={ 'flex-row' }>
           <div className={ 'sender' }>{ sender }</div>
           <div className={ 'post-time' }>{
-            `${ postTime }` }</div>
+            `${ time(postTime) }` }</div>
         </div>
         <BLChatMessage html={ message }/>
       </div>

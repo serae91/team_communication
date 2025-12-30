@@ -1,4 +1,4 @@
-import './MessageCard.scss';
+import './ChatCard.scss';
 import BLSideSymbol from '../../../../ui/bl-side-symbol/BLSideSymbol';
 import BLLeftMarkedCard from '../../../../ui/bl-left-marked-card/BLLeftMarkedCard';
 import type { BLLeftMarkedCardColor } from '../../../../ui/bl-left-marked-card/types';
@@ -12,16 +12,16 @@ interface MessageCardProps {
   onClick: () => void | undefined;
 }
 
-const MessageCard = ({
-                       title,
-                       sender,
-                       message,
-                       color,
-                       onClick,
-                     }: MessageCardProps) => {
+const ChatCard = ({
+                    title,
+                    sender,
+                    message,
+                    color,
+                    onClick,
+                  }: MessageCardProps) => {
   return (
     <BLLeftMarkedCard color={ color } onClick={ onClick }>
-      <div className={ 'message-card' }>
+      <div className={ 'chat-card' }>
         <div className={ 'title flex-row' }><BLSideSymbol>#</BLSideSymbol>{ title }</div>
         <div className={ 'message-box flex-row' }>
           <div className={ 'sender' }>
@@ -35,4 +35,4 @@ const MessageCard = ({
   );
 };
 
-export default MessageCard;
+export default ChatCard;

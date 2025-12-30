@@ -1,3 +1,6 @@
-.cursor-pointer:hover {
-  cursor: pointer;
+@use '../../../../styles/colors' as colors;
+@use '../../../../styles/constants' as constants;
+
+.chat-modal {
+  color: colors.$color-text-main;
 }
