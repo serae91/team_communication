@@ -16,7 +16,7 @@ const BLLeftMarkedCard = ({
                             onClick
                           }: BLLeftMarkedCardProps) => {
   return (
-    <div className={ `left-marked-card flex-col left-marked-card--${ color } ${ className }` } onClick={ onClick }>
+    <div className={ `left-marked-card left-marked-card--${ color } ${ className }` } onClick={ onClick }>
       { children }
     </div>
   );

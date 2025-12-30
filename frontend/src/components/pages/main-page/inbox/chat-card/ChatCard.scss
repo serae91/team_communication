@@ -14,12 +14,16 @@
     color: colors.$color-text-2;
     align-items: center;
     font-weight: constants.$font-weight-title;
+    display: flex;
+    flex-direction: row;
   }
 
   .message-box {
     align-items: center;
     color: colors.$color-text-main;
     font-weight: constants.$font-weight-sub-title;
+    display: flex;
+    flex-direction: row;
 
     .sender {
       .profile-picture {

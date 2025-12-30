@@ -58,7 +58,7 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
         { renderChatMessages() }
       </div>
       <ChatInput onSend={ sendMessage }/>
-      {/*<div className={ 'flex-row sticky bottom-0' }>
+      {/*<div className={ 'flex flex-row sticky bottom-0' }>
         <BLInput className={ 'full-width' } inputRef={ inputRef }/>
         <button className={ 'send-button' } onClick={ () => {
           if (inputRef.current?.value)

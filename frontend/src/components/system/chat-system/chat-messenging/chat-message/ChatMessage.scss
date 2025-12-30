@@ -2,6 +2,9 @@
 @use '../../../../../styles/constants' as constants;
 
 .chat-message {
+  display: flex;
+  flex-direction: row;
+
   .profile-picture {
     width: 25px;
     height: 25px;
@@ -12,6 +15,8 @@
 
   .right-container {
     max-width: calc(100% - 25px - 8px);
+    display: flex;
+    flex-direction: column;
   }
 
   .sender {

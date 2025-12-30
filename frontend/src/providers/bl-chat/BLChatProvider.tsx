@@ -38,10 +38,10 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
   );
 
   const setNextChat = () => {
-    const currentChatIndex = chats.findIndex(chat => chat.id === activeChatId);
+    const currentChatIndex = chats.findIndex(chat => chat.chatId === activeChatId);
     if (currentChatIndex === -1) return;
     const nextChatIndex = (currentChatIndex < chats.length - 1) ? currentChatIndex + 1 : 0;
-    const nextId = chats[nextChatIndex]?.id;
+    const nextId = chats[nextChatIndex]?.chatId;
     if (!nextId) return;
     setActiveChatId(nextId);
   };
@@ -65,7 +65,7 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
         case 'RECEIVE_REMINDER':
           setChats(prev =>
             prev.map(chat =>
-              msg.chatIds.includes(chat.id)
+              msg.chatIds.includes(chat.chatId)
                 ? {...chat, reminderStatus: 'TRIGGERED'} as ChatUserAttrView
                 : chat
             )
@@ -82,13 +82,13 @@ export const BLChatProvider = ({children}: { children: React.ReactNode }) => {
   }, [addMessageHandler, removeMessageHandler]);
 
   const remind = () => {
-    const currentChat = chats.find(chat => chat.id === activeChatId);
+    const currentChat = chats.find(chat => chat.chatId === activeChatId);
     if (!currentChat) return;
     const now = new Date();
     const inFiveMinutes = new Date(now.getTime() + 30 * 1000);
     setReminder({chatId: activeChatId, reminderAt: inFiveMinutes} as BLRelChatUserAttrSetReminderDto).then(v => {
       setChats(prev => prev.map(chat => {
-        if (chat.id !== activeChatId) return chat;
+        if (chat.chatId !== activeChatId) return chat;
         return {...chat, reminderAt: inFiveMinutes, reminderStatus: ReminderStatusEnum.SCHEDULED} as ChatUserAttrView;
       }));
     });

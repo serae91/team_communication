@@ -22,8 +22,8 @@ const ChatCard = ({
   return (
     <BLLeftMarkedCard color={ color } onClick={ onClick }>
       <div className={ 'chat-card' }>
-        <div className={ 'title flex-row' }><BLSideSymbol>#</BLSideSymbol>{ title }</div>
-        <div className={ 'message-box flex-row' }>
+        <div className={ 'title' }><BLSideSymbol>#</BLSideSymbol>{ title }</div>
+        <div className={ 'message-box' }>
           <div className={ 'sender' }>
             <div className={ 'profile-picture' }></div>
             { sender }

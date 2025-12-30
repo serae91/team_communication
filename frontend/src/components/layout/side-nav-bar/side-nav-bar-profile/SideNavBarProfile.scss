@@ -5,6 +5,8 @@
   height: 64px;
   align-items: center;
   color: colors.$color-text-3;
+  display: flex;
+  flex-direction: row;
 
   .card {
     display: flex;

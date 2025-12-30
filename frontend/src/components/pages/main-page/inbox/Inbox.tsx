@@ -32,7 +32,7 @@ const Inbox = () => {
     <BLContentCard className={ 'inbox relative' }>
       <ChatModalRenderer/>
       <CreateChatModalRenderer/>
-      <div className={ 'title-box flex-col' }>
+      <div className={ 'title-box' }>
         <div className={ 'title' }>
           Inbox
         </div>

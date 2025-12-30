@@ -17,7 +17,7 @@ const ChatMessage = ({sender, postTime, message}: ChatMessageProps) => {
       )
     );
   };
-  
+
   const time = (date: Date) => {
     return new Intl.DateTimeFormat('de-DE', {
       hour: '2-digit',
@@ -26,10 +26,10 @@ const ChatMessage = ({sender, postTime, message}: ChatMessageProps) => {
   };
 
   return (
-    <div className={ 'chat-message flex-row' }>
+    <div className={ 'chat-message' }>
       <div className={ 'profile-picture' }/>
-      <div className={ 'flex-col right-container' }>
-        <div className={ 'flex-row' }>
+      <div className={ 'right-container' }>
+        <div className={ 'flex flex-row' }>
           <div className={ 'sender' }>{ sender }</div>
           <div className={ 'post-time' }>{
             `${ time(postTime) }` }</div>
