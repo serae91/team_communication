@@ -1,5 +1,5 @@
 @use '../../../styles/colors' as colors;
-@use '../../../styles/constants' as constant;
+@use '../../../styles/constants' as constants;
 
 .button {
   position: relative;
@@ -8,8 +8,8 @@
   justify-content: center;
   border: solid;
   border-color: $color-border;
-  border-radius: constant.$border-radius;
-  border-width: constant.$border-width;
+  border-radius: constants.$border-radius;
+  border-width: constants.$border-width;
   background-color: colors.$color-brand;
   color: colors.$color-white;
   cursor: pointer;
@@ -29,8 +29,8 @@
     border-style: solid;
     border-color: #D6BBFB;
     transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
+    width: 1rem;
+    height: 1rem;
   }
 
   &::before {
@@ -63,8 +63,8 @@
 .button--m {
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
-  --circle-size: 8px;
-  --circle-offset: 12px;
+  --circle-size: 0.5rem;
+  --circle-offset: 0.75rem;
 
   &::before,
   &::after {
@@ -76,8 +76,8 @@
 .button--l {
   padding: 0.75rem 1.25rem;
   font-size: 1rem;
-  --circle-size: 10px;
-  --circle-offset: 14px;
+  --circle-size: 0.625rem;
+  --circle-offset: 0.875rem;
 
   &::before,
   &::after {
@@ -87,15 +87,15 @@
 }
 
 .button--xl {
-  padding: 1rem 1.5rem;
+  padding: 1rem constants.$padding;
   font-size: 1.125rem;
-  --circle-size: 12px;
-  --circle-offset: 16px;
+  --circle-size: 0.75rem;
+  --circle-offset: 1rem;
 
   &::before,
   &::after {
-    width: 16px;
-    height: 16px;
+    width: 1rem;
+    height: 1rem;
   }
 }
 

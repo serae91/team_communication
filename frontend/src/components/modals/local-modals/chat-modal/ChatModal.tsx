@@ -22,7 +22,7 @@ const ChatModal = () => {
       </button>
       <button onClick={ remind }>Set Reminder</button>*/ }
       <BLLeftMarkedCard>
-        <div className={ 'chat-modal pl-[24px] pt-[29px] pr-[29px] pb-[29px]' }>
+        <div className={ 'chat-modal' }>
           { chats?.find(chat => chat.chatId === activeChatId)?.title ?? 'Error: Selected chat could not be found' }
           <ChatSystem messages={ messages } sendMessage={ sendMessage }/>
         </div>
