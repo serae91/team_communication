@@ -6,8 +6,18 @@ import './ChatModal.scss';
 import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
 import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
 import { LocalModalTypeEnum } from '../../../../enums/LocalModalTypeEnum.ts';
-import { CheckOutlined, MoreTimeOutlined, ReplyOutlined, ShareOutlined, SkipNextOutlined } from '@mui/icons-material';
+import {
+  CheckOutlined,
+  MoreTimeOutlined,
+  PersonAddAltOutlined,
+  ReplyOutlined,
+  ShareOutlined,
+  SkipNextOutlined
+} from '@mui/icons-material';
 import { triggerDone } from '../../../../services/RelChatUserAttrService.ts';
+import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';
+import BLProfileToken from '../../../ui/bl-profile-token/BLProfileToken.tsx';
+import BLSideSymbol from '../../../ui/bl-side-symbol/BLSideSymbol.tsx';
 
 const ChatModal = () => {
   const {chats, activeChatId, remind, setNextChat} = useBLChats();
@@ -15,26 +25,33 @@ const ChatModal = () => {
 
   return (
     <BLModal modalType={ LocalModalTypeEnum.JOIN_CHAT }>
-      {/*<button onClick={ setNextChat }>Set next chat</button>
-      <button onClick={ () => {
-        if (activeChatId)
-          triggerDone(activeChatId);
-      }
-      }>Down
-      </button>
-      <button onClick={ remind }>Set Reminder</button>*/ }
       <BLLeftMarkedCard>
         <div className={ 'chat-modal' }>
-          <div className={ 'flex flex-row' }>
-            { chats?.find(chat => chat.chatId === activeChatId)?.title ?? 'Error: Selected chat could not be found' }
-            <SkipNextOutlined sx={ {color: '#888'} } onClick={ setNextChat }/>
-            <ReplyOutlined sx={ {color: '#888'} }/>
-            <ShareOutlined sx={ {color: '#888'} }/>
-            <MoreTimeOutlined sx={ {color: '#888'} } onClick={ remind }/>
-            <CheckOutlined sx={ {color: '#888'} } onClick={ () => {
-              if (activeChatId)
-                triggerDone(activeChatId);
-            } }/>
+          <div className={ 'flex justify-between' }>
+            <div className={ 'flex flex-col' }>
+              <div className={ 'flex items-center gap-6 h-6' }>
+                <BLSideSymbol>#</BLSideSymbol>
+                { chats?.find(chat => chat.chatId === activeChatId)?.title ?? 'Error: Selected chat could not be found' }
+                <PersonAddAltOutlined/>
+              </div>
+              <div className={ 'flex items-center gap-3' }>
+                <BLHintCard hintCardType={ 'error' }>
+                  <li>Urgent Topic</li>
+                </BLHintCard>
+                <p>Raised by</p>
+                <BLProfileToken username={ 'Phoenix Baker' }/>
+              </div>
+            </div>
+            <div className={ 'flex items-center gap-6 h-6' }>
+              <SkipNextOutlined sx={ {color: '#A4A7Ae'} } onClick={ setNextChat }/>
+              <ReplyOutlined sx={ {color: '#A4A7Ae'} }/>
+              <ShareOutlined sx={ {color: '#A4A7Ae'} }/>
+              <MoreTimeOutlined sx={ {color: '#A4A7Ae'} } onClick={ remind }/>
+              <CheckOutlined sx={ {color: '#A4A7Ae'} } onClick={ () => {
+                if (activeChatId)
+                  triggerDone(activeChatId);
+              } }/>
+            </div>
           </div>
           <ChatSystem messages={ messages } sendMessage={ sendMessage }/>
         </div>

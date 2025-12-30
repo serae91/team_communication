@@ -2,9 +2,10 @@ import './ChatCard.scss';
 import BLSideSymbol from '../../../../ui/bl-side-symbol/BLSideSymbol';
 import BLLeftMarkedCard from '../../../../ui/bl-left-marked-card/BLLeftMarkedCard';
 import type { BLLeftMarkedCardColor } from '../../../../ui/bl-left-marked-card/types';
+import BLProfileToken from '../../../../ui/bl-profile-token/BLProfileToken.tsx';
 
 
-interface MessageCardProps {
+interface ChatCardProps {
   title: string;
   sender: string;
   message: string;
@@ -18,16 +19,13 @@ const ChatCard = ({
                     message,
                     color,
                     onClick,
-                  }: MessageCardProps) => {
+                  }: ChatCardProps) => {
   return (
     <BLLeftMarkedCard color={ color } onClick={ onClick }>
       <div className={ 'chat-card' }>
         <div className={ 'title' }><BLSideSymbol>#</BLSideSymbol>{ title }</div>
         <div className={ 'message-box' }>
-          <div className={ 'sender' }>
-            <div className={ 'profile-picture' }></div>
-            { sender }
-          </div>
+          <BLProfileToken username={ sender }/>
           { message }
         </div>
       </div>
