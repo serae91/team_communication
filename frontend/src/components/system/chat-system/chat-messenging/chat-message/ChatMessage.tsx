@@ -29,7 +29,7 @@ const ChatMessage = ({sender, postTime, message}: ChatMessageProps) => {
     <div className={ 'chat-message' }>
       <div className={ 'profile-picture' }/>
       <div className={ 'right-container' }>
-        <div className={ 'flex flex-row' }>
+        <div className={ 'flex items-center' }>
           <div className={ 'sender' }>{ sender }</div>
           <div className={ 'post-time' }>{
             `${ time(postTime) }` }</div>

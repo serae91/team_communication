@@ -2,8 +2,6 @@
 @use '../../../../styles/constants' as constants;
 
 .chat-messenging {
-  gap: 1.125rem;
-
   .send-button {
     outline: none;
     color: colors.$color-text-main;

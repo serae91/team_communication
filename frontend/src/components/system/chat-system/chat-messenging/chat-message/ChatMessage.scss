@@ -23,15 +23,18 @@
     font-weight: constants.$font-weight-sub-title;
     color: colors.$color-text-2;
     margin-right: constants.$margin-right;
+    font-size: 14px;
   }
 
   .post-time {
     color: colors.$color-text-2;
+    font-size: 12px;
   }
 
   .message {
     color: colors.$color-text-main;
     display: flex;
     text-align: left;
+    font-size: 14px;
   }
 }

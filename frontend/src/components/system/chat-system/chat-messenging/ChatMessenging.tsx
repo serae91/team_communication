@@ -12,7 +12,6 @@ interface ChatMessengingProps {
 }
 
 const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
   const chatScrollRef = useRef<HTMLDivElement>(null);
 
   const prevLength = useRef(messages?.length ?? 0);
@@ -45,10 +44,10 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
   }, [messages.length, scrollDownWhenAtBottomAndAddingNewMessage]);
 
   const renderChatMessages = () => {
-    return messages.map(message =>
+    return <div className={ 'flex flex-col gap-1.5' }>{ messages.map(message =>
       <ChatMessage sender={ message.sender.username } postTime={ message.createdAt } message={ message.text }
-                   key={ message.id }/>
-    );
+                   key={ message.id }/>) }</div>;
+
   };
 
   return (
@@ -58,15 +57,6 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
         { renderChatMessages() }
       </div>
       <ChatInput onSend={ sendMessage }/>
-      {/*<div className={ 'flex flex-row sticky bottom-0' }>
-        <BLInput className={ 'full-width' } inputRef={ inputRef }/>
-        <button className={ 'send-button' } onClick={ () => {
-          if (inputRef.current?.value)
-            sendMessage(inputRef.current.value)
-        } }>
-          <FaArrowRight/>
-        </button>
-      </div>*/ }
     </>
   );
 };
