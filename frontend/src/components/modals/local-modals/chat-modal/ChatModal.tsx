@@ -27,18 +27,18 @@ const ChatModal = () => {
     <BLModal modalType={ LocalModalTypeEnum.JOIN_CHAT }>
       <BLLeftMarkedCard>
         <div className={ 'chat-modal' }>
-          <div className={ 'flex justify-between' }>
-            <div className={ 'flex flex-col' }>
-              <div className={ 'flex items-center gap-6 h-6' }>
+          <div className={ 'flex justify-between h-14' }>
+            <div className={ 'flex flex-col h-full justify-between' }>
+              <div className={ 'flex items-center gap-6  chat-title' }>
                 <BLSideSymbol>#</BLSideSymbol>
-                { chats?.find(chat => chat.chatId === activeChatId)?.title ?? 'Error: Selected chat could not be found' }
+                { 'Development' }{ chats?.find(chat => chat.chatId === activeChatId)?.title ?? 'Error: Selected chat could not be found' }
                 <PersonAddAltOutlined/>
               </div>
               <div className={ 'flex items-center gap-3' }>
-                <BLHintCard hintCardType={ 'error' }>
+                <BLHintCard hintCardType={ 'error' } className={ 'h-5.5' }>
                   <li>Urgent Topic</li>
                 </BLHintCard>
-                <p>Raised by</p>
+                <p className={ 'chat-title' }>Raised by</p>
                 <BLProfileToken username={ 'Phoenix Baker' }/>
               </div>
             </div>
