@@ -15,9 +15,9 @@ import {
   SkipNextOutlined
 } from '@mui/icons-material';
 import { triggerDone } from '../../../../services/RelChatUserAttrService.ts';
-import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';
 import BLProfileToken from '../../../ui/bl-profile-token/BLProfileToken.tsx';
 import BLSideSymbol from '../../../ui/bl-side-symbol/BLSideSymbol.tsx';
+import BLUrgencyToken from '../../../ui/bl-urgency-token/BLUrgencyToken.tsx';
 
 const ChatModal = () => {
   const {chats, activeChatId, remind, setNextChat} = useBLChats();
@@ -35,9 +35,7 @@ const ChatModal = () => {
                 <PersonAddAltOutlined/>
               </div>
               <div className={ 'flex items-center gap-3' }>
-                <BLHintCard hintCardType={ 'error' } className={ 'h-5.5' }>
-                  <li>Urgent Topic</li>
-                </BLHintCard>
+                <BLUrgencyToken hintCardType={ 'error' }/>
                 <p className={ 'chat-title' }>Raised by</p>
                 <BLProfileToken username={ 'Phoenix Baker' }/>
               </div>
