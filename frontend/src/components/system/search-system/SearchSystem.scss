@@ -1,0 +1,10 @@
+@use '../../../styles/colors' as colors;
+@use '../../../styles/constants' as constants;
+
+.search-system {
+  background-color: colors.$color-white;
+
+  .search-bar {
+    height: 3.5rem;
+  }
+}

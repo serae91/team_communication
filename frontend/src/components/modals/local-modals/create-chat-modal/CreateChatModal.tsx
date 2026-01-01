@@ -1,18 +1,17 @@
 import BLModal from '../../../ui/bl-modal/BLModal.tsx';
-import BLLeftMarkedCard from '../../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
-import type { BLChatCreateDto } from '../../../../dtos/ChatUserAttrView.ts';
 import type {
   WebsocketMessage
 } from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
-import ChatMessenging from '../../../system/chat-system/chat-messenging/ChatMessenging.tsx';
 import { useModal } from '../../../../providers/modal/ModalProvider.tsx';
-import BLMultiSelect, { type GmailLabel } from '../../../ui/bl-multi-select/BLMultiSelect.tsx';
+import { type GmailLabel } from '../../../ui/bl-multi-select/BLMultiSelect.tsx';
 import LabelIcon from '@mui/icons-material/Label';
 import { useState } from 'react';
 import {
   useWebSocket
 } from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
 import { LocalModalTypeEnum } from '../../../../enums/LocalModalTypeEnum.ts';
+import type { BLChatCreateDto } from '../../../../dtos/BLChatCreateDto.ts';
+import SearchSystem from '../../../system/search-system/SearchSystem.tsx';
 
 
 const CreateChatModal = () => {
@@ -34,15 +33,47 @@ const CreateChatModal = () => {
   };
   return (
     <BLModal modalType={ LocalModalTypeEnum.CREATE_CHAT }>
-      <BLLeftMarkedCard>
-        <BLMultiSelect
-          labels={ dummyLabels }
-          value={ selected }
-          onChange={ setSelected }
-          placeholder="Choose labels…"
+      <SearchSystem placeholder={ 'Search for a member' }></SearchSystem>
+      {/*<BLLeftMarkedCard className={ 'h-122' }>
+        <TextField
+          placeholder="Search for a member"
+          variant="outlined"
+          fullWidth
+          InputProps={ {
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchOutlined color="action"/>
+              </InputAdornment>
+            ),
+          } }
         />
+
+        <Box sx={ {display: 'flex', flexWrap: 'wrap', gap: 0.5} }>
+          { selected.map((id) => {
+            const lbl = {
+              id: '1',
+              name: 'Important',
+              color: '#e53935', // rot
+              icon: <LabelIcon/>,
+            };
+
+            return (
+              <Chip
+                key={ id }
+                label={ lbl.name }
+                size="small"
+                icon={ lbl.icon ?? <LabelIcon/> }
+                sx={ {
+                  background: lbl.color,
+                  //color: theme.palette.getContrastText(lbl.color),
+                  '& .MuiChip-icon': {color: 'inherit !important'},
+                } }
+              />
+            );
+          }) }
+        </Box>
         <ChatMessenging messages={ [] } sendMessage={ sendCreateChatMessage }/>
-      </BLLeftMarkedCard>
+      </BLLeftMarkedCard>*/ }
     </BLModal>);
 };
 
