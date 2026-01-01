@@ -2,6 +2,9 @@
 @use '../../../../../styles/constants' as constants;
 
 .chat-message {
+  display: flex;
+  flex-direction: row;
+
   .profile-picture {
     width: 25px;
     height: 25px;
@@ -12,21 +15,26 @@
 
   .right-container {
     max-width: calc(100% - 25px - 8px);
+    display: flex;
+    flex-direction: column;
   }
 
   .sender {
     font-weight: constants.$font-weight-sub-title;
     color: colors.$color-text-2;
     margin-right: constants.$margin-right;
+    font-size: constants.$font-size-3;
   }
 
   .post-time {
     color: colors.$color-text-2;
+    font-size: constants.$font-size-4;
   }
 
   .message {
     color: colors.$color-text-main;
     display: flex;
     text-align: left;
+    font-size: constants.$font-size-3;
   }
 }

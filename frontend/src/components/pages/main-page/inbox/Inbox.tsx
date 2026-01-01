@@ -1,4 +1,5 @@
-import MessageCard from './message-card/MessageCard.tsx';
+import './Inbox.scss';
+import ChatCard from './chat-card/ChatCard.tsx';
 import BLContentCard from '../../../ui/bl-content-card/BLContentCard.tsx';
 import BLHintCard from '../../../ui/bl-hint-card/BLHintCard.tsx';
 import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
@@ -15,7 +16,7 @@ const Inbox = () => {
   const listChats = () => {
     if (!chats?.length) return <p>No messages received yet</p>;
     return (chats.map(chat =>
-      <MessageCard
+      <ChatCard
         key={ chat.chatId.toString() }
         title={ chat.title } message={ 'test message' }
         sender={ 'test sender' } color={ 'red' }
@@ -31,7 +32,7 @@ const Inbox = () => {
     <BLContentCard className={ 'inbox relative' }>
       <ChatModalRenderer/>
       <CreateChatModalRenderer/>
-      <div className={ 'title-box flex-col' }>
+      <div className={ 'title-box' }>
         <div className={ 'title' }>
           Inbox
         </div>

@@ -15,7 +15,7 @@ const MainPage = () => {
       <BLChatProvider>
         <BLMessageProvider>
           <ModalProvider>
-            <div className={ 'main-page full-width full-height' }>
+            <div className={ 'main-page' }>
               <SideNavBar/>
               <Inbox/>
             </div>

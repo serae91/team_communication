@@ -2,10 +2,12 @@
 @use '../../../../styles/constants' as constants;
 
 .inbox {
-  gap: 10px;
+  gap: 0.625rem;
 
   .title-box {
     align-items: flex-start;
+    display: flex;
+    flex-direction: column;
 
     .title {
       height: constants.$height-title;

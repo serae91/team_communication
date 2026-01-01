@@ -10,4 +10,6 @@
   border-width: constants.$border-width;
   border-color: colors.$color-border;
   background-color: colors.$color-white;
+  display: flex;
+  flex-direction: column;
 }

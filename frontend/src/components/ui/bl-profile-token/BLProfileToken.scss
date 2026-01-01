@@ -1,0 +1,23 @@
+@use '../../../styles/colors' as colors;
+@use '../../../styles/constants' as constants;
+
+.profile-token {
+  .profile-picture {
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    margin-right: constants.$margin-right;
+    background-color: pink;
+  }
+
+  color: colors.$color-text-2;
+  border-radius: constants.$border-radius;
+  background-color: colors.$color-select-gray;
+  height: 1.5rem;
+  padding: 0 0.75rem;
+  display: flex;
+  align-items: center;
+  margin-right: constants.$margin-right;
+  font-size: constants.$font-size-3;
+  font-weight: constants.$font-weight-sub-title;
+}

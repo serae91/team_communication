@@ -15,14 +15,12 @@ const LoginPage = () => {
       credentials: 'include',
       body: JSON.stringify({username, password})
     });
-    console.log('res', res);
     if (!res.ok) {
       alert('Login failed');
       return;
     }
 
     const data = await res.json();
-    console.log('data', data);
     const jwtToken = data.token;
     localStorage.setItem('authToken', jwtToken);
 

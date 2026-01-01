@@ -9,10 +9,10 @@ import { LocalModalTypeEnum } from '../../../enums/LocalModalTypeEnum.ts';
 const SideNavBar = () => {
   const {openLocalModal} = useModal();
   return (
-    <div className="side-nav-bar flex-col">
+    <div className="side-nav-bar">
       <SideNavBarProfile/>
       <button onClick={ () => openLocalModal({type: LocalModalTypeEnum.CREATE_CHAT}) }>Open Create Chat Modal</button>
-      <div className={ 'button-group flex-col' }>
+      <div className={ 'button-group' }>
         <SideNavBarButton badgeCount={ 3 }>
           <BLSideSymbol><FaEnvelope size={ 20 } className={ 'side-symbol' }/></BLSideSymbol>
           Inbox
@@ -26,7 +26,7 @@ const SideNavBar = () => {
           Invite Team Member
         </SideNavBarButton>
       </div>
-      <div className={ 'button-group flex-col' }>
+      <div className={ 'button-group' }>
         <div className={ 'title' }>Groups</div>
         <SideNavBarButton badgeCount={ 3 }>
           <BLSideSymbol>#</BLSideSymbol> Development

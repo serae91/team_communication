@@ -1,20 +1,25 @@
-@use '../../../styles/colors' as c;
+@use '../../../styles/colors' as colors;
+@use '../../../styles/constants' as constants;
 
 .side-nav-bar {
   position: relative;
-  width: 329px;
+  width: 20rem;
   height: 100vh;
-  gap: 24px;
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
 
   .button-group {
-    gap: 6px;
+    gap: 0.25rem;
+    display: flex;
+    flex-direction: column;
 
     .title {
       padding-left: 1.2em;
       display: flex;
       justify-content: left;
-      color: c.$color-text-2;
-      font-weight: 600;
+      color: colors.$color-text-2;
+      font-weight: constants.$font-weight-title;
       float: left;
     }
   }

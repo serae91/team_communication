@@ -6,7 +6,7 @@ import { Logout } from '@mui/icons-material';
 const SideNavBarProfile = () => {
   const {user, logout} = useAuth();
   return (
-    <div className={ 'profile flex-row' }>
+    <div className={ 'profile' }>
       <button className={ 'card' }>
         <div className={ 'picture' }></div>
         <div className={ 'envelope' }>

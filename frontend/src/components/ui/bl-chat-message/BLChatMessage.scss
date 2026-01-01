@@ -1,6 +1,9 @@
+@use '../../../styles/colors' as colors;
+@use '../../../styles/constants' as constants;
+
 .bl-chat-message {
   font-family: Inter, Arial, sans-serif;
-  font-size: 14px;
+  font-size: constants.$font-size-3;
   color: #222;
 }
 

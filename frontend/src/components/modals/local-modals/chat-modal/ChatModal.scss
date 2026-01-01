@@ -1,3 +1,15 @@
-.cursor-pointer:hover {
-  cursor: pointer;
+@use '../../../../styles/colors' as colors;
+@use '../../../../styles/constants' as constants;
+
+.chat-modal {
+  color: colors.$color-text-main;
+  padding: 29px 29px 29px 1.5rem;
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  .chat-title {
+    font-size: constants.$font-size-3;
+    font-weight: constants.$font-weight-sub-title;
+  }
 }

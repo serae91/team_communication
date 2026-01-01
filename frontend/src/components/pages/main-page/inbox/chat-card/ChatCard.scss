@@ -1,0 +1,28 @@
+@use '../../../../../styles/colors' as colors;
+@use '../../../../../styles/constants' as constants;
+
+.chat-card {
+  height: 5rem;
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+  padding-left: 0.8125rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .title {
+    color: colors.$color-text-2;
+    align-items: center;
+    font-weight: constants.$font-weight-title;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .message-box {
+    align-items: center;
+    color: colors.$color-text-main;
+    font-weight: constants.$font-weight-sub-title;
+    display: flex;
+    flex-direction: row;
+  }
+}

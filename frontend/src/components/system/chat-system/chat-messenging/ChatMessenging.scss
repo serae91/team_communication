@@ -2,14 +2,12 @@
 @use '../../../../styles/constants' as constants;
 
 .chat-messenging {
-  gap: 18px;
-
   .send-button {
     outline: none;
     color: colors.$color-text-main;
     background-color: colors.$color-white;
     min-height: constants.$height-title;
-    padding: 0 18px;
+    padding: 0 1.125rem;
     border-radius: constants.$border-radius;
     border-style: solid;
     border-width: constants.$border-width;
