@@ -40,21 +40,21 @@ const CreateChatModal = () => {
     </BLModal>);
 };
 const users = [
-  {id: 'a', firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'},
-  {id: 'b', firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'}
+  {id: 1, firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'},
+  {id: 2, firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'}
 ] as BLSelectableUser[];
 const groups = [
   {
     groupName: 'group A',
     users: [
-      {id: 'a', firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'},
-      {id: 'a', firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'}
+      {id: 1, firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'},
+      {id: 2, firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'}
     ]
   }, {
     groupName: 'group B',
     users: [
-      {id: 'a', firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'},
-      {id: 'b', firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'}
+      {id: 1, firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'},
+      {id: 2, firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'}
     ]
   }
 ] as BLSelectableUserGroup[];

@@ -5,7 +5,7 @@ import BLSelectableList from '../BLSelectableList.tsx';
 import type { BLListItemGroupProps } from '../bl-list-item-group/BLListItemGroup.tsx';
 
 export interface BLSelectableUser {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   userName: string;

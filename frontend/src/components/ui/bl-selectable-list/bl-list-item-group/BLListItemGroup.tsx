@@ -5,11 +5,21 @@ import { Divider } from '@mui/material';
 import './BLListItemGroup.scss';
 
 export interface BLListItemGroupProps {
+  selected: number[];
+  setSelected: React.Dispatch<React.SetStateAction<number[]>>;
   listSubheader: ReactNode;
   listItems: BLListItemProps[];
 }
 
-const BLListItemGroup = ({listSubheader, listItems}: BLListItemGroupProps) => {
+const BLListItemGroup = ({selected, setSelected, listSubheader, listItems}: BLListItemGroupProps) => {
+
+  const toggle = (id: number) => {
+    setSelected((prev) =>
+      prev.includes(id)
+        ? prev.filter((i) => i !== id)
+        : [...prev, id]
+    );
+  };
   return (
     <div className={ 'bl-list-item-group' }>
       <Divider/>
@@ -22,10 +32,14 @@ const BLListItemGroup = ({listSubheader, listItems}: BLListItemGroupProps) => {
             primary={ item.primary }
             secondary={ item.secondary ?? '' }
             start={ item.start ?? '' }
-            selected={ item.selected ?? false }
+            selected={ selected.includes(item.id) }
             end={ item.end ?? (() => undefined) }
-            onClick={ item.onClick ?? (() => {
-            }) }/>
+            onClick={ () => {
+              toggle(item.id);
+              if (item.onClick) {
+                item.onClick();
+              }
+            } }/>
         )
       }</div>
     </div>

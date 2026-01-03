@@ -5,7 +5,7 @@ import './BLListItem.scss';
 import React from 'react';
 
 export interface BLListItemProps {
-  id: string;
+  id: number;
   primary: React.ReactNode;
   secondary?: React.ReactNode;
   start?: React.ReactNode;
