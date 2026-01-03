@@ -23,15 +23,17 @@ const BLListItem = ({
                       selected = false,
                     }: BLListItemProps) => {
   return (
-    <ListItem onClick={ onClick }>
-      { start && <ListItemIcon>{ start }</ListItemIcon> }
+    <div className={ `bl-list-item${ selected ? '--selected' : '' }` }>
+      <ListItem onClick={ onClick }>
+        { start && <ListItemIcon>{ start }</ListItemIcon> }
 
-      <ListItemText
-        primary={ primary }
-        secondary={ secondary }
-      />
-      { end?.({selected}) }
-    </ListItem>
+        <ListItemText
+          primary={ primary }
+          secondary={ secondary }
+        />
+        { end?.({selected}) }
+      </ListItem>
+    </div>
   );
 };
 
