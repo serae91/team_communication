@@ -21,9 +21,11 @@ export interface BLSelectableUserGroup {
 interface BLSelectableUserListProps {
   users: BLSelectableUser[];
   groups: BLSelectableUserGroup[];
+  selected: number[];
+  setSelected: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-const BLSelectableUserList = ({users, groups}: BLSelectableUserListProps) => {
+const BLSelectableUserList = ({users, groups, selected, setSelected}: BLSelectableUserListProps) => {
   const primary = (user: BLSelectableUser) => <div className={ 'flex items-center gap-2' }>
     <div className={ 'text-base font-medium text-[#181D27]' }>{ user.firstName } { user.lastName }</div>
     <div className={ 'text-base font-normal text-[#535862]' }>@{ user.userName }</div>
@@ -51,7 +53,8 @@ const BLSelectableUserList = ({users, groups}: BLSelectableUserListProps) => {
     listSubheader: group.groupName,
     listItems: group.users.map(mapUser)
   } as BLListItemGroupProps));
-  return (<BLSelectableList singleItems={ mappedUsers } groups={ mappedGroups }/>);
+  return (<BLSelectableList singleItems={ mappedUsers } groups={ mappedGroups } selected={ selected }
+                            setSelected={ setSelected }/>);
 };
 
 export default BLSelectableUserList;

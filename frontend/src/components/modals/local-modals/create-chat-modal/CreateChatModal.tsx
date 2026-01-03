@@ -14,12 +14,13 @@ import BLSelectableUserList, {
   type BLSelectableUser,
   type BLSelectableUserGroup
 } from '../../../ui/bl-selectable-list/bl-selectable-user-list/BLSelectableUserList.tsx';
+import BLLeftMarkedCard from '../../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
 
 
 const CreateChatModal = () => {
   const {send} = useWebSocket();
-  const {closeGlobalModal} = useModal();
-  const [selected, setSelected] = useState<string[]>([]);
+  const {closeLocalModal} = useModal();
+  const [selected, setSelected] = useState<number[]>([]);
   const sendCreateChatMessage = (text: string) => {
     const message = {
       type: 'CREATE_CHAT',
@@ -31,18 +32,22 @@ const CreateChatModal = () => {
       } as BLChatCreateDto
     } as WebsocketMessage;
     send(message);
-    closeGlobalModal();
+    closeLocalModal();
   };
   return (
     <BLModal modalType={ LocalModalTypeEnum.CREATE_CHAT }>
-      <SearchSystem placeholder={ 'Search for a member' }></SearchSystem>
-      <BLSelectableUserList users={ users } groups={ groups }/>
+      <BLLeftMarkedCard>
+        <SearchSystem placeholder={ 'Search for a member' }></SearchSystem>
+        <BLSelectableUserList users={ users } groups={ groups } selected={ selected } setSelected={ setSelected }/>
+      </BLLeftMarkedCard>
     </BLModal>);
 };
+
 const users = [
   {id: 1, firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'},
   {id: 2, firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'}
 ] as BLSelectableUser[];
+
 const groups = [
   {
     id: 1,

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import List from '@mui/material/List';
 import BLListItemGroup, { type BLListItemGroupProps } from './bl-list-item-group/BLListItemGroup.tsx';
 import BLListItem, { type BLListItemProps } from './bl-list-item/BLListItem.tsx';
@@ -7,10 +6,11 @@ import './BLSelectableList.scss';
 interface BLSelectableListProps {
   singleItems?: BLListItemProps[];
   groups?: BLListItemGroupProps[];
+  selected: number[];
+  setSelected: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-const BLSelectableList = ({singleItems, groups}: BLSelectableListProps) => {
-  const [selected, setSelected] = useState<number[]>([]);
+const BLSelectableList = ({selected, setSelected, singleItems, groups}: BLSelectableListProps) => {
 
   const toggle = (id: number) => {
     setSelected((prev) =>
@@ -45,7 +45,7 @@ const BLSelectableList = ({singleItems, groups}: BLSelectableListProps) => {
           groups?.map(group =>
             <BLListItemGroup
               selected={ selected }
-              setSelected={ setSelected }
+              toggle={ toggle }
               key={ group.id }
               id={ group.id }
               listSubheader={ group.listSubheader }

@@ -1,7 +1,6 @@
 import './SearchSystem.scss';
 import { InputAdornment, TextField } from '@mui/material';
 import { SearchOutlined } from '@mui/icons-material';
-import BLSelectableList from '../../ui/bl-selectable-list/BLSelectableList.tsx';
 
 interface SearchSystemPorps {
   placeholder?: string;
@@ -25,7 +24,7 @@ const SearchSystem = ({placeholder}: SearchSystemPorps) => {
           },
         } }
       />
-      <BLSelectableList/>
+      { /*<BLSelectableList/>*/ }
     </div>);
 };
 

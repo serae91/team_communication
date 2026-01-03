@@ -7,20 +7,13 @@ import './BLListItemGroup.scss';
 export interface BLListItemGroupProps {
   id: number;
   selected: number[];
-  setSelected: React.Dispatch<React.SetStateAction<number[]>>;
+  toggle: (id: number) => void;
   listSubheader: ReactNode;
   listItems: BLListItemProps[];
 }
 
-const BLListItemGroup = ({id, selected, setSelected, listSubheader, listItems}: BLListItemGroupProps) => {
+const BLListItemGroup = ({id, selected, toggle, listSubheader, listItems}: BLListItemGroupProps) => {
 
-  const toggle = (id: number) => {
-    setSelected((prev) =>
-      prev.includes(id)
-        ? prev.filter((i) => i !== id)
-        : [...prev, id]
-    );
-  };
   return (
     <div className={ 'bl-list-item-group' }>
       <Divider/>
