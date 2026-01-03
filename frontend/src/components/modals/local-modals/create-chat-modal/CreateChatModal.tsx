@@ -3,8 +3,6 @@ import type {
   WebsocketMessage
 } from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
 import { useModal } from '../../../../providers/modal/ModalProvider.tsx';
-import { type GmailLabel } from '../../../ui/bl-multi-select/BLMultiSelect.tsx';
-import LabelIcon from '@mui/icons-material/Label';
 import { useState } from 'react';
 import {
   useWebSocket
@@ -12,6 +10,10 @@ import {
 import { LocalModalTypeEnum } from '../../../../enums/LocalModalTypeEnum.ts';
 import type { BLChatCreateDto } from '../../../../dtos/BLChatCreateDto.ts';
 import SearchSystem from '../../../system/search-system/SearchSystem.tsx';
+import BLSelectableUserList, {
+  type BLSelectableUser,
+  type BLSelectableUserGroup
+} from '../../../ui/bl-selectable-list/bl-selectable-user-list/BLSelectableUserList.tsx';
 
 
 const CreateChatModal = () => {
@@ -34,52 +36,130 @@ const CreateChatModal = () => {
   return (
     <BLModal modalType={ LocalModalTypeEnum.CREATE_CHAT }>
       <SearchSystem placeholder={ 'Search for a member' }></SearchSystem>
-      {/*<BLLeftMarkedCard className={ 'h-122' }>
-        <TextField
-          placeholder="Search for a member"
-          variant="outlined"
-          fullWidth
-          InputProps={ {
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchOutlined color="action"/>
-              </InputAdornment>
-            ),
-          } }
-        />
-
-        <Box sx={ {display: 'flex', flexWrap: 'wrap', gap: 0.5} }>
-          { selected.map((id) => {
-            const lbl = {
-              id: '1',
-              name: 'Important',
-              color: '#e53935', // rot
-              icon: <LabelIcon/>,
-            };
-
-            return (
-              <Chip
-                key={ id }
-                label={ lbl.name }
-                size="small"
-                icon={ lbl.icon ?? <LabelIcon/> }
-                sx={ {
-                  background: lbl.color,
-                  //color: theme.palette.getContrastText(lbl.color),
-                  '& .MuiChip-icon': {color: 'inherit !important'},
-                } }
-              />
-            );
-          }) }
-        </Box>
-        <ChatMessenging messages={ [] } sendMessage={ sendCreateChatMessage }/>
-      </BLLeftMarkedCard>*/ }
+      <BLSelectableUserList users={ users } groups={ groups }/>
     </BLModal>);
 };
+const users = [
+  {id: 'a', firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'},
+  {id: 'b', firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'}
+] as BLSelectableUser[];
+const groups = [
+  {
+    groupName: 'group A',
+    users: [
+      {id: 'a', firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'},
+      {id: 'a', firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'}
+    ]
+  }, {
+    groupName: 'group B',
+    users: [
+      {id: 'a', firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'},
+      {id: 'b', firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'}
+    ]
+  }
+] as BLSelectableUserGroup[];
+/*const items = [{
+  id: 'a',
+  primary: 'abc',
+  secondary: 'def',
+  start: 'start',
+  end: () => 'end',
+  onClick: () => console.log('a')
+}, {
+  id: 'b',
+  //primary: 'bcde',
+  secondary: 'cde',
+  start: 'start',
+  end: () => 'end',
+  onClick: () => console.log('b')
+}, {
+  id: 'bc',
+  primary: 'bcde',
+  //secondary: 'cde',
+  start: 'start',
+  end: () => 'end',
+  onClick: () => console.log('b')
+}, {
+  id: 'bx',
+  primary: 'bcde',
+  secondary: 'cde',
+  //start: 'start',
+  end: () => 'end',
+  onClick: () => console.log('b')
+}, {
+  id: 'by',
+  primary: 'bcde',
+  secondary: 'cde',
+  start: 'start',
+  //end: 'end',
+  onClick: () => console.log('b')
+}] as BLListItemProps[];
+
+const groupItems = [{
+  listSubheader: 'You cose the members', listItems: [{
+    id: 'a',
+    //primary: 'abc',
+    secondary: 'def',
+    start: 'start',
+    end: () => 'end',
+    onClick: () => console.log('a')
+  }, {
+    id: 'f',
+    primary: 'fghj',
+    //secondary: 'ghh',
+    start: 'start',
+    end: () => 'end',
+    onClick: () => console.log('b')
+  }, {
+    id: 'b',
+    primary: <div className={ 'flex' }>
+      <div className={ '' }>Carla Columna</div>
+      <div className={ 'text-sm' }>@columna</div>
+    </div>,
+    start: 'start',
+    //end: 'end',
+    onClick: () => console.log('b')
+  }, {
+    id: 'k',
+    primary:
+      <div className={ 'flex items-center gap-2' }>
+        <div className={ 'text-base font-medium text-[#181D27]' }>Phoenix Baker</div>
+        <div className={ 'text-base font-normal text-[#535862]' }>@phoenix</div>
+      </div>,
+    //secondary: 'cde',
+    start: 'start',
+    end: () => <Checkbox
+      edge="end"
+      sx={ {
+        color: '#000',
+        '&.Mui-checked': {
+          color: '#7F56D9',
+        },
+      } }
+    />,
+    onClick: () => console.log('b')
+  }]
+}, {
+  listSubheader: 'All members', listItems: [{
+    id: 'ab',
+    primary: 'abc',
+    secondary: 'def',
+    start: 'start',
+    end: () => 'end',
+    onClick: () => console.log('a')
+  }, {
+    id: 'fb',
+    primary: 'fghj',
+    secondary: 'ghh',
+    start: 'start',
+    end: () => 'end',
+    onClick: () => console.log('b')
+  }]
+}] as BLListItemGroupProps[];*/
 
 export default CreateChatModal;
 
-export const dummyLabels: GmailLabel[] = [
+/*const dummyLabels: GmailLabel[] = [
   {
     id: '1',
     name: 'Important',
@@ -110,4 +190,4 @@ export const dummyLabels: GmailLabel[] = [
     color: '#fb8c00', // orange
     icon: <LabelIcon/>,
   },
-];
+];*/
