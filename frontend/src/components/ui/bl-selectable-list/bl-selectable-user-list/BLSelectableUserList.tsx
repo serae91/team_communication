@@ -13,6 +13,7 @@ export interface BLSelectableUser {
 }
 
 export interface BLSelectableUserGroup {
+  id: number;
   groupName: string;
   users: BLSelectableUser[];
 }
@@ -46,6 +47,7 @@ const BLSelectableUserList = ({users, groups}: BLSelectableUserListProps) => {
   const mappedUsers = users.map(mapUser);
 
   const mappedGroups = groups.map(group => ({
+    id: group.id,
     listSubheader: group.groupName,
     listItems: group.users.map(mapUser)
   } as BLListItemGroupProps));

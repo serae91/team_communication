@@ -5,13 +5,14 @@ import { Divider } from '@mui/material';
 import './BLListItemGroup.scss';
 
 export interface BLListItemGroupProps {
+  id: number;
   selected: number[];
   setSelected: React.Dispatch<React.SetStateAction<number[]>>;
   listSubheader: ReactNode;
   listItems: BLListItemProps[];
 }
 
-const BLListItemGroup = ({selected, setSelected, listSubheader, listItems}: BLListItemGroupProps) => {
+const BLListItemGroup = ({id, selected, setSelected, listSubheader, listItems}: BLListItemGroupProps) => {
 
   const toggle = (id: number) => {
     setSelected((prev) =>

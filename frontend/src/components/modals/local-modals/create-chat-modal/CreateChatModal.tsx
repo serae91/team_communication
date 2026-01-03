@@ -45,12 +45,15 @@ const users = [
 ] as BLSelectableUser[];
 const groups = [
   {
+    id: 1,
     groupName: 'group A',
     users: [
       {id: 1, firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'},
       {id: 2, firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'}
     ]
-  }, {
+  },
+  {
+    id: 2,
     groupName: 'group B',
     users: [
       {id: 1, firstName: 'Gerald', lastName: 'Hopf', userName: 'userName'},

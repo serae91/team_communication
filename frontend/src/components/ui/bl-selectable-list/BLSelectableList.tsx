@@ -43,13 +43,14 @@ const BLSelectableList = ({singleItems, groups}: BLSelectableListProps) => {
         }
         {
           groups?.map(group =>
-            <><BLListItemGroup
+            <BLListItemGroup
               selected={ selected }
               setSelected={ setSelected }
-              key={ group.listItems[0]?.id }
+              key={ group.id }
+              id={ group.id }
               listSubheader={ group.listSubheader }
               listItems={ group.listItems }
-            /></>)
+            />)
         }
       </List>
     </div>
