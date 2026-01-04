@@ -1,3 +1,4 @@
+import './CreateChatModal.scss';
 import BLModal from '../../../ui/bl-modal/BLModal.tsx';
 import type {
   WebsocketMessage
@@ -15,6 +16,7 @@ import BLSelectableUserList, {
   type BLSelectableUserGroup
 } from '../../../ui/bl-selectable-list/bl-selectable-user-list/BLSelectableUserList.tsx';
 import BLLeftMarkedCard from '../../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
+import { CheckOutlined, ModeEditOutlined } from '@mui/icons-material';
 
 
 const CreateChatModal = () => {
@@ -36,7 +38,17 @@ const CreateChatModal = () => {
   };
   return (
     <BLModal modalType={ LocalModalTypeEnum.CREATE_CHAT }>
-      <BLLeftMarkedCard>
+      <BLLeftMarkedCard className={ 'create-chat-modal' }>
+        <div className={ 'title-line' }>
+          <div className={ 'title-start' }>
+            <ModeEditOutlined className={ 'title-icon' }/>
+            <div className={ 'title-text' }>Create a topic</div>
+          </div>
+          <div className={ 'title-end' }>
+            <ModeEditOutlined/>
+            <CheckOutlined/>
+          </div>
+        </div>
         <SearchSystem placeholder={ 'Search for a member' }></SearchSystem>
         <BLSelectableUserList users={ users } groups={ groups } selected={ selected } setSelected={ setSelected }/>
       </BLLeftMarkedCard>

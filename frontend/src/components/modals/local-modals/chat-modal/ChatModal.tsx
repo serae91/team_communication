@@ -40,12 +40,12 @@ const ChatModal = () => {
                 <BLProfileToken username={ 'Phoenix Baker' }/>
               </div>
             </div>
-            <div className={ 'flex items-center gap-6 h-6' }>
-              <SkipNextOutlined sx={ {color: '#A4A7Ae'} } onClick={ setNextChat }/>
-              <ReplyOutlined sx={ {color: '#A4A7Ae'} }/>
-              <ShareOutlined sx={ {color: '#A4A7Ae'} }/>
-              <MoreTimeOutlined sx={ {color: '#A4A7Ae'} } onClick={ remind }/>
-              <CheckOutlined sx={ {color: '#A4A7Ae'} } onClick={ () => {
+            <div className={ 'flex items-center gap-6 h-6 text-[#A4A7Ae]' }>
+              <SkipNextOutlined onClick={ setNextChat }/>
+              <ReplyOutlined/>
+              <ShareOutlined/>
+              <MoreTimeOutlined onClick={ remind }/>
+              <CheckOutlined onClick={ () => {
                 if (activeChatId)
                   triggerDone(activeChatId);
               } }/>
