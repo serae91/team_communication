@@ -25,7 +25,7 @@ const ModalContext = createContext<ModalContextType | null>(null);
 
 export const ModalProvider = ({children}: ModalProviderProps) => {
   const [globalModalState, setGlobalModalState] = useState<GlobalModalState>({type: GlobalModalTypeEnum.NONE});
-  const [localModalState, setLocalModalState] = useState<LocalModalState[]>([]);
+  const [localModalState, setLocalModalState] = useState<LocalModalState[]>([{type: LocalModalTypeEnum.CREATE_CHAT}]);
   const openGlobalModal = (globalModalState: GlobalModalState) => setGlobalModalState(globalModalState);
   const closeGlobalModal = () => setGlobalModalState({type: GlobalModalTypeEnum.NONE});
   const value: ModalContextType = {
