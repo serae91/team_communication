@@ -2,6 +2,7 @@ package backend.bl_entities.bl_group;
 
 import backend.bl_entities.bl_chat.BLChat;
 import backend.bl_entities.bl_user.BLUser;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -44,6 +45,7 @@ public class BLGroup {
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
+    @JsonManagedReference
     @ManyToMany(targetEntity = BLChat.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "bl_rel_chat_group",
             joinColumns = {
@@ -54,7 +56,8 @@ public class BLGroup {
             })
     private Set<BLChat> chats;
 
-    @ManyToMany(targetEntity = BLChat.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @ManyToMany(targetEntity = BLUser.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "bl_rel_group_user",
             joinColumns = {
                     @JoinColumn(name = "group_id", referencedColumnName = "id")
