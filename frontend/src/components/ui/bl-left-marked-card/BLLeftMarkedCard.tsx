@@ -1,6 +1,7 @@
 import './BLLeftMarkedCard.scss';
 import React, { type ReactNode } from 'react';
-import type { BLLeftMarkedCardColor } from './types';
+
+export type BLLeftMarkedCardColor = 'black' | 'red';
 
 interface BLLeftMarkedCardProps {
   children?: ReactNode;

@@ -6,7 +6,7 @@ import { useBLChats } from '../bl-chat/BLChatProvider.tsx';
 import { getMessages } from '../../services/MessageService.ts';
 import { useAuth } from '../auth/AuthProvider.tsx';
 
-export interface ProviderProps {
+interface BLMessageProviderProps {
   children: ReactNode;
 }
 
@@ -17,7 +17,7 @@ type BLMessageContextType = {
 };
 const BLMessageContext = createContext<BLMessageContextType | null>(null);
 
-export const BLMessageProvider = ({children}: ProviderProps) => {
+export const BLMessageProvider = ({children}: BLMessageProviderProps) => {
   const [messages, setMessages] = useState<BLMessageDto[]>([]);
   const {removeMessageHandler, addMessageHandler, send} = useWebSocket();
   const {user} = useAuth();

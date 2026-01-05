@@ -37,7 +37,7 @@ public class ChatResource {
 
     @GET
     @Path("/list")
-    public List<BLChatView> getChats(@QueryParam("box") @DefaultValue("INBOX") final ChatBox box, @QueryParam("page") @DefaultValue("0") @Min(0) final int page, @QueryParam("size") @DefaultValue("20") @Min(1) @Max(100) final int size, @QueryParam("sortField") @DefaultValue("LAST_MESSAGE_AT") final ChatSortField sortField, @QueryParam("sortDirection") @DefaultValue("DESC") final SortDirection sortDirection) {
+    public List<BLChatView> getChats(@QueryParam("chatBox") @DefaultValue("INBOX") final ChatBox box, @QueryParam("page") @DefaultValue("0") @Min(0) final int page, @QueryParam("size") @DefaultValue("20") @Min(1) @Max(100) final int size, @QueryParam("sortField") @DefaultValue("LAST_MESSAGE_AT") final ChatSortField sortField, @QueryParam("sortDirection") @DefaultValue("DESC") final SortDirection sortDirection) {
         return chatService.getChatListByUserId(currentUser.getUserId(), box, page, size, sortField, sortDirection);
     }
 }

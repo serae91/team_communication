@@ -37,10 +37,10 @@ public class ChatService {
         return entityViewManager.applySetting(EntityViewSetting.create(BLChatView.class), criteriaBuilder).getSingleResult();
     }
 
-    public List<BLChatView> getChatListByUserId(final Long userId, final ChatBox box, final int page, final int size, final ChatSortField sortField, final SortDirection sortDirection) {
+    public List<BLChatView> getChatListByUserId(final Long userId, final ChatBox chatBox, final int page, final int size, final ChatSortField sortField, final SortDirection sortDirection) {
         final CriteriaBuilder<BLChat> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLChat.class);
         filterByUserId(userId, criteriaBuilder);
-        filterByBox(userId, box, criteriaBuilder);
+        filterByBox(userId, chatBox, criteriaBuilder);
         filterByPagination(page, size, criteriaBuilder);
         sort(sortField, sortDirection, criteriaBuilder);
 
@@ -62,8 +62,8 @@ public class ChatService {
                 .endOr();
     }
 
-    private void filterByBox(final Long userId, final ChatBox box, final CriteriaBuilder<BLChat> criteriaBuilder) {
-        if (ChatBox.INBOX.equals(box)) {
+    private void filterByBox(final Long userId, final ChatBox chatBox, final CriteriaBuilder<BLChat> criteriaBuilder) {
+        if (ChatBox.INBOX.equals(chatBox)) {
             criteriaBuilder
                     .where("lastMessageUserId").notEq(userId)
                     .whereNotExists()
@@ -73,7 +73,7 @@ public class ChatService {
                     .where("done").eq(true)
                     .where("reminderStatus").notEq(ReminderStatus.SCHEDULED)
                     .end();
-        } else if (ChatBox.REMINDER.equals(box)) {
+        } else if (ChatBox.REMINDER.equals(chatBox)) {
             criteriaBuilder
                     .whereExists()
                     .from(BLRelChatUserAttr.class)
@@ -81,7 +81,7 @@ public class ChatService {
                     .where("userId").eq(userId)
                     .where("reminderStatus").eq(ReminderStatus.SCHEDULED)
                     .end();
-        } else if (ChatBox.SENT.equals(box)) {
+        } else if (ChatBox.SENT.equals(chatBox)) {
             criteriaBuilder.where("lastMessageUserId").eq(userId);
         }
     }
