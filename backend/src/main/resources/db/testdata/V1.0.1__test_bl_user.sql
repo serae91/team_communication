@@ -10,7 +10,4 @@ VALUES (nextval('bl_user_sequence'), 'user', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWx
        (nextval('bl_user_sequence'), 'user9', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
        (nextval('bl_user_sequence'), 'user10', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
        (nextval('bl_user_sequence'), 'user11', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
-       (nextval('bl_user_sequence'), 'user12', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
-       (nextval('bl_user_sequence'), 'user13', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
-       (nextval('bl_user_sequence'), 'user14', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW()),
-       (nextval('bl_user_sequence'), 'user15', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW());
+       (nextval('bl_user_sequence'), 'user12', '$2a$10$B15tWHO6GyXAs4YQtCJqDeTzHWxVQMs5EqwDGUKO7.C1j7/oDQyky', NOW());

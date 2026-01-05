@@ -28,8 +28,8 @@ VALUES (nextval('bl_rel_chat_user_attr_sequence'),
         'NONE'),
 
        (nextval('bl_rel_chat_user_attr_sequence'),
-        (SELECT id FROM bl_chat WHERE title = 'chat2'),
-        (SELECT id FROM bl_user WHERE username = 'user15'),
+        (SELECT id FROM bl_chat WHERE title = 'chat4'),
+        (SELECT id FROM bl_user WHERE username = 'user4'),
         true,
         null,
         'NONE');
