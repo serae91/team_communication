@@ -7,4 +7,7 @@ VALUES (nextval('bl_chat_sequence'), 'chat', 'LOW', NOW(), (SELECT id FROM bl_us
        (nextval('bl_chat_sequence'), 'chat6', 'HIGH', NOW(), (SELECT id FROM bl_user WHERE username = 'user6')),
        (nextval('bl_chat_sequence'), 'chat7', 'LOW', NOW(), (SELECT id FROM bl_user WHERE username = 'user7')),
        (nextval('bl_chat_sequence'), 'chat8', 'MEDIUM', NOW(), (SELECT id FROM bl_user WHERE username = 'user8')),
-       (nextval('bl_chat_sequence'), 'chat9', 'HIGH', NOW(), (SELECT id FROM bl_user WHERE username = 'user9'));
+       (nextval('bl_chat_sequence'), 'chat9', 'HIGH', NOW(), (SELECT id FROM bl_user WHERE username = 'user9')),
+       (nextval('bl_chat_sequence'), 'chat10', 'HIGH', NOW(), (SELECT id FROM bl_user WHERE username = 'user10')),
+       (nextval('bl_chat_sequence'), 'chat11', 'HIGH', NOW(), (SELECT id FROM bl_user WHERE username = 'user11')),
+       (nextval('bl_chat_sequence'), 'chat12', 'HIGH', NOW(), (SELECT id FROM bl_user WHERE username = 'user12'));

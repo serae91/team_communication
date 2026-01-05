@@ -9,7 +9,7 @@ ALTER TABLE bl_rel_workspace_user ADD CONSTRAINT one_workspace_per_user UNIQUE (
 CREATE OR REPLACE FUNCTION enforce_single_workspace_per_chat()
 RETURNS trigger AS $$
 DECLARE
-new_workspace BIGINT;
+  new_workspace BIGINT;
   chat_workspace BIGINT;
   workspace_count INTEGER;
 BEGIN
