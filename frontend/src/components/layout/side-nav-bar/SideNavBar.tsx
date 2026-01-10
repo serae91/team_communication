@@ -9,26 +9,26 @@ import { useChatBox } from '../../../providers/chat-box/ChatBoxProvider.tsx';
 import { ChatBoxEnum } from '../../../enums/ChatBoxEnum.ts';
 
 const SideNavBar = () => {
-  const {setChatBox} = useChatBox();
+  const {chatBoxCount, setChatBox} = useChatBox();
   const {openLocalModal} = useModal();
   return (
     <div className="side-nav-bar">
       <SideNavBarProfile/>
       <button onClick={ () => openLocalModal({type: LocalModalTypeEnum.CREATE_CHAT}) }>Open Create Chat Modal</button>
       <div className={ 'button-group' }>
-        <SideNavBarButton badgeCount={ 3 } onClick={ () => setChatBox(ChatBoxEnum.INBOX) }>
+        <SideNavBarButton badgeCount={ chatBoxCount.inboxCount } onClick={ () => setChatBox(ChatBoxEnum.INBOX) }>
           <BLSideSymbol><FaEnvelope size={ 20 } className={ 'side-symbol' }/></BLSideSymbol>
           Inbox
         </SideNavBarButton>
-        <SideNavBarButton badgeCount={ 1 } onClick={ () => setChatBox(ChatBoxEnum.REMINDER) }>
+        <SideNavBarButton badgeCount={ chatBoxCount.reminderCount } onClick={ () => setChatBox(ChatBoxEnum.REMINDER) }>
           <BLSideSymbol><FaHistory size={ 20 } className={ 'side-symbol' }/></BLSideSymbol>
           Reminder
         </SideNavBarButton>
-        <SideNavBarButton badgeCount={ 0 } onClick={ () => setChatBox(ChatBoxEnum.SENT) }>
+        <SideNavBarButton badgeCount={ chatBoxCount.sentCount } onClick={ () => setChatBox(ChatBoxEnum.SENT) }>
           <BLSideSymbol><FaUserPlus size={ 20 } className={ 'side-symbol' }/></BLSideSymbol>
           Sent
         </SideNavBarButton>
-        <SideNavBarButton badgeCount={ 0 } onClick={ () => setChatBox(ChatBoxEnum.ALL) }>
+        <SideNavBarButton badgeCount={ chatBoxCount.totalCount } onClick={ () => setChatBox(ChatBoxEnum.ALL) }>
           <BLSideSymbol><FaUserPlus size={ 20 } className={ 'side-symbol' }/></BLSideSymbol>
           All
         </SideNavBarButton>

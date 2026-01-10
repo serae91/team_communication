@@ -7,6 +7,10 @@ import type { PaginationDto } from '../dtos/PaginationDto.ts';
 
 const path = '/relchatuserattr';
 
+export async function getChatBoxCount() {
+  return (await api.get(`${ path }/chatboxcount`)).data;
+}
+
 export async function getChatUserViews(chatBox: ChatBoxEnum, pagination?: PaginationDto, sortField?: ChatSortFieldEnum, sortDirection?: SortDirectionEnum) {
   const url = `${ path }/list?chatBox=${ chatBox }${ pagination ? `&page=${ pagination.page }&size=${ pagination.size }` : '' }${ sortField ? `&sortField=${ sortField }` : '' }${ sortDirection ? `&sortDirection=${ sortDirection }` : '' }`;
   return (await api.get(url)).data;

@@ -6,6 +6,7 @@ import backend.bl_api.rel_chat_user_attr.usecase.update.RelChatUserAttrUpdateSer
 import backend.bl_entities.bl_chat.ChatBox;
 import backend.bl_entities.bl_chat.ChatSortField;
 import backend.bl_entities.bl_rel_chat_user_attr.BLRelChatUserAttrSetReminderDto;
+import backend.bl_entities.bl_rel_chat_user_attr.ChatBoxCountDto;
 import backend.bl_entities.bl_rel_chat_user_attr.ChatUserView;
 import backend.utils.enums.SortDirection;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -34,11 +35,11 @@ public class RelChatUserAttrResource {
     @Inject
     CurrentUser currentUser;
 
-    /*@GET
-    @Path("/list")
-    public List<ChatUserView> findByUserId() {
-        return chatUserViewService.findByUserId(currentUser.getUserId());
-    }*/
+    @GET
+    @Path("/chatboxcount")
+    public ChatBoxCountDto getChatBoxCount() {
+        return chatUserViewService.getChatBoxCount(currentUser.getUserId());
+    }
 
     @GET
     @Path("/list")

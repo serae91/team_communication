@@ -2,6 +2,7 @@ package backend.bl_api.rel_chat_user_attr.usecase.core;
 
 import backend.bl_entities.bl_chat.ChatBox;
 import backend.bl_entities.bl_chat.ChatSortField;
+import backend.bl_entities.bl_rel_chat_user_attr.ChatBoxCountDto;
 import backend.bl_entities.bl_rel_chat_user_attr.ChatUserView;
 import backend.bl_entities.bl_rel_chat_user_attr.ReminderStatus;
 import backend.utils.enums.SortDirection;
@@ -30,18 +31,35 @@ public class ChatUserViewService {
     public List<ChatUserView> getChatUserViews(final Long userId, final ChatBox chatBox, final int page, final int size, final ChatSortField sortField, final SortDirection sortDirection) {
         final CriteriaBuilder<ChatUserView> criteriaBuilder = criteriaBuilderFactory.create(entityManager, ChatUserView.class);
         filterByUserId(userId, criteriaBuilder);
-        filterByBox(userId, chatBox, criteriaBuilder);
+        filterByChatBox(userId, chatBox, criteriaBuilder);
         filterByPagination(page, size, criteriaBuilder);
         sort(sortField, sortDirection, criteriaBuilder);
 
         return criteriaBuilder.getResultList();
     }
 
-    private void filterByUserId(final Long userId, final CriteriaBuilder<ChatUserView> criteriaBuilder) {
+    public ChatBoxCountDto getChatBoxCount(final Long userId) {
+        final Long inboxCount = getChatCount(userId, ChatBox.INBOX);
+        final Long reminderCount = getChatCount(userId, ChatBox.REMINDER);
+        final Long sentCount = getChatCount(userId, ChatBox.SENT);
+        final Long totalCount = getChatCount(userId, ChatBox.ALL);
+        return new ChatBoxCountDto(inboxCount, reminderCount, sentCount, totalCount);
+    }
+
+    public Long getChatCount(final Long userId, final ChatBox chatBox) {
+        final CriteriaBuilder<Long> criteriaBuilder = criteriaBuilderFactory.create(entityManager, Long.class)
+                .from(ChatUserView.class)
+                .select("COUNT(chatId)");
+        filterByUserId(userId, criteriaBuilder);
+        filterByChatBox(userId, chatBox, criteriaBuilder);
+        return criteriaBuilder.getSingleResult();
+    }
+
+    private <T> void filterByUserId(final Long userId, final CriteriaBuilder<T> criteriaBuilder) {
         criteriaBuilder.where("userId").eq(userId);
     }
 
-    private void filterByBox(final Long userId, final ChatBox chatBox, final CriteriaBuilder<ChatUserView> criteriaBuilder) {
+    private <T> void filterByChatBox(final Long userId, final ChatBox chatBox, final CriteriaBuilder<T> criteriaBuilder) {
         if (ChatBox.INBOX.equals(chatBox)) {
             criteriaBuilder
                     .where("done").notEq(true)
