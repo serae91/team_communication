@@ -7,12 +7,17 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class RelChatUserAttrRepository implements PanacheRepository<BLRelChatUserAttr> {
 
     public BLRelChatUserAttr findBy(final Long chatId, final Long userId) {
         return find("chat.id = ?1 and user.id = ?2", chatId, userId).singleResult();
+    }
+
+    public Optional<BLRelChatUserAttr> findOptionalBy(final Long chatId, final Long userId) {
+        return find("chat.id = ?1 and user.id = ?2", chatId, userId).firstResultOptional();
     }
 
     public List<BLRelChatUserAttr> findBy(final Long chatId) {
