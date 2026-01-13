@@ -20,17 +20,22 @@ public class RelChatUserAttrUpdateService {
 
     @Transactional
     public void setReminder(final BLRelChatUserAttrSetReminderDto setReminderDto, final Long userId) {
-        final BLRelChatUserAttr attrChatUser = getBLRelChatUserAttrOrNew(setReminderDto.chatId(), userId);
-        attrChatUser.setReminderAt(setReminderDto.reminderAt());
-        attrChatUser.setReminderStatus(ReminderStatus.SCHEDULED);
-        repository.persist(attrChatUser);
+        final BLRelChatUserAttr chatUserAttr = getBLRelChatUserAttrOrNew(setReminderDto.chatId(), userId);
+        chatUserAttr.setReminderAt(setReminderDto.reminderAt());
+        chatUserAttr.setReminderStatus(ReminderStatus.SCHEDULED);
+        chatUserAttr.setDone(false);
+        repository.persist(chatUserAttr);
     }
 
     @Transactional
     public void triggerDone(final Long chatId, final Long userId) {
-        final BLRelChatUserAttr attrChatUser = getBLRelChatUserAttrOrNew(chatId, userId);
-        attrChatUser.setDone(!attrChatUser.isDone());
-        repository.persist(attrChatUser);
+        final BLRelChatUserAttr chatUserAttr = getBLRelChatUserAttrOrNew(chatId, userId);
+        chatUserAttr.setDone(!chatUserAttr.isDone());
+        if (chatUserAttr.isDone()) {
+            chatUserAttr.setReminderStatus(ReminderStatus.NONE);
+            chatUserAttr.setReminderAt(null);
+        }
+        repository.persist(chatUserAttr);
     }
 
     @Transactional

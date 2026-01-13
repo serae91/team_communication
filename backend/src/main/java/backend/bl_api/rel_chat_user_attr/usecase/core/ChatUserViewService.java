@@ -62,14 +62,16 @@ public class ChatUserViewService {
     private <T> void filterByChatBox(final Long userId, final ChatBox chatBox, final CriteriaBuilder<T> criteriaBuilder) {
         if (ChatBox.INBOX.equals(chatBox)) {
             criteriaBuilder
-                    .where("done").notEq(true)
+                    .where("done").eq(false)
                     .where("reminderStatus").notEq(ReminderStatus.SCHEDULED)
                     .where("lastMessageUserId").notEq(userId);
         } else if (ChatBox.REMINDER.equals(chatBox)) {
             criteriaBuilder
                     .where("reminderStatus").eq(ReminderStatus.SCHEDULED);
         } else if (ChatBox.SENT.equals(chatBox)) {
-            criteriaBuilder.where("lastMessageUserId").eq(userId);
+            criteriaBuilder
+                    .where("lastMessageUserId").eq(userId)
+                    .where("done").eq(false);
         }
     }
 
