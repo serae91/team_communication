@@ -185,4 +185,3 @@ CREATE TRIGGER group_user_workspace_enforce
 BEFORE INSERT OR UPDATE ON bl_rel_group_user
 FOR EACH ROW
 EXECUTE FUNCTION enforce_single_workspace_per_group();
-
