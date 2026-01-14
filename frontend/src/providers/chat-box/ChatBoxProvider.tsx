@@ -6,6 +6,7 @@ import { ChatSortFieldEnum } from '../../enums/ChatSortFieldEnum.ts';
 import type { ChatBoxCountDto } from '../../dtos/ChatBoxCountDto.ts';
 import { getChatBoxCount } from '../../services/RelChatUserAttrService.ts';
 import { useAuth } from '../auth/AuthProvider.tsx';
+import { useSearchParams } from 'react-router-dom';
 
 
 interface ChatBoxProviderProps {
@@ -41,6 +42,7 @@ const ChatBoxProvider = ({children}: ChatBoxProviderProps) => {
   const [sortField, setSortField] = useState<ChatSortFieldEnum>(ChatSortFieldEnum.LAST_MESSAGE_AT);
   const [sortDirection, setSortDirection] = useState<SortDirectionEnum>(SortDirectionEnum.DESC);
   const [pagination, setPagination] = useState<PaginationDto>({page: 0, size: 20});
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const onMoveChatsToBox = (count: number, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
     setChatBoxCount(prev => getChatCountOnMoveChatToBox(count, prev, fromBox, toBox));
@@ -62,6 +64,17 @@ const ChatBoxProvider = ({children}: ChatBoxProviderProps) => {
   useEffect(() => {
     getChatBoxCount().then(setChatBoxCount);
   }, [user]);
+
+  useEffect(() => {
+    const chatBox = searchParams.get('chatBox') as ChatBoxEnum;
+    if (chatBox) {
+      setChatBox(chatBox);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    setSearchParams(prev => ({...prev, chatBox}));
+  }, [chatBox, setSearchParams]);
 
   const value = {
     chatBoxCount,
