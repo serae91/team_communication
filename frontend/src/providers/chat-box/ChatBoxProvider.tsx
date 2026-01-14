@@ -73,7 +73,10 @@ const ChatBoxProvider = ({children}: ChatBoxProviderProps) => {
   }, [searchParams]);
 
   useEffect(() => {
-    setSearchParams(prev => ({...prev, chatBox}));
+    setSearchParams(prev => {
+      prev.set('chatBox', chatBox);
+      return prev;
+    });
   }, [chatBox, setSearchParams]);
 
   const value = {
