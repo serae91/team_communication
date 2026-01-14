@@ -31,7 +31,7 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
   const [activeChatId, setActiveChatId] = useState<number | null>(null);
   const {removeMessageHandler, addMessageHandler, send} = useWebSocket();
   const {user} = useAuth();
-  const {chatBox, pagination, sortField, sortDirection} = useChatBox();
+  const {chatBox, pagination, sortField, sortDirection, onMoveChatsToBox} = useChatBox();
 
 
   const chatsWithReminder = useMemo(
@@ -73,6 +73,7 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
       } else if (chatBox === toBox) {
         setChats(prev => [...movedChats, ...prev]);
       }
+      onMoveChatsToBox(movedChats.length, fromBox, toBox);
     };
 
     const handler = (msg: WebsocketMessage) => {
