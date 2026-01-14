@@ -1,5 +1,6 @@
 package backend.websocket;
 
+import backend.bl_entities.bl_rel_chat_user_attr.ChatUserView;
 import backend.websocket.model.incoming.ReceiveReminderWebSocketMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,9 +18,9 @@ public class BLWebSocketService {
     @Inject
     ChatWebRegistry chatWebRegistry;
 
-    public void sendReminder(final Long userId, final Set<Long> chatIds) {
+    public void sendReminder(final Long userId, final Set<ChatUserView> chats) {
         try {
-            final ReceiveReminderWebSocketMessage receiveReminderWebSocketMessage = new ReceiveReminderWebSocketMessage("RECEIVE_REMINDER", chatIds);
+            final ReceiveReminderWebSocketMessage receiveReminderWebSocketMessage = new ReceiveReminderWebSocketMessage("RECEIVE_REMINDER", chats);
             final String jsonString = objectMapper.writeValueAsString(receiveReminderWebSocketMessage);
             chatWebRegistry.sendToUser(userId, jsonString);
         } catch (JsonProcessingException jpe) {

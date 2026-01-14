@@ -48,9 +48,9 @@ public class RelChatUserAttrUpdateService {
     }
 
     @Transactional
-    public void setReminderSeen(final Long chatId, final Long userId) {
+    public void setReminderStatus(final Long chatId, final Long userId, final ReminderStatus reminderStatus) {
         final BLRelChatUserAttr attrChatUser = repository.findBy(chatId, userId);
-        attrChatUser.setReminderStatus(ReminderStatus.SEEN);
+        attrChatUser.setReminderStatus(reminderStatus);
         repository.persist(attrChatUser);
     }
 

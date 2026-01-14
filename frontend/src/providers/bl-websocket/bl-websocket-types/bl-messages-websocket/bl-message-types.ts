@@ -11,7 +11,7 @@ export type WebSocketMessageIncoming =
 
 type ReceiveMessage = { type: 'RECEIVE_MESSAGE'; chatId: number; blMessage: BLMessageDto };
 type ReceiveChat = { type: 'RECEIVE_CHAT'; blChat: ChatUserAttrView };
-type ReceiveReminder = { type: 'RECEIVE_REMINDER'; chatIds: number[] };
+type ReceiveReminder = { type: 'RECEIVE_REMINDER'; chats: ChatUserAttrView[] };
 
 type WebSocketMessageOutgoing =
   | RequestChats

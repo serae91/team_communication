@@ -6,6 +6,8 @@ import { ChatSortFieldEnum } from '../../enums/ChatSortFieldEnum.ts';
 import type { ChatBoxCountDto } from '../../dtos/ChatBoxCountDto.ts';
 import { getChatBoxCount } from '../../services/RelChatUserAttrService.ts';
 import { useAuth } from '../auth/AuthProvider.tsx';
+import type { WebsocketMessage } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
+import { useWebSocket } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
 
 
 interface ChatBoxProviderProps {
@@ -30,6 +32,7 @@ const ChatBoxContext = createContext<ChatBoxContextType | null>(null);
 
 const ChatBoxProvider = ({children}: ChatBoxProviderProps) => {
   const {user} = useAuth();
+  const {addMessageHandler, removeMessageHandler} = useWebSocket();
   const [chatBoxCount, setChatBoxCount] = useState<ChatBoxCountDto>({
     inboxCount: 0,
     reminderCount: 0,
@@ -41,10 +44,54 @@ const ChatBoxProvider = ({children}: ChatBoxProviderProps) => {
   const [sortDirection, setSortDirection] = useState<SortDirectionEnum>(SortDirectionEnum.DESC);
   const [pagination, setPagination] = useState<PaginationDto>({page: 0, size: 20});
 
+  /*const onMoveChatsToBox = (count: number, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
+    setChatBoxCount(prev => getChatCountOnMoveChatToBox(count, prev, fromBox, toBox));
+  };
+
+  const getChatCountOnMoveChatToBox = (count: number, prevChatBoxCount: ChatBoxCountDto, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => ({
+    inboxCount: getNewChatBoxCount(count, prevChatBoxCount.inboxCount, ChatBoxEnum.INBOX, fromBox, toBox),
+    sentCount: getNewChatBoxCount(count, prevChatBoxCount.sentCount, ChatBoxEnum.SENT, fromBox, toBox),
+    reminderCount: getNewChatBoxCount(count, prevChatBoxCount.reminderCount, ChatBoxEnum.REMINDER, fromBox, toBox),
+    totalCount: prevChatBoxCount.totalCount
+  } as ChatBoxCountDto);
+
+  const getNewChatBoxCount = (count: number, prevCount: number, box: ChatBoxEnum, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
+    if (fromBox === box) return prevCount + count;
+    if (toBox === box) return prevCount - count;
+    return prevCount;
+  };*/
+
   useEffect(() => {
-    console.log('get Chat Boxes');
     getChatBoxCount().then(setChatBoxCount);
   }, [user]);
+
+  useEffect(() => {
+    const handler = (msg: WebsocketMessage) => {
+      const payload: WebsocketMessage =
+        typeof msg === 'string' ? JSON.parse(msg) : msg;
+
+      const getChatCountOnMoveChatToBox = (count: number, prevChatBoxCount: ChatBoxCountDto, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => ({
+        inboxCount: getNewChatBoxCount(count, prevChatBoxCount.inboxCount, ChatBoxEnum.INBOX, fromBox, toBox),
+        sentCount: getNewChatBoxCount(count, prevChatBoxCount.sentCount, ChatBoxEnum.SENT, fromBox, toBox),
+        reminderCount: getNewChatBoxCount(count, prevChatBoxCount.reminderCount, ChatBoxEnum.REMINDER, fromBox, toBox),
+        totalCount: prevChatBoxCount.totalCount
+      } as ChatBoxCountDto);
+
+      const getNewChatBoxCount = (count: number, prevCount: number, box: ChatBoxEnum, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
+        if (fromBox === box) return prevCount - count;
+        if (toBox === box) return prevCount + count;
+        return prevCount;
+      };
+      switch (payload.type) {
+        case 'RECEIVE_REMINDER':
+          setChatBoxCount(prev => getChatCountOnMoveChatToBox(payload.chats.length, prev, ChatBoxEnum.REMINDER, ChatBoxEnum.INBOX));
+          break;
+      }
+    };
+
+    addMessageHandler(handler);
+    return () => removeMessageHandler(handler);
+  }, [addMessageHandler, removeMessageHandler]);
 
   const value = {
     chatBoxCount,

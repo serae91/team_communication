@@ -7,6 +7,7 @@ import { getChatUserViews, setReminder } from '../../services/RelChatUserAttrSer
 import type { BLRelChatUserAttrSetReminderDto } from '../../dtos/BLRelChatUserAttrDto.ts';
 import { ReminderStatusEnum } from '../../enums/ReminderStatusEnum.ts';
 import { useChatBox } from '../chat-box/ChatBoxProvider.tsx';
+import { ChatBoxEnum } from '../../enums/ChatBoxEnum.ts';
 
 interface BLChatProviderProps {
   children: ReactNode;
@@ -65,33 +66,39 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
   }, [activeChatId, send]);
 
   useEffect(() => {
+    const moveChatsToBox = (movedChats: ChatUserAttrView[], fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
+      if (chatBox === fromBox) {
+        const movedChatIds = movedChats.map(chat => chat.chatId);
+        setChats(prev => prev.filter(chat => !movedChatIds.includes(chat.chatId)));
+      } else if (chatBox === toBox) {
+        setChats(prev => [...movedChats, ...prev]);
+      }
+    };
+
     const handler = (msg: WebsocketMessage) => {
-      console.log(msg);
-      switch (msg.type) {
-        case 'RECEIVE_REMINDER':
-          setChats(prev =>
-            prev.map(chat =>
-              msg.chatIds.includes(chat.chatId)
-                ? {...chat, reminderStatus: 'TRIGGERED'} as ChatUserAttrView
-                : chat
-            )
-          );
+      const payload: WebsocketMessage =
+        typeof msg === 'string' ? JSON.parse(msg) : msg;
+
+      switch (payload.type) {
+        case 'RECEIVE_REMINDER': {
+          moveChatsToBox(payload.chats, ChatBoxEnum.REMINDER, ChatBoxEnum.INBOX);
           break;
+        }
         case 'RECEIVE_CHAT':
-          setChats((prev) => [...prev, msg.blChat]);
+          setChats((prev) => [...prev, payload.blChat]);
           break;
       }
     };
 
     addMessageHandler(handler);
     return () => removeMessageHandler(handler);
-  }, [addMessageHandler, removeMessageHandler]);
+  }, [addMessageHandler, chatBox, removeMessageHandler]);
 
   const remind = () => {
     const currentChat = chats.find(chat => chat.chatId === activeChatId);
     if (!currentChat) return;
     const now = new Date();
-    const inFiveMinutes = new Date(now.getTime() + 30 * 1000);
+    const inFiveMinutes = new Date(now.getTime() + 15 * 1000);
     setReminder({chatId: activeChatId, reminderAt: inFiveMinutes} as BLRelChatUserAttrSetReminderDto).then(v => {
       setChats(prev => prev.map(chat => {
         if (chat.chatId !== activeChatId) return chat;

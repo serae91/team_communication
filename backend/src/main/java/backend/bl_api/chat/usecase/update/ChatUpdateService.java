@@ -17,4 +17,5 @@ public class ChatUpdateService {
         chat.setLastMessageUserId(userId);
         chatRepository.persist(chat);
     }
+
 }

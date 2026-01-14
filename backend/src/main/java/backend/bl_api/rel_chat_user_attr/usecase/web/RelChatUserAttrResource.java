@@ -8,6 +8,7 @@ import backend.bl_entities.bl_chat.ChatSortField;
 import backend.bl_entities.bl_rel_chat_user_attr.BLRelChatUserAttrSetReminderDto;
 import backend.bl_entities.bl_rel_chat_user_attr.ChatBoxCountDto;
 import backend.bl_entities.bl_rel_chat_user_attr.ChatUserView;
+import backend.bl_entities.bl_rel_chat_user_attr.ReminderStatus;
 import backend.utils.enums.SortDirection;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -62,6 +63,6 @@ public class RelChatUserAttrResource {
     @PATCH
     @Path("/reminder/seen/{chatId}")
     public void setReminderSeen(@PathParam("chatId") final Long chatId) {
-        updateService.setReminderSeen(chatId, currentUser.getUserId());
+        updateService.setReminderStatus(chatId, currentUser.getUserId(), ReminderStatus.SEEN);
     }
 }
