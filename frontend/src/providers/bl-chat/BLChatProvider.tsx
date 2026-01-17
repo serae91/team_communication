@@ -1,4 +1,4 @@
-import React, { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
 import type { ChatUserAttrView } from '../../dtos/ChatUserAttrView.ts';
 import type { WebsocketMessage } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
 import { useWebSocket } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
@@ -8,6 +8,7 @@ import type { BLRelChatUserAttrSetReminderDto } from '../../dtos/BLRelChatUserAt
 import { ReminderStatusEnum } from '../../enums/ReminderStatusEnum.ts';
 import { useChatBox } from '../chat-box/ChatBoxProvider.tsx';
 import { ChatBoxEnum } from '../../enums/ChatBoxEnum.ts';
+import { useSearchParams } from 'react-router-dom';
 
 interface BLChatProviderProps {
   children: ReactNode;
@@ -16,33 +17,23 @@ interface BLChatProviderProps {
 interface BLChatContextType {
   chats: ChatUserAttrView[];
   setChats: React.Dispatch<React.SetStateAction<ChatUserAttrView[]>>;
-  chatsWithReminder: ChatUserAttrView[];
-  chatsWithoutReminder: ChatUserAttrView[];
   activeChatId: number | null;
   setActiveChatId: React.Dispatch<React.SetStateAction<number | null>>;
-  remind: () => void;
   setNextChat: () => void;
 }
 
 const BLChatContext = createContext<BLChatContextType | null>(null);
 
 export const BLChatProvider = ({children}: BLChatProviderProps) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [chats, setChats] = useState<ChatUserAttrView[]>([]);
-  const [activeChatId, setActiveChatId] = useState<number | null>(null);
+  const [activeChatId, setActiveChatId] = useState<number | null>(() => {
+    const param = searchParams.get('activeChatId');
+    return param ? JSON.parse(param) : null;
+  });
   const {removeMessageHandler, addMessageHandler, send} = useWebSocket();
   const {user} = useAuth();
   const {chatBox, pagination, sortField, sortDirection, onMoveChatsToBox} = useChatBox();
-
-
-  const chatsWithReminder = useMemo(
-    () => chats.filter(chat => chat.reminderStatus === 'SCHEDULED' || chat.reminderStatus === 'TRIGGERED'),
-    [chats]
-  );
-
-  const chatsWithoutReminder = useMemo(
-    () => chats.filter(chat => chat.reminderStatus === 'NONE'),
-    [chats]
-  );
 
   const setNextChat = () => {
     const currentChatIndex = chats.findIndex(chat => chat.chatId === activeChatId);
@@ -52,6 +43,20 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
     if (!nextId) return;
     setActiveChatId(nextId);
   };
+
+  useEffect(() => {
+    if (!activeChatId) {
+      setSearchParams(prev => {
+        prev.delete('activeChatId');
+        return prev;
+      });
+    } else {
+      setSearchParams(prev => {
+        prev.set('activeChatId', JSON.stringify(activeChatId));
+        return prev;
+      });
+    }
+  }, [activeChatId, setSearchParams]);
 
   useEffect(() => {
     getChatUserViews(chatBox, pagination, sortField, sortDirection).then(chats => setChats(chats));
@@ -93,7 +98,7 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
 
     addMessageHandler(handler);
     return () => removeMessageHandler(handler);
-  }, [addMessageHandler, chatBox, removeMessageHandler]);
+  }, [addMessageHandler, chatBox, onMoveChatsToBox, removeMessageHandler]);
 
   const remind = () => {
     const currentChat = chats.find(chat => chat.chatId === activeChatId);
@@ -113,11 +118,8 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
       value={ {
         chats,
         setChats,
-        chatsWithReminder,
-        chatsWithoutReminder,
         activeChatId,
         setActiveChatId,
-        remind,
         setNextChat
       } }>
       { children }

@@ -11,7 +11,6 @@ import { useState } from 'react';
 import {
   useWebSocket
 } from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
-import { LocalModalTypeEnum } from '../../../../enums/LocalModalTypeEnum.ts';
 import type { BLChatCreateDto } from '../../../../dtos/BLChatCreateDto.ts';
 
 
@@ -33,7 +32,7 @@ const CreateChatModal = () => {
     closeGlobalModal();
   };
   return (
-    <BLModal modalType={ LocalModalTypeEnum.CREATE_CHAT }>
+    <BLModal>
       <BLLeftMarkedCard>
         <BLMultiSelect
           labels={ dummyLabels }

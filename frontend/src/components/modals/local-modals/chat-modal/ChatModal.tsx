@@ -5,7 +5,6 @@ import ChatSystem from '../../../system/chat-system/ChatSystem.tsx';
 import './ChatModal.scss';
 import { useBLChats } from '../../../../providers/bl-chat/BLChatProvider.tsx';
 import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
-import { LocalModalTypeEnum } from '../../../../enums/LocalModalTypeEnum.ts';
 import {
   CheckOutlined,
   MoreTimeOutlined,
@@ -51,7 +50,7 @@ const ChatModal = () => {
   };
 
   return (
-    <BLModal modalType={ LocalModalTypeEnum.JOIN_CHAT }>
+    <BLModal onClick={ () => setActiveChatId(null) }>
       <BLLeftMarkedCard>
         <div className={ 'chat-modal' }>
           <div className={ 'flex justify-between h-14' }>

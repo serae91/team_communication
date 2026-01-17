@@ -32,8 +32,8 @@ export const ModalProvider = ({children}: ModalProviderProps) => {
     }
   );
   const [localModalState, setLocalModalState] = useState<LocalModalState[]>(() => {
-    const param = searchParams.get('localModalState');
-    return param ? JSON.parse(param) : [];
+    const param = searchParams.get('activeChatId');
+    return param ? [{activeChatId: JSON.parse(param), type: LocalModalTypeEnum.JOIN_CHAT}] : [];
   });
 
 
@@ -55,20 +55,6 @@ export const ModalProvider = ({children}: ModalProviderProps) => {
   function closeLocalModal() {
     setLocalModalState((prev) => prev.slice(0, -1));
   }
-
-  useEffect(() => {
-    if (!localModalState.length) {
-      setSearchParams(prev => {
-        prev.delete('localModalState');
-        return prev;
-      });
-    } else {
-      setSearchParams(prev => {
-        prev.set('localModalState', JSON.stringify(localModalState));
-        return prev;
-      });
-    }
-  }, [localModalState, setSearchParams]);
 
   useEffect(() => {
     if (!globalModalState) {
