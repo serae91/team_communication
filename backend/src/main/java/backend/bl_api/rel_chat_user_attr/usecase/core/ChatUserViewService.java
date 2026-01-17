@@ -24,8 +24,8 @@ public class ChatUserViewService {
     @Inject
     ChatUserViewRepository repository;
 
-    public List<ChatUserView> findByUserId(final Long userId) {
-        return repository.findByUserId(userId);
+    public ChatUserView findByChatIdAndUserId(final Long chatId, final Long userId) {
+        return repository.findByChatIdAndUserId(chatId, userId);
     }
 
     public List<ChatUserView> getChatUserViews(final Long userId, final ChatBox chatBox, final int page, final int size, final ChatSortField sortField, final SortDirection sortDirection) {

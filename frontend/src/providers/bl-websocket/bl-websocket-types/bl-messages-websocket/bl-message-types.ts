@@ -1,5 +1,5 @@
 import type { BLMessageCreateDto, BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
-import type { ChatUserAttrView } from '../../../../dtos/ChatUserAttrView.ts';
+import type { ChatUserView } from '../../../../dtos/ChatUserView.ts';
 import type { BLChatCreateDto } from '../../../../dtos/BLChatCreateDto.ts';
 
 export type WebsocketMessage = WebSocketMessageIncoming | WebSocketMessageOutgoing;
@@ -10,8 +10,8 @@ export type WebSocketMessageIncoming =
   | ReceiveReminder;
 
 type ReceiveMessage = { type: 'RECEIVE_MESSAGE'; chatId: number; blMessage: BLMessageDto };
-type ReceiveChat = { type: 'RECEIVE_CHAT'; blChat: ChatUserAttrView };
-type ReceiveReminder = { type: 'RECEIVE_REMINDER'; chats: ChatUserAttrView[] };
+type ReceiveChat = { type: 'RECEIVE_CHAT'; chatUserView: ChatUserView };
+type ReceiveReminder = { type: 'RECEIVE_REMINDER'; chats: ChatUserView[] };
 
 type WebSocketMessageOutgoing =
   | RequestChats

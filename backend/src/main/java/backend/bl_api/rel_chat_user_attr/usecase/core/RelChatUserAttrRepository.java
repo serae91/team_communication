@@ -10,6 +10,10 @@ import java.util.Optional;
 @ApplicationScoped
 public class RelChatUserAttrRepository implements PanacheRepository<BLRelChatUserAttr> {
 
+    public List<BLRelChatUserAttr> findBy(final Long chatId) {
+        return find("chat.id", chatId).list();
+    }
+
     public BLRelChatUserAttr findBy(final Long chatId, final Long userId) {
         return find("chat.id = ?1 and user.id = ?2", chatId, userId).singleResult();
     }
@@ -17,16 +21,5 @@ public class RelChatUserAttrRepository implements PanacheRepository<BLRelChatUse
     public Optional<BLRelChatUserAttr> findOptionalBy(final Long chatId, final Long userId) {
         return find("chat.id = ?1 and user.id = ?2", chatId, userId).firstResultOptional();
     }
-
-    public List<BLRelChatUserAttr> findBy(final Long chatId) {
-        return find("chat.id", chatId).list();
-    }
-
-    /*public List<BLRelChatUserAttr> findDueReminders(final Instant now, final int limit) {
-        return find("reminderStatus = ?1 and reminderAt <= ?2 order by reminderAt",
-                ReminderStatus.SCHEDULED, now)
-                .page(0, limit)
-                .list();
-    }*/
 
 }
