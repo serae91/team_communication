@@ -1,4 +1,4 @@
-import React, { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
+import React, { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import type { ChatUserView } from '../../dtos/ChatUserView.ts';
 import type { WebsocketMessage } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
 import { useWebSocket } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
@@ -19,8 +19,10 @@ interface BLChatContextType {
   setChats: React.Dispatch<React.SetStateAction<ChatUserView[]>>;
   activeChatId: number | null;
   setActiveChatId: React.Dispatch<React.SetStateAction<number | null>>;
+  getActiveChat: () => ChatUserView | undefined;
   setNextChat: () => void;
   remind: () => void;
+  moveChatsToBox: (movedChats: ChatUserView[], fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => void;
 }
 
 const BLChatContext = createContext<BLChatContextType | null>(null);
@@ -35,6 +37,10 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
   const {removeMessageHandler, addMessageHandler, send} = useWebSocket();
   const {user} = useAuth();
   const {chatBox, pagination, sortField, sortDirection, onMoveChatsToBox} = useChatBox();
+
+  const getActiveChat = () => {
+    return chats.find(chat => chat.chatId === activeChatId);
+  };
 
   const setNextChat = () => {
     const currentChatIndex = chats.findIndex(chat => chat.chatId === activeChatId);
@@ -71,17 +77,18 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
     });
   }, [activeChatId, send]);
 
-  useEffect(() => {
-    const moveChatsToBox = (movedChats: ChatUserView[], fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
-      if (chatBox === fromBox) {
-        const movedChatIds = movedChats.map(chat => chat.chatId);
-        setChats(prev => prev.filter(chat => !movedChatIds.includes(chat.chatId)));
-      } else if (chatBox === toBox) {
-        setChats(prev => [...movedChats, ...prev]);
-      }
-      onMoveChatsToBox(movedChats.length, fromBox, toBox);
-    };
+  const moveChatsToBox = useCallback((movedChats: ChatUserView[], fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
+    if (!movedChats.length || fromBox === toBox) return;
+    if (chatBox === fromBox) {
+      const movedChatIds = movedChats.map(chat => chat.chatId);
+      setChats(prev => prev.filter(chat => !movedChatIds.includes(chat.chatId)));
+    } else if (chatBox === toBox) {
+      setChats(prev => [...movedChats, ...prev]);
+    }
+    onMoveChatsToBox(movedChats.length, fromBox, toBox);
+  }, [chatBox, onMoveChatsToBox]);
 
+  useEffect(() => {
     const handler = (msg: WebsocketMessage) => {
       const payload: WebsocketMessage =
         typeof msg === 'string' ? JSON.parse(msg) : msg;
@@ -99,7 +106,7 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
 
     addMessageHandler(handler);
     return () => removeMessageHandler(handler);
-  }, [addMessageHandler, chatBox, onMoveChatsToBox, removeMessageHandler]);
+  }, [addMessageHandler, chatBox, moveChatsToBox, onMoveChatsToBox, removeMessageHandler]);
 
   const remind = () => {
     const currentChat = chats.find(chat => chat.chatId === activeChatId);
@@ -121,7 +128,10 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
         setChats,
         activeChatId,
         setActiveChatId,
-        setNextChat, remind
+        getActiveChat,
+        setNextChat,
+        remind,
+        moveChatsToBox
       } }>
       { children }
     </BLChatContext.Provider>

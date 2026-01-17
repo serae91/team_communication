@@ -26,7 +26,16 @@ import { useAuth } from '../../../../providers/auth/AuthProvider.tsx';
 
 const ChatModal = () => {
   const {user} = useAuth();
-  const {chats, setChats, activeChatId, setActiveChatId, remind, setNextChat} = useBLChats();
+  const {
+    chats,
+    setChats,
+    activeChatId,
+    setActiveChatId,
+    getActiveChat,
+    remind,
+    setNextChat,
+    moveChatsToBox
+  } = useBLChats();
   const {messages, sendMessage} = useBLMessages();
   const {setChatBoxCount, chatBox} = useChatBox();
   const {closeLocalModal} = useModal();
@@ -84,7 +93,15 @@ const ChatModal = () => {
               } }/></Tooltip>
             </div>
           </div>
-          <ChatSystem messages={ messages } sendMessage={ sendMessage }/>
+          <ChatSystem messages={ messages }
+                      sendMessage={ (text) => {
+                        sendMessage(text);
+                        const activeChat = getActiveChat();
+                        if (activeChat) {
+                          moveChatsToBox([activeChat], chatBox, ChatBoxEnum.SENT);
+                        }
+                      }
+                      }/>
         </div>
       </BLLeftMarkedCard>
     </BLModal>);

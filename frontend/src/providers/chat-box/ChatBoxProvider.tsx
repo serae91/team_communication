@@ -1,4 +1,4 @@
-import React, { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
+import React, { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import { ChatBoxEnum } from '../../enums/ChatBoxEnum.ts';
 import { SortDirectionEnum } from '../../enums/SortDirectionEnum.ts';
 import type { PaginationDto } from '../../dtos/PaginationDto.ts';
@@ -44,22 +44,23 @@ const ChatBoxProvider = ({children}: ChatBoxProviderProps) => {
   const [pagination, setPagination] = useState<PaginationDto>({page: 0, size: 20});
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const onMoveChatsToBox = (count: number, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
-    setChatBoxCount(prev => getChatCountOnMoveChatToBox(count, prev, fromBox, toBox));
-  };
+  const getNewChatBoxCount = useCallback((count: number, prevCount: number, box: ChatBoxEnum, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
+    if (fromBox === box) return prevCount - count;
+    if (toBox === box) return prevCount + count;
+    return prevCount;
+  }, []);
 
-  const getChatCountOnMoveChatToBox = (count: number, prevChatBoxCount: ChatBoxCountDto, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => ({
+  const getChatCountOnMoveChatToBox = useCallback((count: number, prevChatBoxCount: ChatBoxCountDto, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => ({
     inboxCount: getNewChatBoxCount(count, prevChatBoxCount.inboxCount, ChatBoxEnum.INBOX, fromBox, toBox),
     sentCount: getNewChatBoxCount(count, prevChatBoxCount.sentCount, ChatBoxEnum.SENT, fromBox, toBox),
     reminderCount: getNewChatBoxCount(count, prevChatBoxCount.reminderCount, ChatBoxEnum.REMINDER, fromBox, toBox),
     totalCount: prevChatBoxCount.totalCount
-  } as ChatBoxCountDto);
+  } as ChatBoxCountDto), [getNewChatBoxCount]);
 
-  const getNewChatBoxCount = (count: number, prevCount: number, box: ChatBoxEnum, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
-    if (fromBox === box) return prevCount - count;
-    if (toBox === box) return prevCount + count;
-    return prevCount;
-  };
+  const onMoveChatsToBox = useCallback((count: number, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
+    if (!count || fromBox === toBox) return;
+    setChatBoxCount(prev => getChatCountOnMoveChatToBox(count, prev, fromBox, toBox));
+  }, [getChatCountOnMoveChatToBox]);
 
   useEffect(() => {
     getChatBoxCount().then(setChatBoxCount);
