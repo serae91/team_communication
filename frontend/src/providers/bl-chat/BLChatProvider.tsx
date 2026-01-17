@@ -66,11 +66,13 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
   }, [activeChatId, setSearchParams]);
 
   useEffect(() => {
-    getChatUserViews(chatBox, pagination, sortField, sortDirection).then(chats => setChats(chats));
+    getChatUserViews(chatBox, pagination, sortField, sortDirection).then(chats => {
+      console.log(chats);
+      setChats(chats);
+    });
   }, [user, chatBox, pagination, sortField, sortDirection]);
 
   useEffect(() => {
-    if (!activeChatId) return;
     send({
       type: 'SWITCH_CHAT',
       chatId: activeChatId,
@@ -90,6 +92,7 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
 
   useEffect(() => {
     const handler = (msg: WebsocketMessage) => {
+      console.log('msg', msg);
       const payload: WebsocketMessage =
         typeof msg === 'string' ? JSON.parse(msg) : msg;
 
@@ -100,6 +103,10 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
         }
         case 'RECEIVE_CHAT':
           setChats((prev) => [...prev, payload.chatUserView]);
+          break;
+        case 'RECEIVE_UPDATED_CHAT':
+          console.log('RECEIVE Updated chat', payload);
+          moveChatsToBox([payload.chatUserView], payload.fromBox, ChatBoxEnum.INBOX);
           break;
       }
     };

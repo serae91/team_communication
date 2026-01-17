@@ -42,13 +42,12 @@ export const BLMessageProvider = ({children}: BLMessageProviderProps) => {
   }, [addMessageHandler, removeMessageHandler]);
 
   const sendMessage = (text: string) => {
-    if (!activeChatId || !user?.id) return;
+    if (!activeChatId) return;
     const blMessageCreateDto = {
       chatId: activeChatId,
       text: text,
     } as BLMessageCreateDto;
     const message = {type: 'SEND_MESSAGE', chatId: activeChatId, blMessage: blMessageCreateDto} as WebsocketMessage;
-    console.log('send message', message);
     send(message);
   };
 

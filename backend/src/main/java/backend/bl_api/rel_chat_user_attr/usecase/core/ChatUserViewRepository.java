@@ -11,8 +11,12 @@ import java.util.List;
 @ApplicationScoped
 public class ChatUserViewRepository implements PanacheRepository<ChatUserView> {
 
-    public ChatUserView findByChatIdAndUserId(final Long chatId, final Long userId) {
+    public ChatUserView findBy(final Long chatId, final Long userId) {
         return find("chatId = ?1 and userId = ?2", chatId, userId).singleResult();
+    }
+
+    public List<ChatUserView> listBy(final Long chatId) {
+        return list("chatId", chatId);
     }
 
     public List<ChatUserView> findDueReminders(final Instant now, final int limit) {

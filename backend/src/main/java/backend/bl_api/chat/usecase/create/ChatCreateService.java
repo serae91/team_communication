@@ -55,6 +55,6 @@ public class ChatCreateService {
                 .createdAt(createdAt)
                 .build();
         messageCreateService.persist(firstMessage);
-        return chatUserViewService.findByChatIdAndUserId(chat.getId(), senderId);
+        return chatUserViewService.findBy(chat.getId(), senderId);
     }
 }

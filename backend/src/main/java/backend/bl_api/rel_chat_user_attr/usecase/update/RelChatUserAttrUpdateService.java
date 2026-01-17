@@ -39,10 +39,12 @@ public class RelChatUserAttrUpdateService {
     }
 
     @Transactional
-    public void setUndoneForAllUsers(final Long chatId) {
+    public void setUndoneAndRemoveReminderForAllUsers(final Long chatId) {
         final List<BLRelChatUserAttr> attrChatUsers = repository.findBy(chatId);
         attrChatUsers.forEach(bLRelChatUser -> {
             bLRelChatUser.setDone(false);
+            bLRelChatUser.setReminderStatus(ReminderStatus.NONE);
+            bLRelChatUser.setReminderAt(null);
         });
         repository.persist(attrChatUsers);
     }

@@ -1,5 +1,7 @@
 package backend.bl_entities.bl_rel_chat_user_attr;
 
+import backend.bl_entities.bl_chat.ChatBox;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -52,4 +54,12 @@ public class ChatUserView {
     @Enumerated(EnumType.STRING)
     @Column(name = "reminder_status")
     private ReminderStatus reminderStatus;
+
+    @JsonProperty
+    public ChatBox getChatBox() {
+        if (done) return ChatBox.ALL;
+        if (ReminderStatus.SCHEDULED.equals(reminderStatus)) return ChatBox.REMINDER;
+        if (userId.equals(lastMessageUserId)) return ChatBox.SENT;
+        return ChatBox.INBOX;
+    }
 }

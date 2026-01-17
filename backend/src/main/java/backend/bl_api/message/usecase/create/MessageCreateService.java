@@ -54,7 +54,7 @@ public class MessageCreateService {
                 .createdAt(Instant.now())
                 .build();
         messageRepository.persist(message);
-        relChatUserAttrUpdateService.setUndoneForAllUsers(chat.getId());
+        relChatUserAttrUpdateService.setUndoneAndRemoveReminderForAllUsers(chat.getId());
         chatUpdateService.updateLastMessageUserId(messageCreateDto.chatId(), userId);
 
         return messageService.getBLMessageView(message.getId());

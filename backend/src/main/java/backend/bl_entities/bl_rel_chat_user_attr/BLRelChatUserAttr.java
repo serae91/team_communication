@@ -21,7 +21,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.Objects;
 
 @Entity
 @Table(name = "bl_rel_chat_user_attr")
@@ -58,7 +57,7 @@ public class BLRelChatUserAttr {
 
     @PrePersist
     void prePersist() {
-        if (Objects.isNull(reminderStatus)) {
+        if (reminderStatus == null) {
             reminderStatus = ReminderStatus.NONE;
         }
     }
