@@ -19,16 +19,12 @@ import BLSideSymbol from '../../../ui/bl-side-symbol/BLSideSymbol.tsx';
 import BLUrgencyToken from '../../../ui/bl-urgency-token/BLUrgencyToken.tsx';
 import { Tooltip } from '@mui/material';
 import { useChatBox } from '../../../../providers/chat-box/ChatBoxProvider.tsx';
-import type { ChatBoxCountDto } from '../../../../dtos/ChatBoxCountDto.ts';
 import { useModal } from '../../../../providers/modal/ModalProvider.tsx';
 import { ChatBoxEnum } from '../../../../enums/ChatBoxEnum.ts';
-import { useAuth } from '../../../../providers/auth/AuthProvider.tsx';
 
 const ChatModal = () => {
-  const {user} = useAuth();
   const {
     chats,
-    setChats,
     activeChatId,
     setActiveChatId,
     getActiveChat,
@@ -37,26 +33,8 @@ const ChatModal = () => {
     moveChatsToBox
   } = useBLChats();
   const {messages, sendMessage} = useBLMessages();
-  const {setChatBoxCount, chatBox} = useChatBox();
+  const {chatBox} = useChatBox();
   const {closeLocalModal} = useModal();
-
-  const getChatCountOnTriggerDone = (prev: ChatBoxCountDto) => {
-    if (chatBox !== ChatBoxEnum.ALL) {
-      return {
-        ...prev,
-        inboxCount: chatBox === ChatBoxEnum.INBOX ? prev.inboxCount - 1 : prev.inboxCount,
-        reminderCount: chatBox === ChatBoxEnum.REMINDER ? prev.reminderCount - 1 : prev.reminderCount,
-        sentCount: chatBox === ChatBoxEnum.SENT ? prev.sentCount - 1 : prev.sentCount,
-      } as ChatBoxCountDto;
-    }
-    const lastMessageUserId = chats.find(chat => chat.chatId === activeChatId)?.lastMessageUserId;
-    const isLastSender = lastMessageUserId === user?.id;
-    return {
-      ...prev,
-      inboxCount: isLastSender ? prev.inboxCount : prev.inboxCount + 1,
-      sentCount: isLastSender ? prev.sentCount + 1 : prev.sentCount,
-    } as ChatBoxCountDto;
-  };
 
   return (
     <BLModal onClick={ () => setActiveChatId(null) }>
@@ -84,11 +62,14 @@ const ChatModal = () => {
                                                             onClick={ remind }/></Tooltip>
               <Tooltip title={ 'done' }><CheckOutlined sx={ {color: '#A4A7Ae', cursor: 'pointer'} } onClick={ () => {
                 if (activeChatId) {
-                  triggerDone(activeChatId);
-                  setChatBoxCount(getChatCountOnTriggerDone);
-                  closeLocalModal();
-                  setChats(prev => prev.filter(modal => modal.chatId !== activeChatId));
-                  setActiveChatId(null);
+                  triggerDone(activeChatId).then(() => {
+                    const activeChat = getActiveChat();
+                    if (activeChat) {
+                      moveChatsToBox([activeChat], chatBox, ChatBoxEnum.ALL);
+                    }
+                    closeLocalModal();
+                    setActiveChatId(null);
+                  });
                 }
               } }/></Tooltip>
             </div>
@@ -96,10 +77,10 @@ const ChatModal = () => {
           <ChatSystem messages={ messages }
                       sendMessage={ (text) => {
                         sendMessage(text);
-                        const activeChat = getActiveChat();
+                        /*const activeChat = getActiveChat();
                         if (activeChat) {
                           moveChatsToBox([activeChat], chatBox, ChatBoxEnum.SENT);
-                        }
+                        }*/
                       }
                       }/>
         </div>

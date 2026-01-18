@@ -1,5 +1,3 @@
-import type { ChatBoxEnum } from '../enums/ChatBoxEnum.ts';
-
 export interface ChatUserView {
   chatId: number;
   userId: number;
@@ -11,6 +9,5 @@ export interface ChatUserView {
   done: boolean;
   reminderAt: Date;
   reminderStatus: string;
-  chatBox: ChatBoxEnum;
 }
 

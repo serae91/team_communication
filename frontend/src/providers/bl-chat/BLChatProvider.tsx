@@ -80,14 +80,14 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
   }, [activeChatId, send]);
 
   const moveChatsToBox = useCallback((movedChats: ChatUserView[], fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
-    if (!movedChats.length || fromBox === toBox) return;
+    onMoveChatsToBox(movedChats.length, fromBox, toBox);
+    if (!movedChats.length || fromBox === toBox || chatBox === ChatBoxEnum.ALL) return;
     if (chatBox === fromBox) {
       const movedChatIds = movedChats.map(chat => chat.chatId);
       setChats(prev => prev.filter(chat => !movedChatIds.includes(chat.chatId)));
     } else if (chatBox === toBox) {
       setChats(prev => [...movedChats, ...prev]);
     }
-    onMoveChatsToBox(movedChats.length, fromBox, toBox);
   }, [chatBox, onMoveChatsToBox]);
 
   useEffect(() => {
@@ -105,8 +105,7 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
           setChats((prev) => [...prev, payload.chatUserView]);
           break;
         case 'RECEIVE_UPDATED_CHAT':
-          console.log('RECEIVE Updated chat', payload);
-          moveChatsToBox([payload.chatUserView], payload.fromBox, ChatBoxEnum.INBOX);
+          moveChatsToBox([payload.chatUserView], payload.fromBox, payload.chatUserView.userId === payload.chatUserView.lastMessageUserId ? ChatBoxEnum.SENT : ChatBoxEnum.INBOX);
           break;
       }
     };
