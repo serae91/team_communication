@@ -56,13 +56,15 @@ public class CommandHandler {
 
     private void handleSendMessage(final SendMessageWebSocketMessage sendMessageWebSocketMessage, final WebSocketConnection connection) {
         final List<ChatUserView> chatUserViews = chatUserViewService.listByChatId(sendMessageWebSocketMessage.chatId());
+        final Long userId = chatRegistry.getUserIdByConnection(connection);
         final List<ReceiveUpdatedChatWebSocketMessage> updatedChats = chatUserViews.stream().map(chatUserView -> {
             final ChatBox chatBox = chatUserView.getChatBox();
             chatUserView.setReminderAt(null);
             chatUserView.setReminderStatus(ReminderStatus.NONE);
+            chatUserView.setLastMessageUserId(userId);
             return new ReceiveUpdatedChatWebSocketMessage(chatUserView, chatBox);
         }).toList();
-        final BLMessageView blMessageView = messageCreateService.createMessageFromDto(sendMessageWebSocketMessage.blMessage(), chatRegistry.getUserIdByConnection(connection));
+        final BLMessageView blMessageView = messageCreateService.createMessageFromDto(sendMessageWebSocketMessage.blMessage(), userId);
 
         chatRegistry.sendToChat(sendMessageWebSocketMessage.chatId(), new ReceiveMessageWebSocketMessage(blMessageView));
 
