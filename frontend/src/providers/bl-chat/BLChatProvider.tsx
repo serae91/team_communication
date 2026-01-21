@@ -1,14 +1,23 @@
-import React, { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  type Dispatch,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import type { ChatUserView } from '../../dtos/ChatUserView.ts';
 import type { WebsocketMessage } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
 import { useWebSocket } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
 import { useAuth } from '../auth/AuthProvider.tsx';
-import { getChatUserViews, setReminder } from '../../services/RelChatUserAttrService.ts';
+import { getChatUserViews, setReminder, triggerDone } from '../../services/RelChatUserAttrService.ts';
 import { useChatBox } from '../chat-box/ChatBoxProvider.tsx';
 import { ChatBoxEnum } from '../../enums/ChatBoxEnum.ts';
 import { useSearchParams } from 'react-router-dom';
 import type { BLRelChatUserAttrSetReminderDto } from '../../dtos/BLRelChatUserAttrDto.ts';
 import { ReminderStatusEnum } from '../../enums/ReminderStatusEnum.ts';
+import { getCurrentChatBox } from '../../utils/chat-user-view-utils/ChatUserViewUtils.ts';
 
 interface BLChatProviderProps {
   children: ReactNode;
@@ -16,12 +25,13 @@ interface BLChatProviderProps {
 
 interface BLChatContextType {
   chats: ChatUserView[];
-  setChats: React.Dispatch<React.SetStateAction<ChatUserView[]>>;
+  setChats: Dispatch<React.SetStateAction<ChatUserView[]>>;
   activeChatId: number | null;
-  setActiveChatId: React.Dispatch<React.SetStateAction<number | null>>;
+  setActiveChatId: Dispatch<React.SetStateAction<number | null>>;
   getActiveChat: () => ChatUserView | undefined;
   setNextChat: () => void;
   remind: () => void;
+  setDone: () => void;
   moveChatsToBox: (movedChats: ChatUserView[], fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => void;
 }
 
@@ -98,7 +108,10 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
 
       switch (payload.type) {
         case 'RECEIVE_REMINDER': {
-          moveChatsToBox(payload.chats, ChatBoxEnum.REMINDER, ChatBoxEnum.INBOX);
+          const inBoxReminder = payload.chats.filter(chat => chat.lastMessageUserId !== user?.id);
+          const sentBoxReminder = payload.chats.filter(chat => chat.lastMessageUserId === user?.id);
+          moveChatsToBox(inBoxReminder, ChatBoxEnum.REMINDER, ChatBoxEnum.INBOX);
+          moveChatsToBox(sentBoxReminder, ChatBoxEnum.REMINDER, ChatBoxEnum.SENT);
           break;
         }
         case 'RECEIVE_CHAT':
@@ -112,19 +125,36 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
 
     addMessageHandler(handler);
     return () => removeMessageHandler(handler);
-  }, [addMessageHandler, chatBox, moveChatsToBox, onMoveChatsToBox, removeMessageHandler]);
+  }, [addMessageHandler, chatBox, moveChatsToBox, onMoveChatsToBox, removeMessageHandler, user?.id]);
 
   const remind = () => {
-    const currentChat = chats.find(chat => chat.chatId === activeChatId);
-    if (!currentChat) return;
+    const activeChat = getActiveChat();
+    if (!activeChat || !user) return;
     const now = new Date();
     const inFiveMinutes = new Date(now.getTime() + 15 * 1000);
-    setReminder({chatId: activeChatId, reminderAt: inFiveMinutes} as BLRelChatUserAttrSetReminderDto).then(v => {
-      setChats(prev => prev.map(chat => {
-        if (chat.chatId !== activeChatId) return chat;
-        return {...chat, reminderAt: inFiveMinutes, reminderStatus: ReminderStatusEnum.SCHEDULED} as ChatUserView;
-      }));
+    setReminder({chatId: activeChatId, reminderAt: inFiveMinutes} as BLRelChatUserAttrSetReminderDto).then(() => {
+      if (chatBox === ChatBoxEnum.REMINDER) {
+        setChats(prev => prev.map(chat => {
+          if (chat.chatId !== activeChatId) return chat;
+          return {...chat, reminderAt: inFiveMinutes, reminderStatus: ReminderStatusEnum.SCHEDULED} as ChatUserView;
+        }));
+      } else {
+        moveChatsToBox([activeChat], getCurrentChatBox(activeChat, user), ChatBoxEnum.REMINDER);
+      }
+      setActiveChatId(null);
     });
+  };
+
+  const setDone = () => {
+    const activeChat = getActiveChat();
+    if (!activeChatId || !activeChat) return;
+    triggerDone(activeChatId).then(() => {
+      if (activeChat && user) {
+        moveChatsToBox([activeChat], getCurrentChatBox(activeChat, user), ChatBoxEnum.ALL);
+      }
+      setActiveChatId(null);
+    });
+
   };
 
   return (
@@ -137,6 +167,7 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
         getActiveChat,
         setNextChat,
         remind,
+        setDone,
         moveChatsToBox
       } }>
       { children }

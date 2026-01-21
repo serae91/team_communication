@@ -75,7 +75,8 @@ public class ChatUserViewService {
         } else if (ChatBox.SENT.equals(chatBox)) {
             criteriaBuilder
                     .where("lastMessageUserId").eq(userId)
-                    .where("done").eq(false);
+                    .where("done").eq(false)
+                    .where("reminderStatus").notEq(ReminderStatus.SCHEDULED);
         }
     }
 
