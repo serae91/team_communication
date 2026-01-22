@@ -1,4 +1,4 @@
-export interface ChatUserAttrView {
+export interface ChatUserView {
   chatId: number;
   userId: number;
   chatUserAttrId: number;

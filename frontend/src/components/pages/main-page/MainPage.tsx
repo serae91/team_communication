@@ -7,21 +7,24 @@ import SideNavBar from '../../layout/side-nav-bar/SideNavBar.tsx';
 import {
   BLMessageWebSocketProvider
 } from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
+import ChatBoxProvider from '../../../providers/chat-box/ChatBoxProvider.tsx';
 
 
 const MainPage = () => {
   return (
     <BLMessageWebSocketProvider connectionURL={ 'blwebsocket' }>
-      <BLChatProvider>
-        <BLMessageProvider>
-          <ModalProvider>
-            <div className={ 'main-page' }>
-              <SideNavBar/>
-              <Inbox/>
-            </div>
-          </ModalProvider>
-        </BLMessageProvider>
-      </BLChatProvider>
+      <ChatBoxProvider>
+        <BLChatProvider>
+          <BLMessageProvider>
+            <ModalProvider>
+              <div className={ 'main-page' }>
+                <SideNavBar/>
+                <Inbox/>
+              </div>
+            </ModalProvider>
+          </BLMessageProvider>
+        </BLChatProvider>
+      </ChatBoxProvider>
     </BLMessageWebSocketProvider>
   );
 };

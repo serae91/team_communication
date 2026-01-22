@@ -1,7 +1,9 @@
 package backend.websocket;
 
+import backend.bl_api.rel_chat_user_attr.usecase.core.ChatUserViewRepository;
+import backend.bl_api.rel_chat_user_attr.usecase.update.RelChatUserAttrUpdateService;
+import backend.bl_entities.bl_rel_chat_user_attr.ChatUserView;
 import backend.bl_entities.bl_rel_chat_user_attr.ReminderStatus;
-import backend.bl_api.rel_chat_user_attr.usecase.core.RelChatUserAttrRepository;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -19,7 +21,10 @@ public class ChatReminderScheduler {
     private static final int BATCH_SIZE = 100;
 
     @Inject
-    RelChatUserAttrRepository relChatUserAttrRepository;
+    ChatUserViewRepository chatUserViewRepository;
+
+    @Inject
+    RelChatUserAttrUpdateService relChatUserAttrUpdateService;
 
     @Inject
     BLWebSocketService webSocketService;
@@ -28,24 +33,20 @@ public class ChatReminderScheduler {
     @Scheduled(every = "10s")
     void processDueReminders() {
         final Instant now = Instant.now();
-        final List<backend.bl_entities.bl_rel_chat_user_attr.BLRelChatUserAttr> dueReminders = relChatUserAttrRepository.findDueReminders(now, BATCH_SIZE);
+        final List<ChatUserView> dueReminders = chatUserViewRepository.findDueReminders(now, BATCH_SIZE);
         if (dueReminders.isEmpty()) {
             return;
         }
-        final Map<Long, Set<Long>> chatIdsByUser =
+        final Map<Long, Set<ChatUserView>> chatsByUser =
                 dueReminders.stream()
                         .collect(Collectors.groupingBy(
-                                r -> r.getUser().getId(),
-                                Collectors.mapping(
-                                        r -> r.getChat().getId(),
-                                        Collectors.toSet()
-                                )
+                                ChatUserView::getUserId,
+                                Collectors.toSet()
+
                         ));
 
-        chatIdsByUser.forEach(webSocketService::sendReminder);
-        dueReminders.forEach(reminder ->
-                reminder.setReminderStatus(ReminderStatus.TRIGGERED)
+        chatsByUser.forEach(webSocketService::sendReminder);
+        dueReminders.forEach(reminder -> relChatUserAttrUpdateService.setReminderStatus(reminder.getChatId(), reminder.getUserId(), ReminderStatus.TRIGGERED)
         );
-        relChatUserAttrRepository.persist(dueReminders);
     }
 }

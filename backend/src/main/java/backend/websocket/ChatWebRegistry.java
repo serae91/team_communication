@@ -29,10 +29,12 @@ public class ChatWebRegistry {
 
     public synchronized void joinChat(final Long userId, final Long chatId) {
         leaveChat(userId);
-        chatToUsers
-                .computeIfAbsent(chatId, id -> ConcurrentHashMap.newKeySet())
-                .add(userId);
-        userToChat.put(userId, chatId);
+        if (chatId != null) {
+            chatToUsers
+                    .computeIfAbsent(chatId, id -> ConcurrentHashMap.newKeySet())
+                    .add(userId);
+            userToChat.put(userId, chatId);
+        }
     }
 
     public synchronized void joinChat(final WebSocketConnection connection, final Long chatId) {
@@ -75,7 +77,7 @@ public class ChatWebRegistry {
         final Set<Long> users = chatToUsers.get(chatId);
         if (users == null) return;
 
-        for (Long userId : users) {
+        for (final Long userId : users) {
             final WebSocketConnection conn = userConnections.get(userId);
             if (conn != null) {
                 sendAsJsonString(conn, payload);
@@ -102,6 +104,10 @@ public class ChatWebRegistry {
 
     public Long getUserIdByConnection(final WebSocketConnection connection) {
         return connectionToUser.get(connection);
+    }
+
+    public Set<Long> getToChatConnectedUsers(final Long chatId) {
+        return chatToUsers.get(chatId);
     }
 }
 

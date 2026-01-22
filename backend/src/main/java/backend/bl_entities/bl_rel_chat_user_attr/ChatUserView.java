@@ -1,5 +1,6 @@
 package backend.bl_entities.bl_rel_chat_user_attr;
 
+import backend.bl_entities.bl_chat.ChatBox;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -7,8 +8,11 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Immutable;
 
 import java.time.Instant;
@@ -18,7 +22,10 @@ import java.time.Instant;
 @Table(name = "chat_user_view")
 @IdClass(ChatUserViewId.class)
 @Getter
+@Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class ChatUserView {
     @Id
     @Column(name = "chat_id")
@@ -52,4 +59,11 @@ public class ChatUserView {
     @Enumerated(EnumType.STRING)
     @Column(name = "reminder_status")
     private ReminderStatus reminderStatus;
+
+    public ChatBox getChatBox() {
+        if (done) return ChatBox.ALL;
+        if (ReminderStatus.SCHEDULED.equals(reminderStatus)) return ChatBox.REMINDER;
+        if (userId.equals(lastMessageUserId)) return ChatBox.SENT;
+        return ChatBox.INBOX;
+    }
 }

@@ -1,1 +1,0 @@
-export type BLLeftMarkedCardColor = 'black' | 'red';

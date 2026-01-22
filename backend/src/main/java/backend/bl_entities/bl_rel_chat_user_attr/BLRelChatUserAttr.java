@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -53,5 +54,12 @@ public class BLRelChatUserAttr {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private BLUser user;
+
+    @PrePersist
+    void prePersist() {
+        if (reminderStatus == null) {
+            reminderStatus = ReminderStatus.NONE;
+        }
+    }
 }
 
