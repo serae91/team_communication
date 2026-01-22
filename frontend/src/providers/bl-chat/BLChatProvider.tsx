@@ -77,7 +77,6 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
 
   useEffect(() => {
     getChatUserViews(chatBox, pagination, sortField, sortDirection).then(chats => {
-      console.log(chats);
       setChats(chats);
     });
   }, [user, chatBox, pagination, sortField, sortDirection]);
@@ -102,7 +101,6 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
 
   useEffect(() => {
     const handler = (msg: WebsocketMessage) => {
-      console.log('msg', msg);
       const payload: WebsocketMessage =
         typeof msg === 'string' ? JSON.parse(msg) : msg;
 
@@ -154,7 +152,6 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
       }
       setActiveChatId(null);
     });
-
   };
 
   return (
