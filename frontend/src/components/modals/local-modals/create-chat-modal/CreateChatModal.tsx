@@ -1,5 +1,6 @@
 import './CreateChatModal.scss';
 import BLModal from '../../../ui/bl-modal/BLModal.tsx';
+import BLLeftMarkedCard from '../../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
 import type {
   WebsocketMessage
 } from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';

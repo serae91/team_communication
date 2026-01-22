@@ -4,9 +4,9 @@ interface SideNavBarButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEle
   badgeCount?: number;
 }
 
-const SideNavBarButton = ({badgeCount, children}: SideNavBarButtonProps) => {
+const SideNavBarButton = ({badgeCount, children, onClick}: SideNavBarButtonProps) => {
   return (
-    <button disabled={ false } className="side-nav-bar-button">
+    <button disabled={ false } className="side-nav-bar-button" onClick={ onClick }>
       <div className={ 'content' }>
         <div className={ 'label' }>{ children }</div>
         {

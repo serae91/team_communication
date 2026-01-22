@@ -1,7 +1,6 @@
 import './ChatCard.scss';
 import BLSideSymbol from '../../../../ui/bl-side-symbol/BLSideSymbol';
-import BLLeftMarkedCard from '../../../../ui/bl-left-marked-card/BLLeftMarkedCard';
-import type { BLLeftMarkedCardColor } from '../../../../ui/bl-left-marked-card/types';
+import BLLeftMarkedCard, { type BLLeftMarkedCardColor } from '../../../../ui/bl-left-marked-card/BLLeftMarkedCard';
 import BLProfileToken from '../../../../ui/bl-profile-token/BLProfileToken.tsx';
 
 

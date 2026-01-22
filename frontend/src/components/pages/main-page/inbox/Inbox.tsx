@@ -8,10 +8,26 @@ import { LocalModalTypeEnum } from '../../../../enums/LocalModalTypeEnum.ts';
 import ChatModalRenderer from '../../../modals/local-modals/chat-modal/chat-modal-renderer/ChatModalRenderer.tsx';
 import CreateChatModalRenderer
   from '../../../modals/local-modals/create-chat-modal/create-chat-modal-renderer/CreateChatModalRenderer.tsx';
+import { useChatBox } from '../../../../providers/chat-box/ChatBoxProvider.tsx';
+import { ChatBoxEnum } from '../../../../enums/ChatBoxEnum.ts';
 
 const Inbox = () => {
   const {chats, setActiveChatId} = useBLChats();
+  const {chatBox} = useChatBox();
   const {openLocalModal} = useModal();
+
+  const getTitle = () => {
+    switch (chatBox) {//TODO handle hardcoded string
+      case ChatBoxEnum.INBOX:
+        return 'Inbox';
+      case ChatBoxEnum.SENT:
+        return 'Sent';
+      case ChatBoxEnum.REMINDER:
+        return 'Reminder';
+      case ChatBoxEnum.ALL:
+        return 'All';
+    }
+  };
 
   const listChats = () => {
     if (!chats?.length) return <p>No messages received yet</p>;
@@ -34,7 +50,7 @@ const Inbox = () => {
       <CreateChatModalRenderer/>
       <div className={ 'title-box' }>
         <div className={ 'title' }>
-          Inbox
+          { getTitle() }
         </div>
         <div className={ 'sub-title' }>
           A collection of all your messages

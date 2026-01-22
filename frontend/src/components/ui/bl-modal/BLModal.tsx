@@ -1,15 +1,14 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { type ReactNode } from 'react';
 import { useModal } from '../../../providers/modal/ModalProvider.tsx';
-import type { LocalModalTypeEnum } from '../../../enums/LocalModalTypeEnum.ts';
 
 interface ModalProps {
-  modalType: LocalModalTypeEnum;
   children?: ReactNode;
+  onClick?: () => void;
 }
 
-const BLModal = ({modalType, children}: ModalProps) => {
-  const {globalModalState, closeGlobalModal, localModalState, closeLocalModal} = useModal();
+const BLModal = ({children, onClick}: ModalProps) => {
+  const {globalModalState, closeGlobalModal, closeLocalModal} = useModal();
   return (
     <AnimatePresence>
       <motion.div
@@ -19,6 +18,8 @@ const BLModal = ({modalType, children}: ModalProps) => {
             closeGlobalModal();
           else
             closeLocalModal();
+          if (onClick)
+            onClick();
         }
         }
         initial={ {opacity: 0} }

@@ -1,6 +1,7 @@
-import { createContext, type ReactNode, useContext, useState } from 'react';
+import { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
 import { GlobalModalTypeEnum, LocalModalTypeEnum } from '../../enums/LocalModalTypeEnum.ts';
 import GlobalModalRenderer from '../../components/modals/global-modals/global-modal-renderer/GlobalModalRenderer.tsx';
+import { useSearchParams } from 'react-router-dom';
 
 export interface ModalProviderProps {
   children: ReactNode;
@@ -24,8 +25,18 @@ export type ModalContextType = {
 const ModalContext = createContext<ModalContextType | null>(null);
 
 export const ModalProvider = ({children}: ModalProviderProps) => {
-  const [globalModalState, setGlobalModalState] = useState<GlobalModalState>({type: GlobalModalTypeEnum.NONE});
-  const [localModalState, setLocalModalState] = useState<LocalModalState[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [globalModalState, setGlobalModalState] = useState<GlobalModalState>(() => {
+      const param = searchParams.get('globalModalState');
+      return param ? JSON.parse(param) : {type: GlobalModalTypeEnum.NONE};
+    }
+  );
+  const [localModalState, setLocalModalState] = useState<LocalModalState[]>(() => {
+    const param = searchParams.get('activeChatId');
+    return param ? [{activeChatId: JSON.parse(param), type: LocalModalTypeEnum.JOIN_CHAT}] : [];
+  });
+
+
   const openGlobalModal = (globalModalState: GlobalModalState) => setGlobalModalState(globalModalState);
   const closeGlobalModal = () => setGlobalModalState({type: GlobalModalTypeEnum.NONE});
   const value: ModalContextType = {
@@ -44,6 +55,20 @@ export const ModalProvider = ({children}: ModalProviderProps) => {
   function closeLocalModal() {
     setLocalModalState((prev) => prev.slice(0, -1));
   }
+
+  useEffect(() => {
+    if (!globalModalState) {
+      setSearchParams(prev => {
+        prev.delete('globalModalState');
+        return prev;
+      });
+    } else {
+      setSearchParams(prev => {
+        prev.set('globalModalState', JSON.stringify(globalModalState));
+        return prev;
+      });
+    }
+  }, [globalModalState, setSearchParams]);
 
 
   return (
