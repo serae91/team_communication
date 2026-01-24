@@ -1,17 +1,10 @@
 import { CircularProgress, InputAdornment, TextField } from '@mui/material';
 import { SearchOutlined } from '@mui/icons-material';
 import './MultiSelectProvider.scss';
-import {
-  createContext,
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction,
-  useContext,
-  useEffect,
-  useState
-} from 'react';
+import { createContext, type Dispatch, type ReactNode, type SetStateAction, useContext, useRef, useState } from 'react';
 import { useDebounce } from '../../services/useDebounce.ts';
 import { useQuery } from '@tanstack/react-query';
+import BLScrollPortal from '../../components/ui/bl-scroll-portal/BLScrollPortal.tsx';
 
 export interface Selectable {
   id: number;
@@ -62,17 +55,14 @@ const createMultiSelectProvider = <T extends Selectable>() => {
 
     const filteredOptions = options.filter((option) => filter(option, query));
 
-    useEffect(() => {
-      console.log(filteredOptions);
-      console.log('isOpen', isOpen);
-    }, [options]);
-
     const value = {query, setQuery, selected, setSelected, filteredOptions};
 
+    const inputRef = useRef<HTMLInputElement>(null);
     return (
       <MultiSelectContext.Provider value={ value }>
         <div className={ 'search-system' }>
           <TextField
+            ref={ inputRef }
             value={ query }
             onChange={ (e) => setQuery(e.target.value) }
             className={ 'search-bar' }
@@ -98,8 +88,9 @@ const createMultiSelectProvider = <T extends Selectable>() => {
               },
             } }
           />
-          { isOpen && children }
+          { isOpen && (<BLScrollPortal anchorRef={ inputRef }>{ children }</BLScrollPortal>) }
         </div>
+
       </MultiSelectContext.Provider>);
   };
 
