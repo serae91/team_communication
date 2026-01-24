@@ -2,14 +2,14 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import './BLListItem.scss';
-import React from 'react';
+import React, { type ReactNode } from 'react';
 
 export interface BLListItemProps {
   id: number;
-  primary: React.ReactNode;
-  secondary?: React.ReactNode;
-  start?: React.ReactNode;
-  end?: ({selected}: { selected: boolean }) => React.ReactNode;
+  primary: ReactNode;
+  secondary?: ReactNode;
+  start?: ReactNode;
+  end?: (selected: boolean) => ReactNode;
   onClick?: () => void;
   selected: boolean;
 }
@@ -31,7 +31,7 @@ const BLListItem = ({
           primary={ primary }
           secondary={ secondary }
         />
-        { end?.({selected}) }
+        { end?.(selected) }
       </ListItem>
     </div>
   );

@@ -25,7 +25,7 @@ const BLSelectableList = ({selected, setSelected, singleItems, groups}: BLSelect
   };
 
   return (
-    <div className={ 'bl-selectable-list' }>
+    <div className={ 'bl-selectable-list' } onMouseDown={ (e) => e.preventDefault() }>
       <List>
         {
           singleItems?.map(item =>
@@ -36,7 +36,7 @@ const BLSelectableList = ({selected, setSelected, singleItems, groups}: BLSelect
               secondary={ item.secondary }
               start={ item.start }
               end={ item.end ?? (() => undefined) }
-              selected={ selected.includes(item) }
+              selected={ selected.map(s => s.id).includes(item.id) }
               onClick={ () => {
                 toggle(item);
                 if (item.onClick) {

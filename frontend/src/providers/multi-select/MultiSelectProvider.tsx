@@ -1,13 +1,20 @@
 import { CircularProgress, InputAdornment, TextField } from '@mui/material';
 import { SearchOutlined } from '@mui/icons-material';
 import './MultiSelectProvider.scss';
-import { createContext, type Dispatch, type ReactNode, type SetStateAction, useContext, useState } from 'react';
+import {
+  createContext,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import { useDebounce } from '../../services/useDebounce.ts';
 import { useQuery } from '@tanstack/react-query';
 
 export interface Selectable {
   id: number;
-  selected: boolean;
 }
 
 type MultiSelectProviderProps<T> = {
@@ -55,6 +62,10 @@ const createMultiSelectProvider = <T extends Selectable>() => {
 
     const filteredOptions = options.filter((option) => filter(option, query));
 
+    useEffect(() => {
+      console.log(filteredOptions);
+      console.log('isOpen', isOpen);
+    }, [options]);
 
     const value = {query, setQuery, selected, setSelected, filteredOptions};
 
@@ -67,13 +78,15 @@ const createMultiSelectProvider = <T extends Selectable>() => {
             className={ 'search-bar' }
             placeholder={ placeholder ?? '' }
             fullWidth
+            onFocus={ () => setIsOpen(true) }
+            onBlur={ () => {
+              setTimeout(() => setIsOpen(false), 100);
+            } }
 
             slotProps={ {
               input: {
                 startAdornment: (
-                  <InputAdornment position="start"
-                                  onFocus={ () => setIsOpen(true) }
-                                  onBlur={ () => setIsOpen(false) }>
+                  <InputAdornment position="start">
                     <SearchOutlined color="action"/>
                   </InputAdornment>
                 ),
