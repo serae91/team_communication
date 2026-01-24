@@ -34,7 +34,7 @@ public class UserService {
         final CriteriaBuilder<BLUser> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLUser.class);
         if (!query.isBlank()) {
             final WhereOrBuilder<CriteriaBuilder<BLUser>> whereOr = criteriaBuilder.whereOr();
-            whereOr.where("CONCAT(lastName, ' ', firstName) LIKE :q").like().value("%" + query + "%");
+            whereOr.where("CONCAT(lastName, ' ', firstName)").like().value("%" + query + "%");
             whereOr.where("username").like().value("%" + query + "%");
             whereOr.endOr();
         }
