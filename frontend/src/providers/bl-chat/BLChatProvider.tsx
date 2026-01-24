@@ -2,6 +2,7 @@ import React, {
   createContext,
   type Dispatch,
   type ReactNode,
+  type SetStateAction,
   useCallback,
   useContext,
   useEffect,
@@ -9,7 +10,9 @@ import React, {
 } from 'react';
 import type { ChatUserView } from '../../dtos/ChatUserView.ts';
 import type { WebsocketMessage } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
-import { useWebSocket } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
+import {
+  useWebsocketMessageWebSocket
+} from '../bl-websocket/bl-websocket-types/bl-messages-websocket/WebSocketMessageWebSocketProvider.ts';
 import { useAuth } from '../auth/AuthProvider.tsx';
 import { getChatUserViews, setReminder, triggerDone } from '../../services/RelChatUserAttrService.ts';
 import { useChatBox } from '../chat-box/ChatBoxProvider.tsx';
@@ -23,11 +26,11 @@ interface BLChatProviderProps {
   children: ReactNode;
 }
 
-interface BLChatContextType {
+type BLChatContextType = {
   chats: ChatUserView[];
-  setChats: Dispatch<React.SetStateAction<ChatUserView[]>>;
+  setChats: Dispatch<SetStateAction<ChatUserView[]>>;
   activeChatId: number | null;
-  setActiveChatId: Dispatch<React.SetStateAction<number | null>>;
+  setActiveChatId: Dispatch<SetStateAction<number | null>>;
   getActiveChat: () => ChatUserView | undefined;
   setNextChat: () => void;
   remind: () => void;
@@ -44,7 +47,7 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
     const param = searchParams.get('activeChatId');
     return param ? JSON.parse(param) : null;
   });
-  const {removeMessageHandler, addMessageHandler, send} = useWebSocket();
+  const {removeMessageHandler, addMessageHandler, send} = useWebsocketMessageWebSocket();
   const {user} = useAuth();
   const {chatBox, pagination, sortField, sortDirection, onMoveChatsToBox} = useChatBox();
 

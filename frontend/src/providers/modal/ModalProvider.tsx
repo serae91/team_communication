@@ -13,7 +13,7 @@ export type LocalModalState = | { type: LocalModalTypeEnum.JOIN_CHAT } | {
 
 export type GlobalModalState = | { type: GlobalModalTypeEnum.NONE };
 
-export type ModalContextType = {
+type ModalContextType = {
   globalModalState: GlobalModalState;
   openGlobalModal: (globalModalState: GlobalModalState) => void;
   closeGlobalModal: () => void;

@@ -2,12 +2,13 @@ import List from '@mui/material/List';
 import BLListItemGroup, { type BLListItemGroupProps } from './bl-list-item-group/BLListItemGroup.tsx';
 import BLListItem, { type BLListItemProps } from './bl-list-item/BLListItem.tsx';
 import './BLSelectableList.scss';
+import type { Dispatch, SetStateAction } from 'react';
 
 interface BLSelectableListProps {
   singleItems?: BLListItemProps[];
   groups?: BLListItemGroupProps[];
   selected: number[];
-  setSelected: React.Dispatch<React.SetStateAction<number[]>>;
+  setSelected: Dispatch<SetStateAction<number[]>>;
 }
 
 const BLSelectableList = ({selected, setSelected, singleItems, groups}: BLSelectableListProps) => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type Dispatch, type SetStateAction } from 'react';
 import { Checkbox } from '@mui/material';
 import { type BLListItemProps } from '../bl-list-item/BLListItem.tsx';
 import BLSelectableList from '../BLSelectableList.tsx';
@@ -8,7 +8,7 @@ export interface BLSelectableUser {
   id: number;
   firstName: string;
   lastName: string;
-  userName: string;
+  username: string;
   selected?: boolean;
 }
 
@@ -22,13 +22,13 @@ interface BLSelectableUserListProps {
   users: BLSelectableUser[];
   groups: BLSelectableUserGroup[];
   selected: number[];
-  setSelected: React.Dispatch<React.SetStateAction<number[]>>;
+  setSelected: Dispatch<SetStateAction<number[]>>;
 }
 
 const BLSelectableUserList = ({users, groups, selected, setSelected}: BLSelectableUserListProps) => {
   const primary = (user: BLSelectableUser) => <div className={ 'flex items-center gap-2' }>
     <div className={ 'text-base font-medium text-[#181D27]' }>{ user.firstName } { user.lastName }</div>
-    <div className={ 'text-base font-normal text-[#535862]' }>@{ user.userName }</div>
+    <div className={ 'text-base font-normal text-[#535862]' }>@{ user.username }</div>
   </div>;
   const end = (user: BLSelectableUser) => ({selected}: { selected: boolean }) => <Checkbox
     edge="end"

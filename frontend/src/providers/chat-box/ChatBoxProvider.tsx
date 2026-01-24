@@ -1,4 +1,13 @@
-import React, { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+  useCallback,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import { ChatBoxEnum } from '../../enums/ChatBoxEnum.ts';
 import { SortDirectionEnum } from '../../enums/SortDirectionEnum.ts';
 import type { PaginationDto } from '../../dtos/PaginationDto.ts';
@@ -13,17 +22,17 @@ interface ChatBoxProviderProps {
   children?: ReactNode;
 }
 
-interface ChatBoxContextType {
+type ChatBoxContextType = {
   chatBoxCount: ChatBoxCountDto,
-  setChatBoxCount: React.Dispatch<React.SetStateAction<ChatBoxCountDto>>,
+  setChatBoxCount: Dispatch<SetStateAction<ChatBoxCountDto>>,
   chatBox: ChatBoxEnum;
-  setChatBox: React.Dispatch<React.SetStateAction<ChatBoxEnum>>;
+  setChatBox: Dispatch<SetStateAction<ChatBoxEnum>>;
   sortField: ChatSortFieldEnum;
-  setSortField: React.Dispatch<React.SetStateAction<ChatSortFieldEnum>>;
+  setSortField: Dispatch<SetStateAction<ChatSortFieldEnum>>;
   sortDirection: SortDirectionEnum;
-  setSortDirection: React.Dispatch<React.SetStateAction<SortDirectionEnum>>;
+  setSortDirection: Dispatch<SetStateAction<SortDirectionEnum>>;
   pagination: PaginationDto;
-  setPagination: React.Dispatch<React.SetStateAction<PaginationDto>>;
+  setPagination: Dispatch<SetStateAction<PaginationDto>>;
   onMoveChatsToBox: (count: number, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => void;
 }
 

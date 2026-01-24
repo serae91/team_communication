@@ -1,10 +1,19 @@
-import React, { createContext, type ReactNode, useContext, useEffect, useState, } from 'react';
+import React, {
+  createContext,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import type { BLMessageCreateDto, BLMessageDto } from '../../dtos/BLMessageDto.ts';
 import type { WebsocketMessage } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
-import { useWebSocket } from '../bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
+import {
+  useWebsocketMessageWebSocket
+} from '../bl-websocket/bl-websocket-types/bl-messages-websocket/WebSocketMessageWebSocketProvider.ts';
 import { useBLChats } from '../bl-chat/BLChatProvider.tsx';
 import { getMessages } from '../../services/MessageService.ts';
-import { useAuth } from '../auth/AuthProvider.tsx';
 
 interface BLMessageProviderProps {
   children: ReactNode;
@@ -12,15 +21,14 @@ interface BLMessageProviderProps {
 
 type BLMessageContextType = {
   messages: BLMessageDto[];
-  setMessages: React.Dispatch<React.SetStateAction<BLMessageDto[]>>
+  setMessages: Dispatch<SetStateAction<BLMessageDto[]>>
   sendMessage: (text: string) => void;
 };
 const BLMessageContext = createContext<BLMessageContextType | null>(null);
 
 export const BLMessageProvider = ({children}: BLMessageProviderProps) => {
   const [messages, setMessages] = useState<BLMessageDto[]>([]);
-  const {removeMessageHandler, addMessageHandler, send} = useWebSocket();
-  const {user} = useAuth();
+  const {removeMessageHandler, addMessageHandler, send} = useWebsocketMessageWebSocket();
   const {activeChatId} = useBLChats();
 
   useEffect(() => {
