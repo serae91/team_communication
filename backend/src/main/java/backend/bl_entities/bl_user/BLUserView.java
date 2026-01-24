@@ -8,5 +8,9 @@ public interface BLUserView {
     @IdMapping
     Long getId();
 
+    String getFirstName();
+
+    String getLastName();
+
     String getUsername();
 }

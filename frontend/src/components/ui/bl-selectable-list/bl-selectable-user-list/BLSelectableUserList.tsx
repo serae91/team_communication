@@ -1,15 +1,18 @@
-import React, { type Dispatch, type SetStateAction } from 'react';
+import React from 'react';
 import { Checkbox } from '@mui/material';
 import { type BLListItemProps } from '../bl-list-item/BLListItem.tsx';
 import BLSelectableList from '../BLSelectableList.tsx';
 import type { BLListItemGroupProps } from '../bl-list-item-group/BLListItemGroup.tsx';
+import {
+  useBLSelectableUserMultiSelect
+} from '../../../../providers/multi-select/bl-user-multi-select-provider/BLMultiSelectProvider.ts';
 
 export interface BLSelectableUser {
   id: number;
   firstName: string;
   lastName: string;
   username: string;
-  selected?: boolean;
+  selected: boolean;
 }
 
 export interface BLSelectableUserGroup {
@@ -21,11 +24,11 @@ export interface BLSelectableUserGroup {
 interface BLSelectableUserListProps {
   users: BLSelectableUser[];
   groups: BLSelectableUserGroup[];
-  selected: number[];
-  setSelected: Dispatch<SetStateAction<number[]>>;
 }
 
-const BLSelectableUserList = ({users, groups, selected, setSelected}: BLSelectableUserListProps) => {
+const BLSelectableUserList = ({users, groups}: BLSelectableUserListProps) => {
+  const {selected, setSelected} = useBLSelectableUserMultiSelect();
+
   const primary = (user: BLSelectableUser) => <div className={ 'flex items-center gap-2' }>
     <div className={ 'text-base font-medium text-[#181D27]' }>{ user.firstName } { user.lastName }</div>
     <div className={ 'text-base font-normal text-[#535862]' }>@{ user.username }</div>

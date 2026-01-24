@@ -5,34 +5,35 @@ import { createContext, type Dispatch, type ReactNode, type SetStateAction, useC
 import { useDebounce } from '../../services/useDebounce.ts';
 import { useQuery } from '@tanstack/react-query';
 
+export interface Selectable {
+  id: number;
+  selected: boolean;
+}
+
 type MultiSelectProviderProps<T> = {
   placeholder?: string;
   children: ReactNode;
 
   fetchOptions: (query: string) => Promise<T[]>;
-
-  selectedOptions: T[];
-
-  filter: (option: T) => boolean;
+  filter: (option: T, query: string) => boolean;
 
   minQueryLength?: number;
   debounceMs?: number;
 }
 
-type MultiSelectContextType<T> = {
+type MultiSelectContextType<T extends Selectable> = {
   query: string;
   setQuery: Dispatch<SetStateAction<string>>,
-  selected: T[],
-  setSelected: Dispatch<SetStateAction<T[]>>,
+  selected: Selectable[],
+  setSelected: Dispatch<SetStateAction<Selectable[]>>,
   filteredOptions: T[],
 };
 
-const createMultiSelectProvider = <T, >() => {
+const createMultiSelectProvider = <T extends Selectable>() => {
   const MultiSelectContext = createContext<MultiSelectContextType<T> | null>(null);
 
   const MultiSelectProvider = ({
                                  placeholder,
-                                 selectedOptions,
                                  children,
                                  fetchOptions,
                                  filter,
@@ -40,7 +41,7 @@ const createMultiSelectProvider = <T, >() => {
                                  debounceMs = 400
                                }: MultiSelectProviderProps<T>) => {
     const [query, setQuery] = useState<string>('');
-    const [selected, setSelected] = useState<T[]>([]);
+    const [selected, setSelected] = useState<Selectable[]>([]);
     const [isOpen, setIsOpen] = useState(false);
 
     const debouncedQuery = useDebounce(query, debounceMs);
@@ -52,7 +53,7 @@ const createMultiSelectProvider = <T, >() => {
       staleTime: 60_000,
     });
 
-    const filteredOptions = options.filter(filter);
+    const filteredOptions = options.filter((option) => filter(option, query));
 
 
     const value = {query, setQuery, selected, setSelected, filteredOptions};
@@ -84,7 +85,7 @@ const createMultiSelectProvider = <T, >() => {
               },
             } }
           />
-          { children }
+          { isOpen && children }
         </div>
       </MultiSelectContext.Provider>);
   };

@@ -11,7 +11,7 @@ export interface BLListItemProps {
   start?: React.ReactNode;
   end?: ({selected}: { selected: boolean }) => React.ReactNode;
   onClick?: () => void;
-  selected?: boolean;
+  selected: boolean;
 }
 
 const BLListItem = ({

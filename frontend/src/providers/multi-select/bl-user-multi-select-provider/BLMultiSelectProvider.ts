@@ -5,5 +5,5 @@ import type {
 
 export const {
   MultiSelectProvider: BLSelectableUserMultiSelectProvider,
-  useMultiSelect: useBLSelectableUserMultiSelectProvider
+  useMultiSelect: useBLSelectableUserMultiSelect
 } = createMultiSelectProvider<BLSelectableUser>();

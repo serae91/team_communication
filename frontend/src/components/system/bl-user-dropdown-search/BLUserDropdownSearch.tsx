@@ -5,10 +5,20 @@ import BLSelectableUserList, {
 import {
   BLSelectableUserMultiSelectProvider
 } from '../../../providers/multi-select/bl-user-multi-select-provider/BLMultiSelectProvider.ts';
+import { getFilteredUser } from '../../../services/UserService.ts';
 
 const BLUserDropdownSearch = () => {
 
-  return (<BLSelectableUserMultiSelectProvider fetchOptions={ } selectedOptions={ }>
+  const filter = (user: BLSelectableUser, query: string) => {
+    if (`${ user.firstName } ${ user.lastName }`.toLowerCase().includes(query.toLowerCase())) return true;
+    if (`${ user.firstName }${ user.lastName }`.toLowerCase().includes(query.toLowerCase())) return true;
+    if (`${ user.lastName } ${ user.firstName }`.toLowerCase().includes(query.toLowerCase())) return true;
+    if (`${ user.lastName }${ user.firstName }`.toLowerCase().includes(query.toLowerCase())) return true;
+    if (user.username.toLowerCase().includes(query.toLowerCase())) return true;
+    return false;
+  };
+  return (<BLSelectableUserMultiSelectProvider fetchOptions={ getFilteredUser } placeholder={ 'Search for a member' }
+                                               filter={ filter }>
     <BLSelectableUserList users={ users } groups={ groups } selected={ } setSelected={ }/>
   </BLSelectableUserMultiSelectProvider>);
 

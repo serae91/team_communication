@@ -3,21 +3,24 @@ import BLListItemGroup, { type BLListItemGroupProps } from './bl-list-item-group
 import BLListItem, { type BLListItemProps } from './bl-list-item/BLListItem.tsx';
 import './BLSelectableList.scss';
 import type { Dispatch, SetStateAction } from 'react';
+import type { Selectable } from '../../../providers/multi-select/MultiSelectProvider.tsx';
 
 interface BLSelectableListProps {
   singleItems?: BLListItemProps[];
   groups?: BLListItemGroupProps[];
-  selected: number[];
-  setSelected: Dispatch<SetStateAction<number[]>>;
+  selected: Selectable[];
+  setSelected: Dispatch<SetStateAction<Selectable[]>>;
 }
 
 const BLSelectableList = ({selected, setSelected, singleItems, groups}: BLSelectableListProps) => {
 
-  const toggle = (id: number) => {
-    setSelected((prev) =>
-      prev.includes(id)
-        ? prev.filter((i) => i !== id)
-        : [...prev, id]
+  const toggle = (selectable: Selectable) => {
+    setSelected((prev) => {
+        const ids = prev.map(value => value.id);
+        return ids.includes(selectable.id)
+          ? prev.filter((value) => value.id !== selectable.id)
+          : [...prev, selectable];
+      }
     );
   };
 
@@ -33,9 +36,9 @@ const BLSelectableList = ({selected, setSelected, singleItems, groups}: BLSelect
               secondary={ item.secondary }
               start={ item.start }
               end={ item.end ?? (() => undefined) }
-              selected={ selected.includes(item.id) }
+              selected={ selected.includes(item) }
               onClick={ () => {
-                toggle(item.id);
+                toggle(item);
                 if (item.onClick) {
                   item.onClick();
                 }
