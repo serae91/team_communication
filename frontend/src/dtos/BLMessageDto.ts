@@ -10,4 +10,5 @@ export interface BLMessageDto {
 export interface BLMessageCreateDto {
   text: string;
   chatId: number;
+  createdAt: Date;
 }
