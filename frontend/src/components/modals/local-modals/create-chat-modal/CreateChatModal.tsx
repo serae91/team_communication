@@ -11,11 +11,17 @@ import {
 import type { BLChatCreateDto } from '../../../../dtos/BLChatCreateDto.ts';
 import { CheckOutlined, ModeEditOutlined } from '@mui/icons-material';
 import BLUserDropdownSearch from '../../../system/bl-user-dropdown-search/BLUserDropdownSearch.tsx';
+import ChatSystem from '../../../system/chat-system/ChatSystem.tsx';
+import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
+import type { BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
+import { useAuth } from '../../../../providers/auth/AuthProvider.tsx';
 
 
 const CreateChatModal = () => {
   const {send} = useWebsocketMessageWebSocket();
   const {closeLocalModal} = useModal();
+  const {messages, setMessages} = useBLMessages();
+  const {user} = useAuth();
 
   const sendCreateChatMessage = (text: string) => {
     const message = {
@@ -44,6 +50,11 @@ const CreateChatModal = () => {
           </div>
         </div>
         <BLUserDropdownSearch/>
+        <ChatSystem messages={ messages } sendMessage={ (text) => {
+          setMessages(prev => {
+            return [...prev, {text: text, createdAt: new Date(), sender: user}] as BLMessageDto[];
+          });
+        } }/>
       </BLLeftMarkedCard>
     </BLModal>);
 };

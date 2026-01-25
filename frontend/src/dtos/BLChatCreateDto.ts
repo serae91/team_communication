@@ -1,6 +1,9 @@
+import type { BLMessageDto } from './BLMessageDto.ts';
+
 export interface BLChatCreateDto {
   title: string;
   urgency: string;
-  firstMessageText: string;
+  firstMessages: BLMessageDto[];
   userIds: number[];
+  createdAt: Date;
 }

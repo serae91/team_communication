@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { type MouseEventHandler, useCallback, useEffect, useRef } from 'react';
 import './ChatMessenging.scss';
 import ChatMessage from './chat-message/ChatMessage';
 import type { BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
@@ -8,10 +8,11 @@ import ChatInput from './chat-input/ChatInput.tsx';
 interface ChatMessengingProps {
   className?: string;
   messages: BLMessageDto[];
-  sendMessage: (text: string) => void;
+  onPressEnter: (text: string) => void;
+  onClickSendButton?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
+const ChatMessenging = ({messages, onPressEnter, onClickSendButton}: ChatMessengingProps) => {
   const chatScrollRef = useRef<HTMLDivElement>(null);
 
   const prevLength = useRef(messages?.length ?? 0);
@@ -56,7 +57,7 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
            className={ 'flex-1 overflow-y-auto chat-messenging' }>
         { renderChatMessages() }
       </div>
-      <ChatInput onSend={ sendMessage }/>
+      <ChatInput onPressEnter={ onPressEnter } onClickSendButton={ onClickSendButton }/>
     </>
   );
 };

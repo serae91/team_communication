@@ -32,7 +32,10 @@ export const BLMessageProvider = ({children}: BLMessageProviderProps) => {
   const {activeChatId} = useBLChats();
 
   useEffect(() => {
-    if (activeChatId === null) return;
+    if (activeChatId === null) {
+      setMessages([]);
+      return;
+    }
     getMessages(activeChatId).then(messages => setMessages(messages));
   }, [activeChatId]);
 
