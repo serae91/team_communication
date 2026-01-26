@@ -10,7 +10,6 @@ const BLUserDropdownSearch = () => {
     <SearchBar placeholder={ 'Search for a member' } query={ query } setQuery={ setQuery } isFetching={ isFetching }>
       <BLSelectableUserList/>
     </SearchBar>);
-
 };
 
 export default BLUserDropdownSearch;

@@ -5,21 +5,26 @@ import './BLSelectableList.scss';
 import type { Dispatch, SetStateAction } from 'react';
 import type { Selectable } from '../../../providers/multi-select/MultiSelectProvider.tsx';
 
-interface BLSelectableListProps {
-  singleItems?: BLListItemProps[];
-  groups?: BLListItemGroupProps[];
+interface BLSelectableListProps<T extends Selectable> {
+  singleItems?: BLListItemProps<T>[];
+  groups?: BLListItemGroupProps<T>[];
   selected: Selectable[];
   setSelected: Dispatch<SetStateAction<Selectable[]>>;
 }
 
-const BLSelectableList = ({selected, setSelected, singleItems, groups}: BLSelectableListProps) => {
+const BLSelectableList = <T extends Selectable>({
+                                                  selected,
+                                                  setSelected,
+                                                  singleItems,
+                                                  groups
+                                                }: BLSelectableListProps<T>) => {
 
-  const toggle = (selectable: Selectable) => {
+  const toggle = (item: BLListItemProps<T>) => {
     setSelected((prev) => {
         const ids = prev.map(value => value.id);
-        return ids.includes(selectable.id)
-          ? prev.filter((value) => value.id !== selectable.id)
-          : [...prev, selectable];
+        return ids.includes(item.id)
+          ? prev.filter((value) => value.id !== item.id)
+          : [...prev, item.originalObject];
       }
     );
   };
@@ -37,11 +42,10 @@ const BLSelectableList = ({selected, setSelected, singleItems, groups}: BLSelect
               start={ item.start }
               end={ item.end ?? (() => undefined) }
               selected={ selected.map(s => s.id).includes(item.id) }
+              originalObject={ item.originalObject }
               onClick={ () => {
                 toggle(item);
-                if (item.onClick) {
-                  item.onClick();
-                }
+                item.onClick?.();
               } }
             />)
         }

@@ -38,8 +38,9 @@ const BLSelectableUserList = () => {
   const mapUser = (user: BLUserDto) => ({
     id: user.id,
     primary: primary(user),
-    end: end
-  } as BLListItemProps);
+    end: end,
+    originalObject: user
+  } as BLListItemProps<BLUserDto>);
 
   const mappedUsers = filteredOptions.map(mapUser);
 

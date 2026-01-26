@@ -19,6 +19,8 @@ import {
   BLUserMultiSelectProvider,
   useBLUserMultiSelect
 } from '../../../../providers/multi-select/bl-selectable-user-multi-select-provider/BLUserMultiSelectProvider.tsx';
+import BLLabelChip from '../../../ui/bl-label-chip/BLLabelChip.tsx';
+import type { BLUserDto } from '../../../../dtos/BLUserDto.ts';
 
 
 const CreateChatModalContent = () => {
@@ -41,6 +43,17 @@ const CreateChatModalContent = () => {
     send(message);
     closeLocalModal();
   };
+
+  const renderSelectedUsers = () => {
+    console.log(selected);
+    return (
+      <div className={ 'flex' }>
+        { selected.map(sel =>
+          <BLLabelChip key={ sel.id } label={ ({...sel} as BLUserDto).username }/>) }
+      </div>
+    );
+  };
+
   return (
     <BLModal>
       <BLLeftMarkedCard className={ 'create-chat-modal' }>
@@ -54,6 +67,7 @@ const CreateChatModalContent = () => {
             <CheckOutlined/>
           </div>
         </div>
+        { renderSelectedUsers() }
         <BLUserDropdownSearch/>
         <ChatSystem messages={ messages } sendMessage={ (text) => {
           setMessages(prev => {

@@ -3,8 +3,9 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import './BLListItem.scss';
 import React, { type ReactNode } from 'react';
+import type { Selectable } from '../../../../providers/multi-select/MultiSelectProvider.tsx';
 
-export interface BLListItemProps {
+export interface BLListItemProps<T extends Selectable> {
   id: number;
   primary: ReactNode;
   secondary?: ReactNode;
@@ -12,16 +13,18 @@ export interface BLListItemProps {
   end?: (selected: boolean) => ReactNode;
   onClick?: () => void;
   selected: boolean;
+  originalObject: T;
 }
 
-const BLListItem = ({
-                      primary,
-                      secondary,
-                      start,
-                      end,
-                      onClick,
-                      selected = false,
-                    }: BLListItemProps) => {
+const BLListItem = <T extends Selectable>({
+                                            primary,
+                                            secondary,
+                                            start,
+                                            end,
+                                            onClick,
+                                            selected = false,
+                                            originalObject,
+                                          }: BLListItemProps<T>) => {
   return (
     <div className={ `bl-list-item${ selected ? '--selected' : '' }` }>
       <ListItem onClick={ onClick }>
