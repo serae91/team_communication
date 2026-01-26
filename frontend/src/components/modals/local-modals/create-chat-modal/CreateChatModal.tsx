@@ -47,7 +47,7 @@ const CreateChatModalContent = () => {
   const renderSelectedUsers = () => {
     console.log(selected);
     return (
-      <div className={ 'flex' }>
+      <div className={ 'flex gap-1' }>
         { selected.map(sel =>
           <BLLabelChip key={ sel.id } label={ ({...sel} as BLUserDto).username }/>) }
       </div>
