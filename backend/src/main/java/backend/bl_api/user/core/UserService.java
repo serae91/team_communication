@@ -30,7 +30,7 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
-    public Set<BLUserView> getFilteredUsers(final String query, final Long userId/*TODO look for workspace by userId*/) {
+    public Set<BLUserView> getFilteredUsers(final String query, final Long userId) {
         final BLUser user = userRepository.findById(userId);
         final CriteriaBuilder<BLUser> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLUser.class);
         criteriaBuilder.where("workspace.id").eq(user.getWorkspace().getId());
