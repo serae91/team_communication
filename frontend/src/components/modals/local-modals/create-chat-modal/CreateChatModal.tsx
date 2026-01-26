@@ -21,6 +21,8 @@ import {
 } from '../../../../providers/multi-select/bl-selectable-user-multi-select-provider/BLUserMultiSelectProvider.tsx';
 import BLLabelChip from '../../../ui/bl-label-chip/BLLabelChip.tsx';
 import type { BLUserDto } from '../../../../dtos/BLUserDto.ts';
+import { Switch } from '@mui/material';
+import { useState } from 'react';
 
 
 const CreateChatModalContent = () => {
@@ -29,6 +31,7 @@ const CreateChatModalContent = () => {
   const {messages, setMessages} = useBLMessages();
   const {user} = useAuth();
   const {selected, setSelected} = useBLUserMultiSelect();
+  const [isUrgent, setIsUrgent] = useState(false);
 
   const sendCreateChatMessage = () => {
     const message = {
@@ -36,7 +39,7 @@ const CreateChatModalContent = () => {
       chatCreateDto: {
         title: 'Perfectly tested title',
         firstMessages: messages,
-        urgency: 'HIGH',
+        urgency: isUrgent ? 'HIGH' : 'LOW',
         userIds: selected.map(sel => sel.id)
       } as BLChatCreateDto
     } as WebsocketMessage;
@@ -69,6 +72,11 @@ const CreateChatModalContent = () => {
         </div>
         { renderSelectedUsers() }
         <BLUserDropdownSearch/>
+        <div className={ 'flex items-center' }>Urgency: <Switch checked={ isUrgent }
+                                                                onChange={ (event) => setIsUrgent(event.target.checked)
+                                                                }/> Mark this topic as
+          urgent
+        </div>
         <ChatSystem messages={ messages } sendMessage={ (text) => {
           setMessages(prev => {
             return [...prev, {text: text, createdAt: new Date(), sender: user}] as BLMessageDto[];
