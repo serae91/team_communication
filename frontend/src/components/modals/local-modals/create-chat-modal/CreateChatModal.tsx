@@ -22,7 +22,7 @@ import {
 import BLLabelChip from '../../../ui/bl-label-chip/BLLabelChip.tsx';
 import type { BLUserDto } from '../../../../dtos/BLUserDto.ts';
 import { Switch } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 const CreateChatModalContent = () => {
@@ -32,6 +32,10 @@ const CreateChatModalContent = () => {
   const {user} = useAuth();
   const {selected, setSelected} = useBLUserMultiSelect();
   const [isUrgent, setIsUrgent] = useState(false);
+
+  useEffect(() => {
+    setMessages([]);
+  }, [setMessages]);
 
   const sendCreateChatMessage = () => {
     const message = {
@@ -48,7 +52,6 @@ const CreateChatModalContent = () => {
   };
 
   const renderSelectedUsers = () => {
-    console.log(selected);
     return (
       <div className={ 'flex gap-1' }>
         { selected.map(sel =>
