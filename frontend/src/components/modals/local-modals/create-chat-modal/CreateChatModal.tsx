@@ -21,7 +21,7 @@ import {
 } from '../../../../providers/multi-select/bl-selectable-user-multi-select-provider/BLUserMultiSelectProvider.tsx';
 import BLLabelChip from '../../../ui/bl-label-chip/BLLabelChip.tsx';
 import type { BLUserDto } from '../../../../dtos/BLUserDto.ts';
-import { Switch } from '@mui/material';
+import { Switch, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 
@@ -32,6 +32,7 @@ const CreateChatModalContent = () => {
   const {user} = useAuth();
   const {selected, setSelected} = useBLUserMultiSelect();
   const [isUrgent, setIsUrgent] = useState(false);
+  const [title, setTitle] = useState('');
 
   useEffect(() => {
     setMessages([]);
@@ -41,7 +42,7 @@ const CreateChatModalContent = () => {
     const message = {
       type: 'CREATE_CHAT',
       chatCreateDto: {
-        title: 'Perfectly tested title',
+        title: title,
         firstMessages: messages,
         urgency: isUrgent ? 'HIGH' : 'LOW',
         userIds: selected.map(sel => sel.id)
@@ -75,6 +76,9 @@ const CreateChatModalContent = () => {
         </div>
         { renderSelectedUsers() }
         <BLUserDropdownSearch/>
+        <TextField label="Title"
+                   value={ title }
+                   onChange={ (e) => setTitle(e.target.value) }/>
         <div className={ 'flex items-center' }>Urgency: <Switch checked={ isUrgent }
                                                                 onChange={ (event) => setIsUrgent(event.target.checked)
                                                                 }/> Mark this topic as
@@ -90,9 +94,11 @@ const CreateChatModalContent = () => {
 };
 
 const CreateChatModal = () => {
-  return (<BLUserMultiSelectProvider>
-    <CreateChatModalContent/>
-  </BLUserMultiSelectProvider>);
+  return (
+    <BLUserMultiSelectProvider>
+      <CreateChatModalContent/>
+    </BLUserMultiSelectProvider>
+  );
 };
 
 export default CreateChatModal;

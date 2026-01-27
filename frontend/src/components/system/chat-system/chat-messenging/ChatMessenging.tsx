@@ -4,7 +4,6 @@ import ChatMessage from './chat-message/ChatMessage';
 import type { BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
 import ChatInput from './chat-input/ChatInput.tsx';
 
-
 interface ChatMessengingProps {
   className?: string;
   messages: BLMessageDto[];
@@ -44,21 +43,28 @@ const ChatMessenging = ({messages, onPressEnter, onClickSendButton}: ChatMesseng
     scrollDownWhenAtBottomAndAddingNewMessage();
   }, [messages.length, scrollDownWhenAtBottomAndAddingNewMessage]);
 
-  const renderChatMessages = () => {
-    return <div className={ 'flex flex-col gap-1.5' }>{ messages.map(message =>
-      <ChatMessage sender={ message.sender.username } postTime={ message.createdAt } message={ message.text }
-                   key={ message.id }/>) }</div>;
-
-  };
-
   return (
-    <>
-      <div ref={ chatScrollRef }
-           className={ 'flex-1 overflow-y-auto chat-messenging' }>
-        { renderChatMessages() }
+    <div className="flex-1 chat-messenging">
+      <div
+        ref={ chatScrollRef }
+        className="scroll-area"
+      >
+        <ul className="flex flex-col gap-1.5 list-none p-0 m-0">
+          { messages.map((message) => (
+            <li key={ message.id }>
+              <ChatMessage
+                sender={ message.sender.username }
+                postTime={ message.createdAt }
+                message={ message.text }
+              />
+            </li>
+          )) }
+        </ul>
       </div>
-      <ChatInput onPressEnter={ onPressEnter } onClickSendButton={ onClickSendButton }/>
-    </>
+      <div className="absolute bottom-0 left-0 right-0">
+        <ChatInput onPressEnter={ onPressEnter } onClickSendButton={ onClickSendButton }/>
+      </div>
+    </div>
   );
 };
 

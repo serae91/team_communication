@@ -2,24 +2,12 @@
 @use '../../../../styles/constants' as constants;
 
 .chat-messenging {
-  .send-button {
-    outline: none;
-    color: colors.$color-text-main;
-    background-color: colors.$color-white;
-    min-height: constants.$height-title;
-    padding: 0 1.125rem;
-    border-radius: constants.$border-radius;
-    border-style: solid;
-    border-width: constants.$border-width;
-    border-color: colors.$color-border;
-    width: constants.$height-title;
-  }
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
 
-  .send-button:hover {
-    background-color: colors.$color-hover-gray;
-  }
-
-  .send-button:active {
-    background-color: colors.$color-select-gray;
+  .scroll-area {
+    overflow-y: auto;
+    height: calc(100% - 114px);
   }
 }
