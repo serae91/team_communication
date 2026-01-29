@@ -4,10 +4,11 @@
 .chat-messenging {
   display: flex;
   flex-direction: column;
-  flex: 1 1 0;
+  height: 100%;
+  position: relative;
 
   .scroll-area {
     overflow-y: auto;
-    height: calc(100% - 114px);
+    flex: 1;
   }
 }

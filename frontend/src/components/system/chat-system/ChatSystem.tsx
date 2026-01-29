@@ -13,9 +13,10 @@ interface ChatSystemProps {
 
 const ChatSystem = ({messages, sendMessage, onClickSendButton}: ChatSystemProps) => {
   return (
-    <div className={ 'flex flex-col relative h-full' }>
+    <div className={ 'chat-system' }>
       <ChatSummary className={ 'mb-4' }/>
-      <ChatMessenging messages={ messages } onPressEnter={ sendMessage } onClickSendButton={ onClickSendButton }/>
+      <ChatMessenging className={ 'messenging' } messages={ messages } onPressEnter={ sendMessage }
+                      onClickSendButton={ onClickSendButton }/>
     </div>
   );
 };

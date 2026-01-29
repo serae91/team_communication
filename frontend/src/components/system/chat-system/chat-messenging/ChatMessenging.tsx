@@ -11,7 +11,7 @@ interface ChatMessengingProps {
   onClickSendButton?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-const ChatMessenging = ({messages, onPressEnter, onClickSendButton}: ChatMessengingProps) => {
+const ChatMessenging = ({className, messages, onPressEnter, onClickSendButton}: ChatMessengingProps) => {
   const chatScrollRef = useRef<HTMLDivElement>(null);
 
   const prevLength = useRef(messages?.length ?? 0);
@@ -44,7 +44,7 @@ const ChatMessenging = ({messages, onPressEnter, onClickSendButton}: ChatMesseng
   }, [messages.length, scrollDownWhenAtBottomAndAddingNewMessage]);
 
   return (
-    <div className="flex-1 chat-messenging">
+    <div className={ `chat-messenging ${ className }` }>
       <div
         ref={ chatScrollRef }
         className="scroll-area"
@@ -61,9 +61,7 @@ const ChatMessenging = ({messages, onPressEnter, onClickSendButton}: ChatMesseng
           )) }
         </ul>
       </div>
-      <div className="absolute bottom-0 left-0 right-0">
-        <ChatInput onPressEnter={ onPressEnter } onClickSendButton={ onClickSendButton }/>
-      </div>
+      <ChatInput onPressEnter={ onPressEnter } onClickSendButton={ onClickSendButton }/>
     </div>
   );
 };

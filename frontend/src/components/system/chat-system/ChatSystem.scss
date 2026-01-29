@@ -2,5 +2,10 @@
 @use '../../../styles/constants' as constants;
 
 .chat-system {
-  background-color: colors.$color-white;
+  height: calc(100% - 80px);
+
+  .messenging {
+    height: calc(100% - 62px - 16px);
+    display: flex;
+  }
 }

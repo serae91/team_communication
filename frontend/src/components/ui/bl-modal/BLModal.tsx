@@ -32,7 +32,7 @@ const BLModal = ({children, onClick}: ModalProps) => {
           animate={ {scale: 1, opacity: 1} }
           exit={ {scale: 0.8, opacity: 0} }
         >
-          <div className={ 'flex-1' }>
+          <div className={ 'flex-1  h-[80vh]' }>
             { children }
           </div>
         </motion.div>

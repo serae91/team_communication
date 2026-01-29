@@ -2,11 +2,8 @@
 @use '../../../../styles/constants' as constants;
 
 .chat-modal {
-  color: colors.$color-text-main;
   padding: 29px 29px 29px 1.5rem;
   gap: 1.5rem;
-  display: flex;
-  flex-direction: column;
   height: 100%;
 
   .chat-title {
