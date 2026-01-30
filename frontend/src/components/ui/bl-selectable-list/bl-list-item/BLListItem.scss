@@ -1,0 +1,15 @@
+@use '../../../../styles/colors' as colors;
+@use '../../../../styles/constants' as constants;
+
+.bl-list-item {
+  cursor: pointer;
+
+  :hover {
+    background-color: colors.$color-hover-gray;
+  }
+}
+
+.bl-list-item--selected {
+  cursor: pointer;
+  background-color: colors.$color-select-gray;
+}

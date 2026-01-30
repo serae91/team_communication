@@ -1,4 +1,6 @@
 package backend.bl_entities.bl_message;
 
-public record BLMessageCreateDto(String text, Long chatId) {
+import java.time.Instant;
+
+public record BLMessageCreateDto(String text, Long chatId, Instant createdAt) {
 }

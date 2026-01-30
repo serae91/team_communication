@@ -10,12 +10,15 @@ import { Box, IconButton, MenuItem, Paper, Select, Toolbar, } from '@mui/materia
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import { CoffeeRounded } from '@mui/icons-material';
+import type { MouseEventHandler } from 'react';
 
 type ChatInputProps = {
-  onSend: (html: string) => void;
+  onPressEnter: (html: string) => void;
+  onClickSendButton?: MouseEventHandler<HTMLButtonElement> | undefined;
 };
 
-const ChatInput = ({onSend}: ChatInputProps) => {
+const ChatInput = ({onPressEnter, onClickSendButton}: ChatInputProps) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -32,7 +35,7 @@ const ChatInput = ({onSend}: ChatInputProps) => {
 
           const html = editor?.getHTML() ?? '';
           if (html !== '<p></p>') {
-            onSend(html);
+            onPressEnter(html);
             editor?.commands.clearContent();
           }
           return true;
@@ -48,52 +51,68 @@ const ChatInput = ({onSend}: ChatInputProps) => {
   if (!editor) return null;
 
   return (
-    <Paper variant="outlined">
-      {/* TOOLBAR */ }
-      <Toolbar variant="dense">
-        <Select
-          size="small"
-          value={ editor.getAttributes('textStyle').fontFamily || 'Inter' }
-          onChange={ (e) =>
-            editor.chain().focus().setFontFamily(e.target.value).run()
-          }
-          sx={ {mr: 1, minWidth: 140} }
-        >
-          <MenuItem value="Inter">Inter</MenuItem>
-          <MenuItem value="Arial">Arial</MenuItem>
-          <MenuItem value="Times New Roman">Times New Roman</MenuItem>
-        </Select>
+    <div className={ 'flex gap-4 items-center justify-center' }>
+      <Paper variant="outlined" className={ 'w-full' }>
+        {/* TOOLBAR */ }
+        <Toolbar variant="dense">
+          <Select
+            size="small"
+            value={ editor.getAttributes('textStyle').fontFamily || 'Inter' }
+            onChange={ (e) =>
+              editor.chain().focus().setFontFamily(e.target.value).run()
+            }
+            sx={ {mr: 1, minWidth: 140} }
+          >
+            <MenuItem value="Inter">Inter</MenuItem>
+            <MenuItem value="Arial">Arial</MenuItem>
+            <MenuItem value="Times New Roman">Times New Roman</MenuItem>
+          </Select>
 
-        <IconButton
+          <IconButton
 
-          color={ editor.isActive('bold') ? 'primary' : 'default' }
-          onClick={ () => editor.chain().focus().toggleBold().run() }
-        >
-          <FormatBoldIcon/>
-        </IconButton>
+            color={ editor.isActive('bold') ? 'primary' : 'default' }
+            onClick={ () => editor.chain().focus().toggleBold().run() }
+          >
+            <FormatBoldIcon/>
+          </IconButton>
 
-        <IconButton
-          color={ editor.isActive('italic') ? 'primary' : 'default' }
-          onClick={ () => editor.chain().focus().toggleItalic().run() }
-        >
-          <FormatItalicIcon/>
-        </IconButton>
+          <IconButton
+            color={ editor.isActive('italic') ? 'primary' : 'default' }
+            onClick={ () => editor.chain().focus().toggleItalic().run() }
+          >
+            <FormatItalicIcon/>
+          </IconButton>
 
-        <IconButton
-          color={ editor.isActive('bulletList') ? 'primary' : 'default' }
-          onClick={ () =>
-            editor.chain().focus().toggleBulletList().run()
-          }
-        >
-          <FormatListBulletedIcon/>
-        </IconButton>
-      </Toolbar>
+          <IconButton
+            color={ editor.isActive('bulletList') ? 'primary' : 'default' }
+            onClick={ () =>
+              editor.chain().focus().toggleBulletList().run()
+            }
+          >
+            <FormatListBulletedIcon/>
+          </IconButton>
+        </Toolbar>
 
-      {/* EDITOR */ }
-      <Box px={ 2 } py={ 1 }>
-        <EditorContent editor={ editor }/>
-      </Box>
-    </Paper>
+        {/* EDITOR */ }
+
+        <Box px={ 2 } py={ 1 }>
+          <EditorContent editor={ editor }/>
+        </Box>
+      </Paper>
+      <IconButton
+        onClick={ onClickSendButton }
+        sx={ {
+          width: 60,
+          height: 60,
+          borderRadius: 2,
+          borderStyle: 'solid',
+          borderColor: 'black',
+          backgroundColor: 'white',
+        } }
+      >
+        <CoffeeRounded/>
+      </IconButton>
+    </div>
   );
 };
 

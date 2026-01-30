@@ -1,0 +1,14 @@
+@use '../../../../styles/colors' as colors;
+@use '../../../../styles/constants' as constants;
+
+.bl-list-item-group {
+  .MuiListSubheader-root {
+    color: #666;
+    font-weight: constants.$font-weight-sub-title;
+    font-size: constants.$font-size-3;
+  }
+
+  .items {
+    
+  }
+}

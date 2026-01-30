@@ -18,8 +18,7 @@ const BLModal = ({children, onClick}: ModalProps) => {
             closeGlobalModal();
           else
             closeLocalModal();
-          if (onClick)
-            onClick();
+          onClick?.();
         }
         }
         initial={ {opacity: 0} }
@@ -27,13 +26,13 @@ const BLModal = ({children, onClick}: ModalProps) => {
         exit={ {opacity: 0} }
       >
         <motion.div
-          className="shadow-lg w-[80%] flex flex-col"
+          className="shadow-lg w-[80%] h-[80vh] flex flex-col overflow-hidden"
           onClick={ (e) => e.stopPropagation() }
           initial={ {scale: 0.8, opacity: 0} }
           animate={ {scale: 1, opacity: 1} }
           exit={ {scale: 0.8, opacity: 0} }
         >
-          <div className={ 'flex-1' }>
+          <div className={ 'flex-1  h-[80vh]' }>
             { children }
           </div>
         </motion.div>

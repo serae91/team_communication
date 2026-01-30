@@ -1,4 +1,12 @@
-import React, { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 
 export type User = {
   id: number;
@@ -6,10 +14,10 @@ export type User = {
   roles: string[];
 };
 
-interface AuthContextType {
+type AuthContextType = {
   user: User | null;
   loading: boolean;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  setUser: Dispatch<SetStateAction<User | null>>;
   logout: () => void;
 }
 

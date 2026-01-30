@@ -28,8 +28,6 @@ public class CommandHandler {
     @Inject
     ChatWebRegistry chatRegistry;
     @Inject
-    BLWebSocketService blWebSocketService;
-    @Inject
     ChatCreateService chatCreateService;
     @Inject
     MessageCreateService messageCreateService;
@@ -47,11 +45,11 @@ public class CommandHandler {
     }
 
     private void handleCreateChat(final CreateChatWebSocketMessage createChatWebSocketMessage, final WebSocketConnection connection) {
-        final ChatUserView chatUserView = chatCreateService.createChatFromDto(createChatWebSocketMessage.chatCreateDto(), chatRegistry.getUserIdByConnection(connection));
-        final ReceiveChatWebSocketMessage receiveChatWebSocketMessage = new ReceiveChatWebSocketMessage(chatUserView);
-        createChatWebSocketMessage.chatCreateDto().userIds().forEach(userId ->
-                chatRegistry.sendToUser(userId, receiveChatWebSocketMessage)
-        );
+        final Long chatId = chatCreateService.createChatFromDto(createChatWebSocketMessage.chatCreateDto(), chatRegistry.getUserIdByConnection(connection));
+        createChatWebSocketMessage.chatCreateDto().userIds().forEach(userId -> {
+            final ReceiveChatWebSocketMessage receiveChatWebSocketMessage = new ReceiveChatWebSocketMessage(chatUserViewService.findBy(chatId, userId));
+            chatRegistry.sendToUser(userId, receiveChatWebSocketMessage);
+        });
     }
 
     private void handleSendMessage(final SendMessageWebSocketMessage sendMessageWebSocketMessage, final WebSocketConnection connection) {

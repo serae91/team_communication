@@ -1,81 +1,104 @@
+import './CreateChatModal.scss';
 import BLModal from '../../../ui/bl-modal/BLModal.tsx';
 import BLLeftMarkedCard from '../../../ui/bl-left-marked-card/BLLeftMarkedCard.tsx';
 import type {
   WebsocketMessage
 } from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/bl-message-types.ts';
-import ChatMessenging from '../../../system/chat-system/chat-messenging/ChatMessenging.tsx';
 import { useModal } from '../../../../providers/modal/ModalProvider.tsx';
-import BLMultiSelect, { type GmailLabel } from '../../../ui/bl-multi-select/BLMultiSelect.tsx';
-import LabelIcon from '@mui/icons-material/Label';
-import { useState } from 'react';
 import {
-  useWebSocket
-} from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
+  useWebsocketMessageWebSocket
+} from '../../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/WebSocketMessageWebSocketProvider.ts';
 import type { BLChatCreateDto } from '../../../../dtos/BLChatCreateDto.ts';
+import { CheckOutlined, ModeEditOutlined } from '@mui/icons-material';
+import BLUserDropdownSearch from '../../../system/dropdown-search/bl-user-dropdown-search/BLUserDropdownSearch.tsx';
+import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
+import type { BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
+import { useAuth } from '../../../../providers/auth/AuthProvider.tsx';
+import {
+  BLUserMultiSelectProvider,
+  useBLUserMultiSelect
+} from '../../../../providers/multi-select/bl-selectable-user-multi-select-provider/BLUserMultiSelectProvider.tsx';
+import BLLabelChip from '../../../ui/bl-label-chip/BLLabelChip.tsx';
+import type { BLUserDto } from '../../../../dtos/BLUserDto.ts';
+import { Switch, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
+import ChatMessenging from '../../../system/chat-system/chat-messenging/ChatMessenging.tsx';
 
 
-const CreateChatModal = () => {
-  const {send} = useWebSocket();
-  const {closeGlobalModal} = useModal();
-  const [selected, setSelected] = useState<string[]>([]);
-  const sendCreateChatMessage = (text: string) => {
+const CreateChatModalContent = () => {
+  const {send} = useWebsocketMessageWebSocket();
+  const {closeLocalModal} = useModal();
+  const {messages, setMessages} = useBLMessages();
+  const {user} = useAuth();
+  const {selected, setSelected} = useBLUserMultiSelect();
+  const [isUrgent, setIsUrgent] = useState(false);
+  const [title, setTitle] = useState('');
+
+  useEffect(() => {
+    setMessages([]);
+  }, [setMessages]);
+
+  const sendCreateChatMessage = () => {
     const message = {
       type: 'CREATE_CHAT',
       chatCreateDto: {
-        title: 'Perfectly tested title',
-        firstMessageText: text,
-        urgency: 'HIGH',
-        userIds: [1, 3]
+        title: title,
+        firstMessages: messages,
+        urgency: isUrgent ? 'HIGH' : 'LOW',
+        userIds: selected.map(sel => sel.id)
       } as BLChatCreateDto
     } as WebsocketMessage;
     send(message);
-    closeGlobalModal();
+    closeLocalModal();
   };
+
+  const renderSelectedUsers = () => {
+    return (
+      <div className={ 'flex gap-1' }>
+        { selected.map(sel =>
+          <BLLabelChip key={ sel.id } label={ ({...sel} as BLUserDto).username }/>) }
+      </div>
+    );
+  };
+
   return (
     <BLModal>
-      <BLLeftMarkedCard>
-        <BLMultiSelect
-          labels={ dummyLabels }
-          value={ selected }
-          onChange={ setSelected }
-          placeholder="Choose labels…"
-        />
-        <ChatMessenging messages={ [] } sendMessage={ sendCreateChatMessage }/>
+      <BLLeftMarkedCard className={ 'create-chat-modal' }>
+        <div className={ 'title-line' }>
+          <div className={ 'title-start' }>
+            <ModeEditOutlined className={ 'title-icon' }/>
+            <div className={ 'title-text' }>Create a topic</div>
+          </div>
+          <div className={ 'title-end' }>
+            <ModeEditOutlined/>
+            <CheckOutlined/>
+          </div>
+        </div>
+        { renderSelectedUsers() }
+        <BLUserDropdownSearch/>
+        <TextField label="Title"
+                   value={ title }
+                   onChange={ (e) => setTitle(e.target.value) }/>
+        <div className={ 'flex items-center' }>Urgency: <Switch checked={ isUrgent }
+                                                                onChange={ (event) => setIsUrgent(event.target.checked)
+                                                                }/> Mark this topic as
+          urgent
+        </div>
+        <ChatMessenging className={ 'chat-messeng' } messages={ messages } onPressEnter={ (text) => {
+          setMessages(prev => {
+            return [...prev, {text: text, createdAt: new Date(), sender: user}] as BLMessageDto[];
+          });
+        } } onClickSendButton={ sendCreateChatMessage }/>
       </BLLeftMarkedCard>
     </BLModal>);
 };
 
-export default CreateChatModal;
+const CreateChatModal = () => {
+  return (
+    <BLUserMultiSelectProvider>
+      <CreateChatModalContent/>
+    </BLUserMultiSelectProvider>
+  );
+};
 
-export const dummyLabels: GmailLabel[] = [
-  {
-    id: '1',
-    name: 'Important',
-    color: '#e53935', // rot
-    icon: <LabelIcon/>,
-  },
-  {
-    id: '2',
-    name: 'Work',
-    color: '#1e88e5', // blau
-    icon: <LabelIcon/>,
-  },
-  {
-    id: '3',
-    name: 'Personal',
-    color: '#43a047', // grün
-    icon: <LabelIcon/>,
-  },
-  {
-    id: '4',
-    name: 'Family',
-    color: '#8e24aa', // lila
-    icon: <LabelIcon/>,
-  },
-  {
-    id: '5',
-    name: 'Travel',
-    color: '#fb8c00', // orange
-    icon: <LabelIcon/>,
-  },
-];
+export default CreateChatModal;

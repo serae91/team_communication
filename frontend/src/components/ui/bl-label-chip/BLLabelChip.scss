@@ -1,0 +1,10 @@
+@use '../../../styles/colors' as colors;
+@use '../../../styles/constants' as constants;
+
+.label-chip {
+  background-color: colors.$color-select-gray;
+  color: colors.$color-text-2;
+  padding: 0 0.5rem;
+  border-radius: 1rem;
+  font-weight: constants.$font-weight-sub-title;
+}

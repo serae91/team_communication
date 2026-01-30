@@ -3,13 +3,12 @@ package backend.bl_api.chat.usecase.create;
 import backend.bl_api.chat.core.ChatRepository;
 import backend.bl_api.chat.core.RelChatUserRepository;
 import backend.bl_api.message.usecase.create.MessageCreateService;
-import backend.bl_api.rel_chat_user_attr.usecase.core.ChatUserViewService;
 import backend.bl_api.user.core.UserService;
 import backend.bl_entities.bl_chat.BLChat;
 import backend.bl_entities.bl_chat.BLChatCreateDto;
 import backend.bl_entities.bl_message.BLMessage;
+import backend.bl_entities.bl_message.BLMessageCreateDto;
 import backend.bl_entities.bl_rel_chat_user.BLRelChatUser;
-import backend.bl_entities.bl_rel_chat_user_attr.ChatUserView;
 import backend.bl_entities.bl_user.BLUser;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
@@ -27,12 +26,10 @@ public class ChatCreateService {
     RelChatUserRepository relChatUserRepository;
     @Inject
     MessageCreateService messageCreateService;
-    @Inject
-    ChatUserViewService chatUserViewService;
 
     @Transactional
-    public ChatUserView createChatFromDto(final BLChatCreateDto chatCreateDto, final Long senderId) {
-        final Instant createdAt = Instant.now();
+    public Long createChatFromDto(final BLChatCreateDto chatCreateDto, final Long senderId) {
+        final Instant createdAt = chatCreateDto.firstMessages().getFirst().createdAt();
         chatCreateDto.userIds().add(senderId);
 
         final BLChat chat = BLChat.builder()
@@ -40,6 +37,7 @@ public class ChatCreateService {
                 .urgency(chatCreateDto.urgency())
                 .createdAt(createdAt)
                 .lastMessageUserId(senderId)
+                .lastMessageAt(chatCreateDto.firstMessages().getLast().createdAt())
                 .build();
         chatRepository.persist(chat);
         chatCreateDto.userIds().forEach(id -> {
@@ -48,13 +46,17 @@ public class ChatCreateService {
             relChatUserRepository.persist(relChatUser);
         });
         final BLUser sender = BLUser.builder().id(senderId).build();
+        chatCreateDto.firstMessages().forEach(message -> createMessage(message, sender, chat));
+        return chat.getId();
+    }
+
+    private void createMessage(final BLMessageCreateDto messageCreateDto, final BLUser sender, final BLChat chat) {
         final BLMessage firstMessage = BLMessage.builder()
                 .sender(sender)
                 .chat(chat)
-                .text(chatCreateDto.firstMessageText())
-                .createdAt(createdAt)
+                .text(messageCreateDto.text())
+                .createdAt(messageCreateDto.createdAt())
                 .build();
         messageCreateService.persist(firstMessage);
-        return chatUserViewService.findBy(chat.getId(), senderId);
     }
 }

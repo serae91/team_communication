@@ -5,14 +5,14 @@ import { BLMessageProvider } from '../../../providers/bl-message/BLMessageProvid
 import { ModalProvider } from '../../../providers/modal/ModalProvider.tsx';
 import SideNavBar from '../../layout/side-nav-bar/SideNavBar.tsx';
 import {
-  BLMessageWebSocketProvider
-} from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/BLMessageWebsocketProvider.tsx';
+  WebSocketMessageWebSocketProvider
+} from '../../../providers/bl-websocket/bl-websocket-types/bl-messages-websocket/WebSocketMessageWebSocketProvider.ts';
 import ChatBoxProvider from '../../../providers/chat-box/ChatBoxProvider.tsx';
 
 
 const MainPage = () => {
   return (
-    <BLMessageWebSocketProvider connectionURL={ 'blwebsocket' }>
+    <WebSocketMessageWebSocketProvider connectionURL={ 'blwebsocket' }>
       <ChatBoxProvider>
         <BLChatProvider>
           <BLMessageProvider>
@@ -25,7 +25,7 @@ const MainPage = () => {
           </BLMessageProvider>
         </BLChatProvider>
       </ChatBoxProvider>
-    </BLMessageWebSocketProvider>
+    </WebSocketMessageWebSocketProvider>
   );
 };
 

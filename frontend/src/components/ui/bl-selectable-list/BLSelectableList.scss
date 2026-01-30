@@ -1,0 +1,8 @@
+@use '../../../styles/colors' as colors;
+@use '../../../styles/constants' as constants;
+
+.MuiList-root {
+  background-color: colors.$color-white;
+  color: #7F56D9;
+
+}

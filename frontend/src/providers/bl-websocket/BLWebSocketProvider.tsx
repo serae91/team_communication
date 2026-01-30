@@ -16,7 +16,7 @@ export type WebSocketContextType<T> = {
 export const createBLWebSocketProvider = <T, >() => {
   const WebSocketContext = createContext<WebSocketContextType<T> | null>(null);
 
-  const BLMessageWebSocketProvider = ({children, connectionURL}: ProviderProps) => {
+  const BLWebSocketProvider = ({children, connectionURL}: ProviderProps) => {
     const [connected, setConnected] = useState(false);
     const [service, setService] = useState<WebSocketService<T> | null>(null);
 
@@ -84,5 +84,5 @@ export const createBLWebSocketProvider = <T, >() => {
     return context;
   };
 
-  return {BLMessageWebSocketProvider, useWebSocket};
+  return {BLWebSocketProvider, useWebSocket};
 };

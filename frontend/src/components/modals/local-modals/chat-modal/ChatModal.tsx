@@ -39,38 +39,32 @@ const ChatModal = () => {
 
   return (
     <BLModal onClick={ () => setActiveChatId(null) }>
-      <BLLeftMarkedCard>
-        <div className={ 'chat-modal' }>
-          <div className={ 'flex justify-between h-14' }>
-            <div className={ 'flex flex-col h-full justify-between' }>
-              <div className={ 'flex items-center gap-6  chat-title' }>
-                <BLSideSymbol>#</BLSideSymbol>
-                { 'Development' }{ chats?.find(chat => chat.chatId === activeChatId)?.title ?? 'Error: Selected chat could not be found' }
-                <PersonAddAltOutlined/>
-              </div>
-              <div className={ 'flex items-center gap-3' }>
-                <BLUrgencyToken hintCardType={ 'error' }/>
-                <p className={ 'chat-title' }>Raised by</p>
-                <BLProfileToken username={ 'Phoenix Baker' }/>
-              </div>
+      <BLLeftMarkedCard className={ 'chat-modal' }>
+        <div className={ 'flex justify-between h-14' }>
+          <div className={ 'flex flex-col h-full justify-between' }>
+            <div className={ 'flex items-center gap-6  chat-title' }>
+              <BLSideSymbol>#</BLSideSymbol>
+              { 'Development' }{ chats?.find(chat => chat.chatId === activeChatId)?.title ?? 'Error: Selected chat could not be found' }
+              <PersonAddAltOutlined/>
             </div>
-            <div className={ 'flex items-center gap-6 h-6' }>
-              <Tooltip title={ 'skip' }><SkipNextOutlined sx={ {color: '#A4A7Ae', cursor: 'pointer'} }
-                                                          onClick={ setNextChat }/></Tooltip>
-              <Tooltip title={ 'share' }><ReplyOutlined sx={ {color: '#A4A7Ae', cursor: 'pointer'} }/></Tooltip>
-              <Tooltip title={ 'share' }><ShareOutlined sx={ {color: '#A4A7Ae', cursor: 'pointer'} }/></Tooltip>
-              <Tooltip title={ 'remind' }><MoreTimeOutlined sx={ {color: '#A4A7Ae', cursor: 'pointer'} }
-                                                            onClick={ remind }/></Tooltip>
-              <Tooltip title={ 'done' }><CheckOutlined sx={ {color: '#A4A7Ae', cursor: 'pointer'} }
-                                                       onClick={ setDone }/></Tooltip>
+            <div className={ 'flex items-center gap-3' }>
+              <BLUrgencyToken hintCardType={ 'error' }/>
+              <p className={ 'chat-title' }>Raised by</p>
+              <BLProfileToken username={ 'Phoenix Baker' }/>
             </div>
           </div>
-          <ChatSystem messages={ messages }
-                      sendMessage={ (text) => {
-                        sendMessage(text);
-                      }
-                      }/>
+          <div className={ 'flex items-center gap-6 h-6 text-[#A4A7Ae]' }>
+            <Tooltip title={ 'skip' }><SkipNextOutlined sx={ {color: '#A4A7Ae', cursor: 'pointer'} }
+                                                        onClick={ setNextChat }/></Tooltip>
+            <Tooltip title={ 'share' }><ReplyOutlined sx={ {color: '#A4A7Ae', cursor: 'pointer'} }/></Tooltip>
+            <Tooltip title={ 'share' }><ShareOutlined sx={ {color: '#A4A7Ae', cursor: 'pointer'} }/></Tooltip>
+            <Tooltip title={ 'remind' }><MoreTimeOutlined sx={ {color: '#A4A7Ae', cursor: 'pointer'} }
+                                                          onClick={ remind }/></Tooltip>
+            <Tooltip title={ 'done' }><CheckOutlined sx={ {color: '#A4A7Ae', cursor: 'pointer'} }
+                                                     onClick={ setDone }/></Tooltip>
+          </div>
         </div>
+        <ChatSystem messages={ messages } sendMessage={ sendMessage } className={ 'chat-sys' }/>
       </BLLeftMarkedCard>
     </BLModal>);
 };

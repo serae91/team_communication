@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { type MouseEventHandler, useCallback, useEffect, useRef } from 'react';
 import './ChatMessenging.scss';
 import ChatMessage from './chat-message/ChatMessage';
 import type { BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
 import ChatInput from './chat-input/ChatInput.tsx';
 
-
 interface ChatMessengingProps {
   className?: string;
   messages: BLMessageDto[];
-  sendMessage: (text: string) => void;
+  onPressEnter: (text: string) => void;
+  onClickSendButton?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
+const ChatMessenging = ({className, messages, onPressEnter, onClickSendButton}: ChatMessengingProps) => {
   const chatScrollRef = useRef<HTMLDivElement>(null);
 
   const prevLength = useRef(messages?.length ?? 0);
@@ -43,21 +43,26 @@ const ChatMessenging = ({messages, sendMessage}: ChatMessengingProps) => {
     scrollDownWhenAtBottomAndAddingNewMessage();
   }, [messages.length, scrollDownWhenAtBottomAndAddingNewMessage]);
 
-  const renderChatMessages = () => {
-    return <div className={ 'flex flex-col gap-1.5' }>{ messages.map(message =>
-      <ChatMessage sender={ message.sender.username } postTime={ message.createdAt } message={ message.text }
-                   key={ message.id }/>) }</div>;
-
-  };
-
   return (
-    <>
-      <div ref={ chatScrollRef }
-           className={ 'flex-1 overflow-y-auto chat-messenging' }>
-        { renderChatMessages() }
+    <div className={ `chat-messenging ${ className }` }>
+      <div
+        ref={ chatScrollRef }
+        className="scroll-area"
+      >
+        <ul className="flex flex-col gap-1.5 list-none p-0 m-0">
+          { messages.map((message) => (
+            <li key={ message.id }>
+              <ChatMessage
+                sender={ message.sender.username }
+                postTime={ message.createdAt }
+                message={ message.text }
+              />
+            </li>
+          )) }
+        </ul>
       </div>
-      <ChatInput onSend={ sendMessage }/>
-    </>
+      <ChatInput onPressEnter={ onPressEnter } onClickSendButton={ onClickSendButton }/>
+    </div>
   );
 };
 
