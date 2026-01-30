@@ -34,4 +34,9 @@
       color: colors.$color-icons;
     }
   }
+
+  .chat-messeng {
+    height: calc(100% - 16px);
+    display: flex;
+  }
 }

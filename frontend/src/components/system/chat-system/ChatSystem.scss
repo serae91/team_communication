@@ -2,8 +2,6 @@
 @use '../../../styles/constants' as constants;
 
 .chat-system {
-  height: calc(100% - 80px);
-
   .messenging {
     height: calc(100% - 62px - 16px);
     display: flex;

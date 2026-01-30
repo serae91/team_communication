@@ -64,7 +64,7 @@ const ChatModal = () => {
                                                      onClick={ setDone }/></Tooltip>
           </div>
         </div>
-        <ChatSystem messages={ messages } sendMessage={ sendMessage }/>
+        <ChatSystem messages={ messages } sendMessage={ sendMessage } className={ 'chat-sys' }/>
       </BLLeftMarkedCard>
     </BLModal>);
 };

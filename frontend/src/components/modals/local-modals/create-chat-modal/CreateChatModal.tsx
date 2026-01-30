@@ -11,7 +11,6 @@ import {
 import type { BLChatCreateDto } from '../../../../dtos/BLChatCreateDto.ts';
 import { CheckOutlined, ModeEditOutlined } from '@mui/icons-material';
 import BLUserDropdownSearch from '../../../system/dropdown-search/bl-user-dropdown-search/BLUserDropdownSearch.tsx';
-import ChatSystem from '../../../system/chat-system/ChatSystem.tsx';
 import { useBLMessages } from '../../../../providers/bl-message/BLMessageProvider.tsx';
 import type { BLMessageDto } from '../../../../dtos/BLMessageDto.ts';
 import { useAuth } from '../../../../providers/auth/AuthProvider.tsx';
@@ -23,6 +22,7 @@ import BLLabelChip from '../../../ui/bl-label-chip/BLLabelChip.tsx';
 import type { BLUserDto } from '../../../../dtos/BLUserDto.ts';
 import { Switch, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
+import ChatMessenging from '../../../system/chat-system/chat-messenging/ChatMessenging.tsx';
 
 
 const CreateChatModalContent = () => {
@@ -84,7 +84,7 @@ const CreateChatModalContent = () => {
                                                                 }/> Mark this topic as
           urgent
         </div>
-        <ChatSystem messages={ messages } sendMessage={ (text) => {
+        <ChatMessenging className={ 'chat-messeng' } messages={ messages } onPressEnter={ (text) => {
           setMessages(prev => {
             return [...prev, {text: text, createdAt: new Date(), sender: user}] as BLMessageDto[];
           });
