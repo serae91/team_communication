@@ -44,6 +44,9 @@ public class ChatUserView {
     @Column(name = "created_at")
     private Instant createdAt;
 
+    @Column(name = "creator_user_id")
+    private Long creatorUserId;
+
     @Column(name = "last_message_user_id")
     private Long lastMessageUserId;
 
@@ -63,7 +66,7 @@ public class ChatUserView {
     public ChatBox getChatBox() {
         if (done) return ChatBox.ALL;
         if (ReminderStatus.SCHEDULED.equals(reminderStatus)) return ChatBox.REMINDER;
-        if (userId.equals(lastMessageUserId)) return ChatBox.SENT;
+        if (userId.equals(creatorUserId)) return ChatBox.SENT;
         return ChatBox.INBOX;
     }
 }

@@ -82,7 +82,7 @@ public class AuthResource {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
-        final Object userIdObj = jwt.getClaim("userId");
+        final Object userIdObj = jwt.getClaim("id");
         final Long userId = Long.valueOf(userIdObj.toString());
         final Set<String> groups = jwt.getGroups() != null ? jwt.getGroups() : Set.of("user");
 

@@ -11,6 +11,7 @@ CREATE TABLE bl_chat
     title                VARCHAR(255)             NOT NULL,
     urgency              VARCHAR(255)             NOT NULL,
     created_at           TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+    creator_user_id      BIGINT                   NOT NULL REFERENCES bl_user(id),
     last_message_user_id BIGINT                   NOT NULL REFERENCES bl_user(id),
     last_message_at      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 );

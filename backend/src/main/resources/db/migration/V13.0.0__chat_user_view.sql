@@ -4,6 +4,7 @@ SELECT
     c.title                AS title,
     c.urgency              AS urgency,
     c.created_at           AS created_at,
+    c.creator_user_id      AS creator_user_id,
     c.last_message_user_id AS last_message_user_id,
     c.last_message_at      AS last_message_at,
 

@@ -33,6 +33,7 @@ public class ChatCreateService {
                 .title(chatCreateDto.title())
                 .urgency(chatCreateDto.urgency())
                 .createdAt(createdAt)
+                .creatorUserId(senderId)
                 .lastMessageUserId(senderId)
                 .lastMessageAt(chatCreateDto.firstMessages().getLast().createdAt())
                 .build();

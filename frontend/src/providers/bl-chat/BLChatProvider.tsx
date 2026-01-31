@@ -110,8 +110,8 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
 
       switch (payload.type) {
         case 'RECEIVE_REMINDER': {
-          const inBoxReminder = payload.chats.filter(chat => chat.lastMessageUserId !== user?.id);
-          const sentBoxReminder = payload.chats.filter(chat => chat.lastMessageUserId === user?.id);
+          const inBoxReminder = payload.chats.filter(chat => chat.creatorUserId !== user?.id);
+          const sentBoxReminder = payload.chats.filter(chat => chat.creatorUserId === user?.id);
           moveChatsToBox(inBoxReminder, [ChatBoxEnum.REMINDER], [ChatBoxEnum.INBOX]);
           moveChatsToBox(sentBoxReminder, [ChatBoxEnum.REMINDER], [ChatBoxEnum.INBOX, ChatBoxEnum.SENT]);
           break;
@@ -122,7 +122,7 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
         }
         case 'RECEIVE_UPDATED_CHAT': {
           const fromBoxes = payload.fromBox === ChatBoxEnum.SENT ? [ChatBoxEnum.INBOX, ChatBoxEnum.SENT] : [payload.fromBox];
-          const toBoxes = payload.chatUserView.userId === payload.chatUserView.lastMessageUserId ? [ChatBoxEnum.INBOX, ChatBoxEnum.SENT] : [ChatBoxEnum.SENT];
+          const toBoxes = getCurrentChatBoxes(payload.chatUserView);
           moveChatsToBox([payload.chatUserView], fromBoxes, toBoxes);
           break;
         }
@@ -145,7 +145,7 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
           return {...chat, reminderAt: inFiveMinutes, reminderStatus: ReminderStatusEnum.SCHEDULED} as ChatUserView;
         }));
       } else {
-        moveChatsToBox([activeChat], getCurrentChatBoxes(activeChat, user), [ChatBoxEnum.REMINDER]);
+        moveChatsToBox([activeChat], getCurrentChatBoxes(activeChat), [ChatBoxEnum.REMINDER]);
       }
       setActiveChatId(null);
     });
@@ -156,7 +156,7 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
     if (!activeChatId || !activeChat) return;
     triggerDone(activeChatId).then(() => {
       if (activeChat && user) {
-        moveChatsToBox([activeChat], getCurrentChatBoxes(activeChat, user), [ChatBoxEnum.ALL]);
+        moveChatsToBox([activeChat], getCurrentChatBoxes(activeChat), [ChatBoxEnum.ALL]);
       }
       setActiveChatId(null);
     });

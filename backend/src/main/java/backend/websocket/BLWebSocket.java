@@ -45,7 +45,7 @@ public class BLWebSocket {
         try {
             final String decodedToken = URLDecoder.decode(token, StandardCharsets.UTF_8);
             final JsonWebToken jwt = jwtParser.parse(decodedToken);
-            final Object userIdClaim = jwt.getClaim("userId");
+            final Object userIdClaim = jwt.getClaim("id");
             final Long userId = getUserId(userIdClaim);
             if (userId == null) {
                 connection.close().subscribe().with(v -> {

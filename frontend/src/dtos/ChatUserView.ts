@@ -4,6 +4,7 @@ export interface ChatUserView {
   chatUserAttrId: number;
   title: string;
   createdAt: Date;
+  creatorUserId: number;
   lastMessageUserId: number;
   lastMessageAt: Date;
   done: boolean;

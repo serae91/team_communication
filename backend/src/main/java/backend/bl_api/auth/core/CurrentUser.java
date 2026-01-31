@@ -18,7 +18,7 @@ public class CurrentUser {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
 
-        final Object claim = jwt.getClaim("userId");
+        final Object claim = jwt.getClaim("id");
         if (claim == null) {
             throw new WebApplicationException(
                     "Missing userId claim", Response.Status.FORBIDDEN

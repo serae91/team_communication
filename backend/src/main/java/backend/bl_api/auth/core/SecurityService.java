@@ -16,7 +16,7 @@ public class SecurityService {
             throw new WebApplicationException(401);
         }
 
-        final Object userId = identity.getAttribute("userId");
+        final Object userId = identity.getAttribute("id");
         if (userId == null) {
             throw new WebApplicationException("userId missing in token", 401);
         }

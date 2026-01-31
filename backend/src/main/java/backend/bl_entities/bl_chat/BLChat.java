@@ -56,6 +56,9 @@ public class BLChat {
     @OneToMany(mappedBy = "chat")
     private Set<BLRelChatGroup> relGroups;
 
+    @Column(name = "creator_user_id", nullable = false)
+    private Long creatorUserId;
+
     @Column(name = "last_message_user_id", nullable = false)
     private Long lastMessageUserId;
 
