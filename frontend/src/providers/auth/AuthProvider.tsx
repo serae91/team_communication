@@ -7,24 +7,19 @@ import React, {
   useEffect,
   useState
 } from 'react';
-
-export type User = {
-  id: number;
-  username: string;
-  roles: string[];
-};
+import type { BLUserDto } from '../../dtos/BLUserDto.ts';
 
 type AuthContextType = {
-  user: User | null;
+  user: BLUserDto | null;
   loading: boolean;
-  setUser: Dispatch<SetStateAction<User | null>>;
+  setUser: Dispatch<SetStateAction<BLUserDto | null>>;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({children}: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<BLUserDto | null>(null);
   const [loading, setLoading] = useState(true);
 
   const logout = async () => {

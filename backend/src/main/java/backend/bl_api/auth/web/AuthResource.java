@@ -41,7 +41,7 @@ public class AuthResource {
         }
 
         final String token = Jwt.subject(user.getUsername())
-                .claim("userId", user.getId())
+                .claim("id", user.getId())
                 //.groups(user.getRoles())
                 .groups(Set.of("user"))//TODO replace by line above
                 .expiresIn(3600)

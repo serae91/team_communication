@@ -20,7 +20,8 @@ import { ChatBoxEnum } from '../../enums/ChatBoxEnum.ts';
 import { useSearchParams } from 'react-router-dom';
 import type { BLRelChatUserAttrSetReminderDto } from '../../dtos/BLRelChatUserAttrDto.ts';
 import { ReminderStatusEnum } from '../../enums/ReminderStatusEnum.ts';
-import { getCurrentChatBox } from '../../utils/chat-user-view-utils/ChatUserViewUtils.ts';
+import { getCurrentChatBoxes } from '../../utils/chat-user-view-utils/ChatUserViewUtils.ts';
+import { arraysHaveSameElements } from '../../utils/array-utils/ArrayUtils.ts';
 
 interface BLChatProviderProps {
   children: ReactNode;
@@ -35,7 +36,7 @@ type BLChatContextType = {
   setNextChat: () => void;
   remind: () => void;
   setDone: () => void;
-  moveChatsToBox: (movedChats: ChatUserView[], fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => void;
+  moveChatsToBox: (movedChats: ChatUserView[], fromBoxes: ChatBoxEnum[], toBoxes: ChatBoxEnum[]) => void;
 }
 
 const BLChatContext = createContext<BLChatContextType | null>(null);
@@ -91,13 +92,13 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
     });
   }, [activeChatId, send]);
 
-  const moveChatsToBox = useCallback((movedChats: ChatUserView[], fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
-    onMoveChatsToBox(movedChats.length, fromBox, toBox);
-    if (!movedChats.length || fromBox === toBox || chatBox === ChatBoxEnum.ALL) return;
-    if (chatBox === fromBox) {
+  const moveChatsToBox = useCallback((movedChats: ChatUserView[], fromBoxes: ChatBoxEnum[], toBoxes: ChatBoxEnum[]) => {
+    onMoveChatsToBox(movedChats.length, fromBoxes, toBoxes);
+    if (!movedChats.length || arraysHaveSameElements(fromBoxes, toBoxes) || chatBox === ChatBoxEnum.ALL) return;
+    if (fromBoxes.includes(chatBox)) {
       const movedChatIds = movedChats.map(chat => chat.chatId);
       setChats(prev => prev.filter(chat => !movedChatIds.includes(chat.chatId)));
-    } else if (chatBox === toBox) {
+    } else if (toBoxes.includes(chatBox)) {
       setChats(prev => [...movedChats, ...prev]);
     }
   }, [chatBox, onMoveChatsToBox]);
@@ -111,16 +112,20 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
         case 'RECEIVE_REMINDER': {
           const inBoxReminder = payload.chats.filter(chat => chat.lastMessageUserId !== user?.id);
           const sentBoxReminder = payload.chats.filter(chat => chat.lastMessageUserId === user?.id);
-          moveChatsToBox(inBoxReminder, ChatBoxEnum.REMINDER, ChatBoxEnum.INBOX);
-          moveChatsToBox(sentBoxReminder, ChatBoxEnum.REMINDER, ChatBoxEnum.SENT);
+          moveChatsToBox(inBoxReminder, [ChatBoxEnum.REMINDER], [ChatBoxEnum.INBOX]);
+          moveChatsToBox(sentBoxReminder, [ChatBoxEnum.REMINDER], [ChatBoxEnum.INBOX, ChatBoxEnum.SENT]);
           break;
         }
-        case 'RECEIVE_CHAT':
+        case 'RECEIVE_CHAT': {
           setChats((prev) => [...prev, payload.chatUserView]);
           break;
-        case 'RECEIVE_UPDATED_CHAT':
-          moveChatsToBox([payload.chatUserView], payload.fromBox, payload.chatUserView.userId === payload.chatUserView.lastMessageUserId ? ChatBoxEnum.SENT : ChatBoxEnum.INBOX);
+        }
+        case 'RECEIVE_UPDATED_CHAT': {
+          const fromBoxes = payload.fromBox === ChatBoxEnum.SENT ? [ChatBoxEnum.INBOX, ChatBoxEnum.SENT] : [payload.fromBox];
+          const toBoxes = payload.chatUserView.userId === payload.chatUserView.lastMessageUserId ? [ChatBoxEnum.INBOX, ChatBoxEnum.SENT] : [ChatBoxEnum.SENT];
+          moveChatsToBox([payload.chatUserView], fromBoxes, toBoxes);
           break;
+        }
       }
     };
 
@@ -140,7 +145,7 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
           return {...chat, reminderAt: inFiveMinutes, reminderStatus: ReminderStatusEnum.SCHEDULED} as ChatUserView;
         }));
       } else {
-        moveChatsToBox([activeChat], getCurrentChatBox(activeChat, user), ChatBoxEnum.REMINDER);
+        moveChatsToBox([activeChat], getCurrentChatBoxes(activeChat, user), [ChatBoxEnum.REMINDER]);
       }
       setActiveChatId(null);
     });
@@ -151,7 +156,7 @@ export const BLChatProvider = ({children}: BLChatProviderProps) => {
     if (!activeChatId || !activeChat) return;
     triggerDone(activeChatId).then(() => {
       if (activeChat && user) {
-        moveChatsToBox([activeChat], getCurrentChatBox(activeChat, user), ChatBoxEnum.ALL);
+        moveChatsToBox([activeChat], getCurrentChatBoxes(activeChat, user), [ChatBoxEnum.ALL]);
       }
       setActiveChatId(null);
     });

@@ -33,7 +33,7 @@ type ChatBoxContextType = {
   setSortDirection: Dispatch<SetStateAction<SortDirectionEnum>>;
   pagination: PaginationDto;
   setPagination: Dispatch<SetStateAction<PaginationDto>>;
-  onMoveChatsToBox: (count: number, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => void;
+  onMoveChatsToBox: (count: number, fromBoxes: ChatBoxEnum[], toBoxes: ChatBoxEnum[]) => void;
 }
 
 const ChatBoxContext = createContext<ChatBoxContextType | null>(null);
@@ -53,22 +53,24 @@ const ChatBoxProvider = ({children}: ChatBoxProviderProps) => {
   const [pagination, setPagination] = useState<PaginationDto>({page: 0, size: 20});
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const getNewChatBoxCount = useCallback((count: number, prevCount: number, box: ChatBoxEnum, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
-    if (fromBox === box) return prevCount - count;
-    if (toBox === box) return prevCount + count;
+  const getNewChatBoxCount = useCallback((count: number, prevCount: number, box: ChatBoxEnum, fromBoxes: ChatBoxEnum[], toBoxes: ChatBoxEnum[]) => {
+    const isFromBox = fromBoxes.includes(box);
+    const isToBox = toBoxes.includes(box);
+    if (isFromBox && !isToBox) return prevCount - count;
+    if (!isFromBox && isToBox) return prevCount + count;
     return prevCount;
   }, []);
 
-  const getChatCountOnMoveChatToBox = useCallback((count: number, prevChatBoxCount: ChatBoxCountDto, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => ({
-    inboxCount: getNewChatBoxCount(count, prevChatBoxCount.inboxCount, ChatBoxEnum.INBOX, fromBox, toBox),
-    sentCount: getNewChatBoxCount(count, prevChatBoxCount.sentCount, ChatBoxEnum.SENT, fromBox, toBox),
-    reminderCount: getNewChatBoxCount(count, prevChatBoxCount.reminderCount, ChatBoxEnum.REMINDER, fromBox, toBox),
+  const getChatCountOnMoveChatToBox = useCallback((count: number, prevChatBoxCount: ChatBoxCountDto, fromBoxes: ChatBoxEnum[], toBoxes: ChatBoxEnum[]) => ({
+    inboxCount: getNewChatBoxCount(count, prevChatBoxCount.inboxCount, ChatBoxEnum.INBOX, fromBoxes, toBoxes),
+    sentCount: getNewChatBoxCount(count, prevChatBoxCount.sentCount, ChatBoxEnum.SENT, fromBoxes, toBoxes),
+    reminderCount: getNewChatBoxCount(count, prevChatBoxCount.reminderCount, ChatBoxEnum.REMINDER, fromBoxes, toBoxes),
     totalCount: prevChatBoxCount.totalCount
   } as ChatBoxCountDto), [getNewChatBoxCount]);
 
-  const onMoveChatsToBox = useCallback((count: number, fromBox: ChatBoxEnum, toBox: ChatBoxEnum) => {
-    if (!count || fromBox === toBox) return;
-    setChatBoxCount(prev => getChatCountOnMoveChatToBox(count, prev, fromBox, toBox));
+  const onMoveChatsToBox = useCallback((count: number, fromBoxes: ChatBoxEnum[], toBoxes: ChatBoxEnum[]) => {
+    if (!count) return;
+    setChatBoxCount(prev => getChatCountOnMoveChatToBox(count, prev, fromBoxes, toBoxes));
   }, [getChatCountOnMoveChatToBox]);
 
   useEffect(() => {

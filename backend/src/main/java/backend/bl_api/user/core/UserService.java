@@ -33,7 +33,9 @@ public class UserService {
     public Set<BLUserView> getFilteredUsers(final String query, final Long userId) {
         final BLUser user = userRepository.findById(userId);
         final CriteriaBuilder<BLUser> criteriaBuilder = criteriaBuilderFactory.create(entityManager, BLUser.class);
-        criteriaBuilder.where("workspace.id").eq(user.getWorkspace().getId());
+        criteriaBuilder
+                .where("id").notEq(userId)
+                .where("workspace.id").eq(user.getWorkspace().getId());
         if (!query.isBlank()) {
             final WhereOrBuilder<CriteriaBuilder<BLUser>> whereOr = criteriaBuilder.whereOr();
             whereOr.whereExpression("CONCAT(lastName, ' ', firstName) LIKE :q");

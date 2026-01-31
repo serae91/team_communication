@@ -3,7 +3,6 @@ package backend.bl_api.chat.usecase.create;
 import backend.bl_api.chat.core.ChatRepository;
 import backend.bl_api.chat.core.RelChatUserRepository;
 import backend.bl_api.message.usecase.create.MessageCreateService;
-import backend.bl_api.user.core.UserService;
 import backend.bl_entities.bl_chat.BLChat;
 import backend.bl_entities.bl_chat.BLChatCreateDto;
 import backend.bl_entities.bl_message.BLMessage;
@@ -20,8 +19,6 @@ import java.time.Instant;
 public class ChatCreateService {
     @Inject
     ChatRepository chatRepository;
-    @Inject
-    UserService userService;
     @Inject
     RelChatUserRepository relChatUserRepository;
     @Inject
@@ -41,7 +38,7 @@ public class ChatCreateService {
                 .build();
         chatRepository.persist(chat);
         chatCreateDto.userIds().forEach(id -> {
-            final BLUser user = userService.getUserById(id);
+            final BLUser user = BLUser.builder().id(id).build();
             final BLRelChatUser relChatUser = BLRelChatUser.builder().user(user).chat(chat).build();
             relChatUserRepository.persist(relChatUser);
         });
